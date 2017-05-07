@@ -44,6 +44,28 @@ public class PinchZoom : MonoBehaviour {
                     // Make sure the orthographic size never drops below zero.
                     GetComponent<Camera>().orthographicSize = Mathf.Max(GetComponent<Camera>().orthographicSize, 0.1f);
                 }
+                if(GetComponent<Camera>().orthographicSize < zoomMin)
+                {
+                    if(deltaMagnitudeDiff >= 0)
+                    {
+                        // ... change the orthographic size based on the change in distance between the touches.
+                        GetComponent<Camera>().orthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
+
+                        // Make sure the orthographic size never drops below zero.
+                        GetComponent<Camera>().orthographicSize = Mathf.Max(GetComponent<Camera>().orthographicSize, 0.1f);
+                    }
+                }
+                if (GetComponent<Camera>().orthographicSize > zoomMax)
+                {
+                    if (deltaMagnitudeDiff <= 0)
+                    {
+                        // ... change the orthographic size based on the change in distance between the touches.
+                        GetComponent<Camera>().orthographicSize += deltaMagnitudeDiff * orthoZoomSpeed;
+
+                        // Make sure the orthographic size never drops below zero.
+                        GetComponent<Camera>().orthographicSize = Mathf.Max(GetComponent<Camera>().orthographicSize, 0.1f);
+                    }
+                }
             }
             else
             {
