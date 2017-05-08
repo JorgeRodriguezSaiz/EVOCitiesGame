@@ -49,7 +49,7 @@ public class SmoothCamera2d : MonoBehaviour
             {
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetX, minY + 0.01f, -10), ref velocity, smoothTime);
             }
-            if (targetX > maxY)
+            if (targetY > maxY)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetX, maxY - 0.01f, -10), ref velocity, smoothTime);
             }
