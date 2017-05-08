@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Assets.UltimateIsometricToolkit.Scripts.Core;
 using System;
+<<<<<<< HEAD
 public class SmoothCamera2d : MonoBehaviour
 {
 
@@ -20,15 +21,39 @@ public class SmoothCamera2d : MonoBehaviour
     private bool aux;
     public float smoothTime = 0.15F;
 
+=======
+public class SmoothCamera2d : MonoBehaviour {
+
+	//public float dampTime = 0.15f;
+	private Vector3 velocity = Vector3.zero;
+	public Transform target;
+    public float maxX;
+    public float maxY;
+    public float minX;
+    public float minY;
+    public float tolerance = 2;        
+    public float Speed = 10;
+    private IsoTransform _isoTransform;
+    private Vector3 initialMousePosition;
+    Vector3 mouseposition;
+    //derecha y arriba true, izquierda y abajo false
+    private bool aux;
+
+>>>>>>> origin/master
     void Start()
     {
         target = this.transform;
     }
     // Update is called once per frame
+<<<<<<< HEAD
     void Update()
     {
         if (target)
         {
+=======
+    void Update() {
+		if (target) {
+>>>>>>> origin/master
             float targetX = target.position.x;
             float targetY = target.position.y;
             /*Vector3 point = Camera.main.WorldToViewportPoint(target.position);
@@ -41,6 +66,7 @@ public class SmoothCamera2d : MonoBehaviour
             {
                 move();
             }
+<<<<<<< HEAD
 
 
             if (targetX < minX)
@@ -58,6 +84,23 @@ public class SmoothCamera2d : MonoBehaviour
             if (targetY > maxY)
             {
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetX, maxY - 0.01f, -10), ref velocity, smoothTime);
+=======
+            if (targetX < minX)
+            {
+                transform.position = new Vector3(minX, targetY, -10);
+            }
+            if (targetX > maxX)
+            {
+                transform.position = new Vector3(maxX, targetY, -10);
+            }
+            if (targetY < minY)
+            {
+                transform.position = new Vector3(targetX, minY, -10);
+            }
+            if (targetX > maxY)
+            {
+                transform.position = new Vector3(targetX, maxY, -10);
+>>>>>>> origin/master
             }
         }
     }
@@ -70,6 +113,7 @@ public class SmoothCamera2d : MonoBehaviour
             {
                 initialMousePosition = mouseposition;
             }
+<<<<<<< HEAD
 
             //Si hay movimiento entra
             if (initialMousePosition != mouseposition)
@@ -92,6 +136,30 @@ public class SmoothCamera2d : MonoBehaviour
                 }
             }
 
+=======
+
+            //Si hay movimiento entra
+            if (initialMousePosition != mouseposition)
+            {
+                if (Math.Abs(mouseposition.x - initialMousePosition.x) > tolerance && Math.Abs(mouseposition.y - initialMousePosition.y) > tolerance)
+                {
+                    transform.Translate(new Vector3(-(mouseposition.x - initialMousePosition.x), -(mouseposition.y - initialMousePosition.y), 0) * Time.deltaTime * Speed);
+                    
+                }
+                else
+                {
+                    if (Math.Abs(mouseposition.x - initialMousePosition.x) > tolerance)
+                    {
+                        transform.Translate(new Vector3(-(mouseposition.x - initialMousePosition.x), 0, 0) * Time.deltaTime * Speed);
+                    }
+                    if (Math.Abs(mouseposition.y - initialMousePosition.y) > tolerance)
+                    {
+                        transform.Translate(new Vector3(0, -(mouseposition.y - initialMousePosition.y), 0) * Time.deltaTime * Speed);
+                    }
+                }
+            }
+            
+>>>>>>> origin/master
         }
         if (mouseposition.x - initialMousePosition.x >= 0)
         {
