@@ -1,62 +1,40 @@
 ﻿using UnityEngine;
-<<<<<<< HEAD
 using Assets.UltimateIsometricToolkit.Scripts.Core;
 using System;
-<<<<<<< HEAD
 public class SmoothCamera2d : MonoBehaviour
 {
-=======
->>>>>>> parent of aa27fc4... CamaraGuachi
 
-public class SmoothCamera2d : MonoBehaviour {
-
-<<<<<<< HEAD
-=======
-public class SmoothCamera2d : MonoBehaviour {
-
-	//public float dampTime = 0.15f;
-	private Vector3 velocity = Vector3.zero;
-	public Transform target;
+    //public float dampTime = 0.15f;
+    private Vector3 velocity = Vector3.zero;
+    public Transform target;
     public float maxX;
     public float maxY;
     public float minX;
     public float minY;
-    public float tolerance = 2;        
+    public float tolerance = 2;
     public float Speed = 10;
     private IsoTransform _isoTransform;
     private Vector3 initialMousePosition;
     Vector3 mouseposition;
     //derecha y arriba true, izquierda y abajo false
     private bool aux;
+    public float smoothTime = 0.15F;
 
->>>>>>> origin/master
     void Start()
     {
         target = this.transform;
     }
     // Update is called once per frame
-<<<<<<< HEAD
     void Update()
     {
         if (target)
         {
-=======
-    void Update() {
-		if (target) {
->>>>>>> origin/master
             float targetX = target.position.x;
             float targetY = target.position.y;
-            /*Vector3 point = Camera.main.WorldToViewportPoint(target.position);
-			Vector3 delta = target.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));
-			Vector3 destination = transform.position + delta;*/
-            //transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
-            /*targetX = Mathf.Clamp(targetX, minXAndY.x, maxXAndY.x);
-            targetY = Mathf.Clamp(targetY, minXAndY.y, maxXAndY.y);*/
             if (targetX >= minX && targetX <= maxY && targetY >= minY && targetY <= maxY)
             {
                 move();
             }
-<<<<<<< HEAD
 
 
             if (targetX < minX)
@@ -71,26 +49,9 @@ public class SmoothCamera2d : MonoBehaviour {
             {
                 transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetX, minY + 0.01f, -10), ref velocity, smoothTime);
             }
-            if (targetY > maxY)
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetX, maxY - 0.01f, -10), ref velocity, smoothTime);
-=======
-            if (targetX < minX)
-            {
-                transform.position = new Vector3(minX, targetY, -10);
-            }
-            if (targetX > maxX)
-            {
-                transform.position = new Vector3(maxX, targetY, -10);
-            }
-            if (targetY < minY)
-            {
-                transform.position = new Vector3(targetX, minY, -10);
-            }
             if (targetX > maxY)
             {
-                transform.position = new Vector3(targetX, maxY, -10);
->>>>>>> origin/master
+                transform.position = Vector3.SmoothDamp(transform.position, new Vector3(targetX, maxY - 0.01f, -10), ref velocity, smoothTime);
             }
         }
     }
@@ -103,24 +64,6 @@ public class SmoothCamera2d : MonoBehaviour {
             {
                 initialMousePosition = mouseposition;
             }
-<<<<<<< HEAD
-=======
-	public float dampTime = 0.15f;
-	private Vector3 velocity = Vector3.zero;
-	public Transform target;
->>>>>>> parent of aa27fc4... CamaraGuachi
-
-	// Update is called once per frame
-	void Update() {
-		if (target) {
-			Vector3 point = Camera.main.WorldToViewportPoint(target.position);
-			Vector3 delta = target.position - Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z));
-			Vector3 destination = transform.position + delta;
-			transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
-		}
-
-<<<<<<< HEAD
-=======
 
             //Si hay movimiento entra
             if (initialMousePosition != mouseposition)
@@ -128,7 +71,7 @@ public class SmoothCamera2d : MonoBehaviour {
                 if (Math.Abs(mouseposition.x - initialMousePosition.x) > tolerance && Math.Abs(mouseposition.y - initialMousePosition.y) > tolerance)
                 {
                     transform.Translate(new Vector3(-(mouseposition.x - initialMousePosition.x), -(mouseposition.y - initialMousePosition.y), 0) * Time.deltaTime * Speed);
-                    
+
                 }
                 else
                 {
@@ -142,8 +85,7 @@ public class SmoothCamera2d : MonoBehaviour {
                     }
                 }
             }
-            
->>>>>>> origin/master
+
         }
         if (mouseposition.x - initialMousePosition.x >= 0)
         {
@@ -163,7 +105,4 @@ public class SmoothCamera2d : MonoBehaviour {
         }
         return aux;
     }
-=======
-	}
->>>>>>> parent of aa27fc4... CamaraGuachi
 }
