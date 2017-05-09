@@ -55,7 +55,7 @@ public class SmoothCamera2d : MonoBehaviour
             }
         }
     }
-    bool move()
+    void move()
     {
         if (Input.GetMouseButton(0))
         {//Detecta el mouse
@@ -85,24 +85,6 @@ public class SmoothCamera2d : MonoBehaviour
                     }
                 }
             }
-
         }
-        if (mouseposition.x - initialMousePosition.x >= 0)
-        {
-            aux = true;
-        }
-        if (mouseposition.x - initialMousePosition.x <= 0)
-        {
-            aux = false;
-        }
-        if (mouseposition.y - initialMousePosition.y >= 0)
-        {
-            aux = true;
-        }
-        if (mouseposition.y - initialMousePosition.y <= 0)
-        {
-            aux = false;
-        }
-        return aux;
     }
 }
