@@ -8,6 +8,7 @@ public class Construction : MonoBehaviour {
     public Vector3 mousePos = new Vector3();
     public Vector3 mousePosCanvas = new Vector3();
     public bool modoConstruccion = false;
+    public bool disponible = true;
     // Use this for initialization
     void Start () {
 
@@ -26,6 +27,7 @@ public class Construction : MonoBehaviour {
             instancia.transform.position = Vector3.MoveTowards(instancia.transform.position, mousePos, 100f*Time.deltaTime);
             botonAceptar.transform.position = Vector3.MoveTowards(botonAceptar.transform.position, Input.mousePosition, 10000f * Time.deltaTime);
         }
+        disponible = instancia.GetComponent<comprobadorDisponible>()._disponible;
     }
     public void OnClickBuilding()
     {
@@ -35,8 +37,11 @@ public class Construction : MonoBehaviour {
     }
     public void OnClickAceptar()
     {
-        modoConstruccion = false;
-        instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        if (disponible)
+        {
+            modoConstruccion = false;
+            instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        }
     }
     public void OnClickCancelar()
     {
