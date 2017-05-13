@@ -20,14 +20,13 @@ public class Construction : MonoBehaviour {
         mousePos.x = Mathf.Round(mousePos.x);
         mousePos.y = Mathf.Round(mousePos.y);
         mousePos.z = Camera.main.nearClipPlane;
-        mousePosCanvas = Input.mousePosition;
-        mousePosCanvas.z = Camera.main.nearClipPlane;
         if (modoConstruccion)
         {
+            disponible = instancia.GetComponent<comprobadorDisponible>()._disponible;
             instancia.transform.position = Vector3.MoveTowards(instancia.transform.position, mousePos, 100f*Time.deltaTime);
             botonAceptar.transform.position = Vector3.MoveTowards(botonAceptar.transform.position, Input.mousePosition, 10000f * Time.deltaTime);
         }
-        disponible = instancia.GetComponent<comprobadorDisponible>()._disponible;
+
     }
     public void OnClickBuilding()
     {
