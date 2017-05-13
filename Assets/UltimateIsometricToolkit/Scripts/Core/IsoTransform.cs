@@ -10,7 +10,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core {
 	/// <summary>
 	/// Isometric transform component
 	/// </summary>
-	[ExecuteInEditMode, DisallowMultipleComponent]
+	//[ExecuteInEditMode, DisallowMultipleComponent]
 	public class IsoTransform : MonoBehaviour {
 		/// <summary>
 		/// Flag to toggle isometric bounds gizmos in scene gui
