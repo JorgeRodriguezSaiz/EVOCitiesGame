@@ -11,7 +11,7 @@ public class Construction : MonoBehaviour {
     public bool disponible = true;
     // Use this for initialization
     void Start () {
-
+        disponible = true;
 	}
 	
 	// Update is called once per frame
