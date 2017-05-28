@@ -12,8 +12,12 @@ public class Inicilización_Recursos : MonoBehaviour {
     public int diamantes;
     public int comida;
     private bool one = true;
+    public DateTime _tiempoDesconexion;
+    public string tiempo;
     // Use this for initialization
     void Start () {
+        _tiempoDesconexion = GameObject.Find("Controller").GetComponent<TimeController>().tiempoDesconexion;
+        tiempo = _tiempoDesconexion.ToString();
         ZPlayerPrefs.Initialize("#45sf@5f#", "S@ALT&KEY");
         if (ZPlayerPrefs.HasKey("comida"))
         {
@@ -21,7 +25,7 @@ public class Inicilización_Recursos : MonoBehaviour {
             {
                 recurso[i] = ZPlayerPrefs.GetInt("recursos" + i);
             }
-
+            tiempo = ZPlayerPrefs.GetString("tiempo");
             comida = ZPlayerPrefs.GetInt("comida");
             monedas = ZPlayerPrefs.GetInt("monedas");
             diamantes = ZPlayerPrefs.GetInt("diamantes");
@@ -46,6 +50,7 @@ public class Inicilización_Recursos : MonoBehaviour {
         ZPlayerPrefs.SetInt("comida", comida);
         ZPlayerPrefs.SetInt("monedas",monedas);
         ZPlayerPrefs.SetInt("diamantes", diamantes);
+        ZPlayerPrefs.SetString("tiempo", tiempo);
         ///ZPlayerPrefs.Save();
     }
     public void Guardado2()
@@ -60,7 +65,7 @@ public class Inicilización_Recursos : MonoBehaviour {
     {
         yield return new WaitForSecondsRealtime(1f);
         Debug.Log("Guardado");
-        Guardado();
+        /*Guardado();
         for (int i = 0; i < recurso.Length; i++)
         {
             yield return new WaitForSecondsRealtime(0.2f);
@@ -68,6 +73,6 @@ public class Inicilización_Recursos : MonoBehaviour {
         }
         //Guardado2();
         ZPlayerPrefs.Save();
-        one = true;
+        one = true;*/
     }
 }
