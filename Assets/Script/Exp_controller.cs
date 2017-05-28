@@ -7,9 +7,11 @@ public class Exp_controller : MonoBehaviour {
     [Header("UI GameObjects")]
     public Scrollbar expBar;
     public Text levelText;
+
     [Header("Variables Numericas")]
     public float exp;
     public int level;
+
     private float expActual;
     private int range = 0;
 
@@ -36,6 +38,7 @@ public class Exp_controller : MonoBehaviour {
             {
                 range = Mathf.FloorToInt(range + 10000 * Convert.ToSingle(Math.Exp(5)));
             }
+            levelText.text = level.ToString();
         }
         else
         {
