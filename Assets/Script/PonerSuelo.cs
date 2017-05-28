@@ -13,15 +13,20 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
 
         void Update()
         {
-            for (int i = 0; i <= maxX; i++)
+            if (xActual <= maxX)
             {
-
-                for (int j = 0; j <= maxZ; j++)
+                for (int i = 0; i <= maxX; i++)
                 {
-                    Instantiate(instanciar);
-                    instanciar.GetComponent<IsoTransform>().Position = new Vector3(i, 0, j);
-                    instanciar.name = "suelo" + i +"" + j;
-                    //instanciar.transform.position = new Vector3(i, 0, j);
+
+                    for (int j = 0; j <= maxZ; j++)
+                    {
+                        Instantiate(instanciar);
+                        instanciar.GetComponent<IsoTransform>().Position = new Vector3(i, 0, j);
+                        instanciar.GetComponent<IsoTransform>().ShowBounds = false;
+                        instanciar.name = "suelo" + i + "" + j;
+                        //instanciar.transform.position = new Vector3(i, 0, j);
+                    }
+                    xActual++;
                 }
             }
         }

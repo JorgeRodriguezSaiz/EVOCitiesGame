@@ -65,7 +65,7 @@ public class Inicilización_Recursos : MonoBehaviour {
     {
         yield return new WaitForSecondsRealtime(1f);
         Debug.Log("Guardado");
-        Guardado();
+        /*Guardado();
         for (int i = 0; i < recurso.Length; i++)
         {
             yield return new WaitForSecondsRealtime(0.2f);
@@ -73,6 +73,6 @@ public class Inicilización_Recursos : MonoBehaviour {
         }
         //Guardado2();
         ZPlayerPrefs.Save();
-        one = true;
+        one = true;*/
     }
 }
