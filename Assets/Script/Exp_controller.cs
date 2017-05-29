@@ -95,4 +95,8 @@ public class Exp_controller : MonoBehaviour {
         ZPlayerPrefs.SetInt("level", level);
         ZPlayerPrefs.Save();
     }
+    public void SumarExp(int expSumar)
+    {
+        exp += exp * Convert.ToSingle(Math.Log(level, 1.1f)) * 100;
+    }
 }
