@@ -28,8 +28,9 @@ public class Construction : MonoBehaviour {
         }
 
     }
-    public void OnClickBuilding()
-    {
+    public void OnClickBuilding(GameObject prefabPasar)
+    { 
+        prefab = prefabPasar;
         instancia = (GameObject)Instantiate(prefab, mousePos, Quaternion.identity);
         instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
         modoConstruccion = true;
