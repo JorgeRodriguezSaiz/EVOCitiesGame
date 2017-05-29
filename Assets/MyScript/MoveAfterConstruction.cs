@@ -4,8 +4,8 @@ using System.Collections;
 public class MoveAfterConstruction : MonoBehaviour {
     public float tiempoParaMover = 1.5f;
     private float timeCounter = 0;
-    private GameObject controller;
-    private GameObject aceptarConstruccion;
+    public GameObject controller;
+    public GameObject aceptarConstruccion;
     public GameObject barraExp;
     public GameObject tienda;
     public GameObject ajustes;
@@ -13,7 +13,7 @@ public class MoveAfterConstruction : MonoBehaviour {
     // Use this for initialization
     void Start () {
         controller = GameObject.Find("Controller");
-        aceptarConstruccion = GameObject.Find("AceptarConstruction");
+        //aceptarConstruccion = GameObject.Find("AceptarConstruction");
     }
 	
 	// Update is called once per frame
@@ -30,7 +30,6 @@ public class MoveAfterConstruction : MonoBehaviour {
                 tienda.SetActive(false);
                 ajustes.SetActive(false);
                 construir.SetActive(false);
-                Debug.Log("chusta");
             }
         }
         else
@@ -41,9 +40,9 @@ public class MoveAfterConstruction : MonoBehaviour {
     void OnMouseDown()
     {
         controller.GetComponent<Construction>().instancia = gameObject;
-        barraExp = GameObject.Find("/UI/BarraExp");
-        tienda = GameObject.Find("Tienda");
-        ajustes = GameObject.Find("Ajustes");
-        construir = GameObject.Find("Construir");
+        //barraExp = GameObject.Find("/UI/BarraExp");
+        //tienda = GameObject.Find("Tienda");
+        //ajustes = GameObject.Find("Ajustes");
+        //construir = GameObject.Find("Construir");
     }
 }
