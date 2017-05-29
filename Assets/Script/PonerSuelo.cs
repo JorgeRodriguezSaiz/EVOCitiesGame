@@ -24,6 +24,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                         instanciar.GetComponent<IsoTransform>().Position = new Vector3(i, 0, j);
                         instanciar.GetComponent<IsoTransform>().ShowBounds = false;
                         instanciar.name = "suelo" + i + "" + j;
+                        //instanciar.transform.SetParent(gameObject.transform);
                         //instanciar.transform.position = new Vector3(i, 0, j);
                     }
                     xActual++;
