@@ -18,23 +18,25 @@ public class MoveAfterConstruction : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-        if (Input.GetMouseButton(0))
+        if (controller.GetComponent<Construction>().instancia != null)
         {
-            timeCounter += Time.deltaTime;
-            if(timeCounter > tiempoParaMover)
+            if (Input.GetMouseButton(0))
             {
-                controller.GetComponent<Construction>().modoConstruccion = true;
-                aceptarConstruccion.SetActive(true);
-                barraExp.SetActive(false);
-                tienda.SetActive(false);
-                ajustes.SetActive(false);
-                construir.SetActive(false);
+                timeCounter += Time.deltaTime;
+                if (timeCounter > tiempoParaMover)
+                {
+                    controller.GetComponent<Construction>().modoConstruccion = true;
+                    aceptarConstruccion.SetActive(true);
+                    barraExp.SetActive(false);
+                    tienda.SetActive(false);
+                    ajustes.SetActive(false);
+                    construir.SetActive(false);
+                }
             }
-        }
-        else
-        {
-            timeCounter = 0;
+            else
+            {
+                timeCounter = 0;
+            }
         }
 	}
     void OnMouseDown()

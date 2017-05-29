@@ -8,7 +8,7 @@ public class Casa : MonoBehaviour {
     public TimeSpan tiempoRestante;
     public DateTime tiempoActual;
     public DateTime tiempoDesconexion, tiempoFinal;
-    private bool funcionar = false;
+    public bool funcionar = false;
     // Use this for initialization
     void Start () {
         //ZPlayerPrefs.DeleteAll();
