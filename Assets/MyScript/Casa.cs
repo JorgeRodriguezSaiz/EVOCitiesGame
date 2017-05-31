@@ -5,6 +5,7 @@ using System;
 public class Casa : MonoBehaviour {
     [Header ("Experiencia")]
     public float exp = 75f;
+    public float poblacionCasa = 2;
     public TimeSpan tiempoRestante;
     public DateTime tiempoActual;
     public DateTime tiempoDesconexion, tiempoFinal;
@@ -47,7 +48,9 @@ public class Casa : MonoBehaviour {
                 funcionar = true;
                 gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                GameObject.Find("Controller").GetComponent<Construction>().poblacion += poblacionCasa;
                 this.enabled = false;
+                
             }
             if (!funcionar)
             {
