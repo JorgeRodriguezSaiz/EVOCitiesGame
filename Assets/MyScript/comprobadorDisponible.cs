@@ -17,7 +17,7 @@ public class comprobadorDisponible : MonoBehaviour {
 	 _instancia = controlador.GetComponent<Construction>().instancia;
      _disponible = controlador.GetComponent<Construction>().disponible;
     }
-    void OnTriggerStay2D (Collider2D coll)
+    void OnTriggerEnter2D (Collider2D coll)
     {
         Debug.Log("Entra en el trigger");
         //_instancia.GetComponent<SpriteRenderer>().color = Color.red;

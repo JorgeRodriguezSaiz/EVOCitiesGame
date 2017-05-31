@@ -41,6 +41,7 @@ public class Construction : MonoBehaviour {
         {
             modoConstruccion = false;
             instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            instancia = null;
         }
         else
         {
