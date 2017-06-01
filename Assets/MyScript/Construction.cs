@@ -52,27 +52,17 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         {
             if (disponible)
             {
-                switch (prefab.name)
+                if (instancia.tag == "trabajo")
                 {
-                    /*case "Casita":
-                        ZPlayerPrefs.SetInt("ConstrucionCasita", ZPlayerPrefs.GetInt("ConstrucionCasita") + 1);
-                        ZPlayerPrefs.SetFloat("CasitaX" + ZPlayerPrefs.GetInt("ConstrucionCasita"), instancia.GetComponent<IsoTransform>().Position.x);
-                        ZPlayerPrefs.SetFloat("CasitaY" + ZPlayerPrefs.GetInt("ConstrucionCasita"), instancia.GetComponent<IsoTransform>().Position.y);
-                        ZPlayerPrefs.SetFloat("CasitaZ" + ZPlayerPrefs.GetInt("ConstrucionCasita"), instancia.GetComponent<IsoTransform>().Position.z);
-                        break;
-                    case "Mina":
-                        ZPlayerPrefs.SetInt("ConstrucionMina", ZPlayerPrefs.GetInt("ConstrucionMina") + 1);
-                        ZPlayerPrefs.SetFloat("MinaX" + ZPlayerPrefs.GetInt("ConstrucionMina"), instancia.GetComponent<IsoTransform>().Position.x);
-                        ZPlayerPrefs.SetFloat("MinaY" + ZPlayerPrefs.GetInt("ConstrucionMina"), instancia.GetComponent<IsoTransform>().Position.y);
-                        ZPlayerPrefs.SetFloat("MinaZ" + ZPlayerPrefs.GetInt("ConstrucionMina"), instancia.GetComponent<IsoTransform>().Position.z);
-                        break;
-                    case "Pintar":
-                        ZPlayerPrefs.SetInt("ConstrucionPintar", ZPlayerPrefs.GetInt("ConstrucionPintar") + 1);
-                        ZPlayerPrefs.SetFloat("PintarX" + ZPlayerPrefs.GetInt("ConstrucionPintar"), instancia.GetComponent<IsoTransform>().Position.x);
-                        ZPlayerPrefs.SetFloat("PintarY" + ZPlayerPrefs.GetInt("ConstrucionPintar"), instancia.GetComponent<IsoTransform>().Position.y);
-                        ZPlayerPrefs.SetFloat("PintarZ" + ZPlayerPrefs.GetInt("ConstrucionPintar"), instancia.GetComponent<IsoTransform>().Position.z);
-                        break;*/
+                    instancia.GetComponent<Trabajos>().IniciarConstruccion();
+                    instancia.GetComponent<Trabajos>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
                 }
+                else if (instancia.tag == "casa")
+                {
+                    instancia.GetComponent<Casa>().IniciarConstruccion();
+                    instancia.GetComponent<Casa>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
+                }
+                
                 modoConstruccion = false;
                 instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                 instancia = null;

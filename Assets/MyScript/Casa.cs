@@ -8,63 +8,91 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         [Header("Experiencia")]
         public float exp = 75f;
         public float poblacionCasa = 2;
+        public int tipoConstruccion = 0;
+        public int numbConstruccion = 0;
         public TimeSpan tiempoRestante;
         public DateTime tiempoActual;
         public DateTime tiempoDesconexion, tiempoFinal;
-        public bool funcionar = false;
+        public bool funcionar = false,startOn = false;
         // Use this for initialization
         void Start()
         {
             //ZPlayerPrefs.DeleteAll();
-
-            if (!funcionar)
-            {
-                if (ZPlayerPrefs.HasKey("Tiempo " + GetInstanceID()))
-                {
-                    tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo " + GetInstanceID()));
-                }
-                else
-                {
-                    tiempoActual = DateTime.Now;
-                    ZPlayerPrefs.SetString("Tiempo " + GetInstanceID(), tiempoActual.ToString());
-                }
-                //tiempoFinal = tiempoActual.AddMinutes(5D);
-                tiempoFinal = tiempoActual.AddSeconds(20D);
-                tiempoDesconexion = DateTime.Now;
-                tiempoRestante = tiempoFinal - tiempoDesconexion;
-            }
-            if (tiempoDesconexion >= tiempoFinal)
-            {
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                funcionar = true;
-                this.enabled = false;
-            }
+            StartCoroutine(Wait());
+            
         }
 
         // Update is called once per frame
         void Update()
         {
-            tiempoDesconexion = DateTime.Now;
-            if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+            if (startOn)
             {
-                if (tiempoDesconexion >= tiempoFinal)
+                tiempoDesconexion = DateTime.Now;
+                if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
                 {
-                    funcionar = true;
-                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                    GameObject.Find("Controller").GetComponent<Construction>().poblacion += poblacionCasa;
-                    this.enabled = false;
+                    if (tiempoDesconexion >= tiempoFinal)
+                    {
+                        funcionar = true;
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                        GameObject.Find("Controller").GetComponent<Construction>().poblacion += poblacionCasa;
+                        this.enabled = false;
 
-                }
-                if (!funcionar)
-                {
-                    string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours, tiempoRestante.Minutes, tiempoRestante.Seconds);
-                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                    float tAux = (float)tiempoRestante.TotalSeconds;
-                    tAux -= 1 * Time.deltaTime;
-                    tiempoRestante = TimeSpan.FromSeconds(tAux);
+                    }
+                    if (!funcionar)
+                    {
+                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours, tiempoRestante.Minutes, tiempoRestante.Seconds);
+                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                        float tAux = (float)tiempoRestante.TotalSeconds;
+                        tAux -= 1 * Time.deltaTime;
+                        tiempoRestante = TimeSpan.FromSeconds(tAux);
+                    }
                 }
             }
+        }
+        public void IniciarConstruccion()
+        {
+            StopAllCoroutines();
+            funcionar = false;
+            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+           
+            ZPlayerPrefs.SetInt("cantidadConstrucciones", ZPlayerPrefs.GetInt("cantidadConstrucciones", -1) + 1);
+            ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
+            ZPlayerPrefs.SetFloat("posY" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.y);
+            ZPlayerPrefs.SetFloat("posZ" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.z);
+            ZPlayerPrefs.SetInt("tipoConstruccion" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), tipoConstruccion);
+            tiempoActual = DateTime.Now;
+            ZPlayerPrefs.SetString("Tiempo" + numbConstruccion, tiempoActual.ToString());
+            tiempoFinal = tiempoActual.AddMinutes(5D);
+            //tiempoFinal = tiempoActual.AddSeconds(20D);
+            tiempoDesconexion = DateTime.Now;
+            tiempoRestante = tiempoFinal - tiempoDesconexion;
+        }
+        IEnumerator Wait()
+        {
+
+            yield return new WaitForSecondsRealtime(0.2f);
+            if (!funcionar)
+            {
+                if (ZPlayerPrefs.HasKey("Tiempo" + numbConstruccion))
+                {
+                    tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo" + numbConstruccion));
+                    tiempoFinal = tiempoActual.AddMinutes(5D);
+                    tiempoDesconexion = DateTime.Now;
+                    tiempoRestante = tiempoFinal - tiempoDesconexion;
+                }
+
+                if (tiempoDesconexion >= tiempoFinal)
+                {
+                    if (ZPlayerPrefs.HasKey("Tiempo" + numbConstruccion))
+                    {
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        funcionar = true;
+                        this.enabled = false;
+                    }
+                }
+            }
+            startOn = true;
         }
     }
 }
