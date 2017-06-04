@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System;
+
 namespace Assets.UltimateIsometricToolkit.Scripts.Core
 {
     public class Construction : MonoBehaviour
@@ -14,6 +17,9 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         public float madera = 0;
         public float piedra = 0;
         public float poblacion = 1f;
+        public float poblacionTotal = 10f;
+        public Text textoPoblacion;
+        public Text textoPoblacionTotal;
         // Use this for initialization
         void Start()
         {
@@ -23,6 +29,8 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         // Update is called once per frame
         void Update()
         {
+            textoPoblacion.text = Convert.ToString(poblacion) + "/";
+            textoPoblacionTotal.text = Convert.ToString(poblacionTotal);
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.x = Mathf.Round(mousePos.x);
             mousePos.y = Mathf.Round(mousePos.y);

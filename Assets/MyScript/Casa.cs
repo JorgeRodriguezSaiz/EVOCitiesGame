@@ -35,6 +35,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                         funcionar = true;
                         gameObject.transform.GetChild(0).gameObject.SetActive(false);
                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                        GameObject.Find("Controller").GetComponent<Construction>().poblacionTotal += poblacionCasa;
                         GameObject.Find("Controller").GetComponent<Construction>().poblacion += poblacionCasa;
                         this.enabled = false;
 
