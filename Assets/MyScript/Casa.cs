@@ -14,6 +14,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         public DateTime tiempoActual;
         public DateTime tiempoDesconexion, tiempoFinal;
         public bool funcionar = false,startOn = false;
+        public double tiempoConstruccion;
         // Use this for initialization
         void Start()
         {
@@ -35,8 +36,8 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                         funcionar = true;
                         gameObject.transform.GetChild(0).gameObject.SetActive(false);
                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                        GameObject.Find("Controller").GetComponent<Construction>().poblacionTotal += poblacionCasa;
-                        GameObject.Find("Controller").GetComponent<Construction>().poblacion += poblacionCasa;
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
                         this.enabled = false;
 
                     }
@@ -64,7 +65,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             ZPlayerPrefs.SetInt("tipoConstruccion" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), tipoConstruccion);
             tiempoActual = DateTime.Now;
             ZPlayerPrefs.SetString("Tiempo" + numbConstruccion, tiempoActual.ToString());
-            tiempoFinal = tiempoActual.AddMinutes(5D);
+            tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
             //tiempoFinal = tiempoActual.AddSeconds(20D);
             tiempoDesconexion = DateTime.Now;
             tiempoRestante = tiempoFinal - tiempoDesconexion;
@@ -78,7 +79,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                 if (ZPlayerPrefs.HasKey("Tiempo" + numbConstruccion))
                 {
                     tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo" + numbConstruccion));
-                    tiempoFinal = tiempoActual.AddMinutes(5D);
+                    tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
                     tiempoDesconexion = DateTime.Now;
                     tiempoRestante = tiempoFinal - tiempoDesconexion;
                 }

@@ -44,7 +44,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         // Update is called once per frame
         void Update()
         {
-            if (GameObject.Find("Controller").GetComponent<Construction>().poblacion > trabajadoresNecesita)
+            if (GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > trabajadoresNecesita)
             {
                 
                 if (startOn)
@@ -69,7 +69,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                                         finTrabajo = true;
                                         if (finTrabajo)
                                         {
-                                            GameObject.Find("Controller").GetComponent<Construction>().poblacion += trabajadoresNecesita;
+                                            GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
                                             finTrabajo = false;
                                             ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
                                         }
@@ -115,7 +115,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                     if (!trabajando)
                     {
                         Trabajar();
-                        GameObject.Find("Controller").GetComponent<Construction>().poblacion -= trabajadoresNecesita;
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
                     }
                 }
             }
