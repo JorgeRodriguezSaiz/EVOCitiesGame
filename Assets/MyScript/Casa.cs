@@ -74,24 +74,24 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         {
 
             yield return new WaitForSecondsRealtime(0.2f);
+            //ZPlayerPrefs.DeleteAll();
             if (!funcionar)
             {
-                if (ZPlayerPrefs.HasKey("Tiempo" + numbConstruccion))
+                if (ZPlayerPrefs.HasKey("Tiempo " + numbConstruccion))
                 {
-                    tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo" + numbConstruccion));
+                    tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo " + numbConstruccion));
+                    numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
                     tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
+                    //tiempoFinal = tiempoActual.AddSeconds(10D);
                     tiempoDesconexion = DateTime.Now;
                     tiempoRestante = tiempoFinal - tiempoDesconexion;
                 }
-
                 if (tiempoDesconexion >= tiempoFinal)
                 {
-                    if (ZPlayerPrefs.HasKey("Tiempo" + numbConstruccion))
-                    {
-                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                        funcionar = true;
-                        this.enabled = false;
-                    }
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    funcionar = true;
+                    //this.enabled = false;
+                    
                 }
             }
             startOn = true;
