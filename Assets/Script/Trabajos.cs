@@ -26,12 +26,15 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         private DateTime tiempoActualTrabajo;
         private DateTime tiempoDesconexionTrabajo, tiempoFinalTrabajo;
         private bool funcionar = false, trabajando = false, finTrabajo = false,startOn = false;
+        private GameObject[] casitas;
+        public GameObject casaPrefab;
 
 
 
         // Use this for initialization
         void Start()
         {
+            trabajando = false;
             if (numbConstruccion <= ZPlayerPrefs.GetInt("cantidadConstrucciones"))
             {
                 gameObject.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + numbConstruccion), ZPlayerPrefs.GetFloat("posY" + numbConstruccion),
@@ -112,11 +115,22 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             {
                 if (funcionar)
                 {
-                    if (!trabajando)
+                    if (trabajando)
                     {
-                        Trabajar();
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
                     }
+                    if (!trabajando)
+                    {
+                        casitas = GameObject.FindGameObjectsWithTag("casa");
+                        foreach(GameObject casa in casitas)
+                        {
+                            if (casa.GetComponent<ComidaCasa>().isComida)
+                            {
+                                Trabajar();
+                            }
+                        }   
+                    }
+                    
                 }
             }
         }
