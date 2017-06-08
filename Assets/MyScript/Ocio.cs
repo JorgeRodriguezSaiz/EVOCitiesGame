@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-
 namespace Assets.UltimateIsometricToolkit.Scripts.Core
 {
-    public class Trabajos : MonoBehaviour
+    public class Ocio : MonoBehaviour
     {
         [Header("Guardado")]
         public int tipoConstruccion = 0;
@@ -25,16 +24,11 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         private TimeSpan tiempoRestanteTrabajo;
         private DateTime tiempoActualTrabajo;
         private DateTime tiempoDesconexionTrabajo, tiempoFinalTrabajo;
-        private bool funcionar = false, trabajando = false, finTrabajo = false,startOn = false;
-        private GameObject[] casitas;
-        public GameObject casaPrefab;
-
-
+        private bool funcionar = false, trabajando = false, finTrabajo = false, startOn = false;
 
         // Use this for initialization
         void Start()
         {
-            trabajando = false;
             if (numbConstruccion <= ZPlayerPrefs.GetInt("cantidadConstrucciones"))
             {
                 gameObject.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + numbConstruccion), ZPlayerPrefs.GetFloat("posY" + numbConstruccion),
@@ -47,64 +41,59 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         // Update is called once per frame
         void Update()
         {
-            if (GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > trabajadoresNecesita)
+            if (startOn)
             {
-                
-                if (startOn)
+                if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
                 {
-                    if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+                    if (tiempoDesconexion >= tiempoFinal)
                     {
-                        if (tiempoDesconexion >= tiempoFinal)
+                        if (!funcionar)
                         {
-                            if (!funcionar)
+                            funcionar = true;
+                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                            GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                            //this.enabled = false;
+                        }
+                        else
+                        {
+                            if (trabajando)
                             {
-                                funcionar = true;
-                                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                                GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                                //this.enabled = false;
-                            }
-                            else
-                            {
-                                if (trabajando)
+                                if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo)
                                 {
-                                    if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo)
+                                    finTrabajo = true;
+                                    if (finTrabajo)
                                     {
-                                        finTrabajo = true;
-                                        if (finTrabajo)
-                                        {
-                                            GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-                                            finTrabajo = false;
-                                            ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
-                                        }
-                                        trabajando = false;
-                                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                                        finTrabajo = false;
+                                        ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
                                     }
-                                    else
+                                    trabajando = false;
+                                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                                }
+                                else
+                                {
+                                    if (trabajando)
                                     {
-                                        if (trabajando)
-                                        {
-                                            tiempoDesconexionTrabajo = DateTime.Now;
-                                            string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
-                                                tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
-                                            gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                                            float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
-                                            tAux -= 1 * Time.deltaTime;
-                                            tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
-                                        }
+                                        tiempoDesconexionTrabajo = DateTime.Now;
+                                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
+                                            tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
+                                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                                        float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
+                                        tAux -= 1 * Time.deltaTime;
+                                        tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
                                     }
                                 }
                             }
                         }
-                        else if (!funcionar)
-                        {
-                            tiempoDesconexion = DateTime.Now;
-                            string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
-                                tiempoRestante.Minutes, tiempoRestante.Seconds);
-                            gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                            float tAux = (float)tiempoRestante.TotalSeconds;
-                            tAux -= 1 * Time.deltaTime;
-                            tiempoRestante = TimeSpan.FromSeconds(tAux);
-                        }
+                    }
+                    else if (!funcionar)
+                    {
+                        tiempoDesconexion = DateTime.Now;
+                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
+                            tiempoRestante.Minutes, tiempoRestante.Seconds);
+                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                        float tAux = (float)tiempoRestante.TotalSeconds;
+                        tAux -= 1 * Time.deltaTime;
+                        tiempoRestante = TimeSpan.FromSeconds(tAux);
                     }
                 }
             }
@@ -115,22 +104,10 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             {
                 if (funcionar)
                 {
-                    if (trabajando)
-                    {
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
-                    }
                     if (!trabajando)
                     {
-                        casitas = GameObject.FindGameObjectsWithTag("casa");
-                        foreach(GameObject casa in casitas)
-                        {
-                            if (casa.GetComponent<ComidaCasa>().isComida)
-                            {
-                                Trabajar();
-                            }
-                        }   
+                        Trabajar();
                     }
-                    
                 }
             }
         }
@@ -154,7 +131,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         {
             StopAllCoroutines();
             funcionar = false;
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);;
+            gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
             ZPlayerPrefs.SetInt("cantidadConstrucciones", ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1);
             ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
             ZPlayerPrefs.SetFloat("posY" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.y);
@@ -179,7 +156,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             if (ZPlayerPrefs.HasKey("Trabajando" + numbConstruccion))
             {
                 trabajando = bool.Parse(ZPlayerPrefs.GetString("Trabajando " + numbConstruccion));
-                
+
             }
             else
             {
