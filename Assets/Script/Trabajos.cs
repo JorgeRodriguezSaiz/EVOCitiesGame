@@ -26,10 +26,15 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         private DateTime tiempoActualTrabajo;
         private DateTime tiempoDesconexionTrabajo, tiempoFinalTrabajo;
         private bool funcionar = false, trabajando = false, finTrabajo = false,startOn = false;
+        private GameObject[] casitas;
+        public GameObject casaPrefab;
+
+
 
         // Use this for initialization
         void Start()
         {
+            trabajando = false;
             if (numbConstruccion <= ZPlayerPrefs.GetInt("cantidadConstrucciones"))
             {
                 gameObject.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + numbConstruccion), ZPlayerPrefs.GetFloat("posY" + numbConstruccion),
@@ -42,59 +47,64 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         // Update is called once per frame
         void Update()
         {
-            if (startOn)
+            if (GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > trabajadoresNecesita)
             {
-                if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+                
+                if (startOn)
                 {
-                    if (tiempoDesconexion >= tiempoFinal)
+                    if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
                     {
-                        if (!funcionar)
+                        if (tiempoDesconexion >= tiempoFinal)
                         {
-                            funcionar = true;
-                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                            GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                            //this.enabled = false;
-                        }
-                        else
-                        {
-                            if (trabajando)
+                            if (!funcionar)
                             {
-                                if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo)
+                                funcionar = true;
+                                gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                                GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                                //this.enabled = false;
+                            }
+                            else
+                            {
+                                if (trabajando)
                                 {
-                                    finTrabajo = true;
-                                    if (finTrabajo)
+                                    if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo)
                                     {
-                                        finTrabajo = false;
-                                        ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
+                                        finTrabajo = true;
+                                        if (finTrabajo)
+                                        {
+                                            GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                                            finTrabajo = false;
+                                            ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
+                                        }
+                                        trabajando = false;
+                                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
                                     }
-                                    trabajando = false;
-                                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                                }
-                                else
-                                {
-                                    if (trabajando)
+                                    else
                                     {
-                                        tiempoDesconexionTrabajo = DateTime.Now;
-                                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
-                                            tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
-                                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                                        float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
-                                        tAux -= 1 * Time.deltaTime;
-                                        tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
+                                        if (trabajando)
+                                        {
+                                            tiempoDesconexionTrabajo = DateTime.Now;
+                                            string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
+                                                tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
+                                            gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                                            float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
+                                            tAux -= 1 * Time.deltaTime;
+                                            tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
+                                        }
                                     }
                                 }
                             }
                         }
-                    }
-                    else if (!funcionar)
-                    {
-                        tiempoDesconexion = DateTime.Now;
-                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
-                            tiempoRestante.Minutes, tiempoRestante.Seconds);
-                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                        float tAux = (float)tiempoRestante.TotalSeconds;
-                        tAux -= 1 * Time.deltaTime;
-                        tiempoRestante = TimeSpan.FromSeconds(tAux);
+                        else if (!funcionar)
+                        {
+                            tiempoDesconexion = DateTime.Now;
+                            string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
+                                tiempoRestante.Minutes, tiempoRestante.Seconds);
+                            gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                            float tAux = (float)tiempoRestante.TotalSeconds;
+                            tAux -= 1 * Time.deltaTime;
+                            tiempoRestante = TimeSpan.FromSeconds(tAux);
+                        }
                     }
                 }
             }
@@ -107,8 +117,16 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                 {
                     if (!trabajando)
                     {
-                        Trabajar();
-                    }
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
+                        casitas = GameObject.FindGameObjectsWithTag("casa");
+                        for(int casa = 0; casa <= casitas.Length ; casa++)
+                        {
+                            if (casitas[casa].GetComponent<ComidaCasa>().isComida)
+                            {
+                                Trabajar();
+                            }
+                        }   
+                    } 
                 }
             }
         }
@@ -144,7 +162,6 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                 tiempoActual = DateTime.Now;
                 ZPlayerPrefs.SetString("Tiempo " + numbConstruccion, tiempoActual.ToString());
                 tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
-                //tiempoFinal = tiempoActual.AddSeconds(10D);
                 tiempoDesconexion = DateTime.Now;
                 tiempoRestante = tiempoFinal - tiempoDesconexion;
             }
