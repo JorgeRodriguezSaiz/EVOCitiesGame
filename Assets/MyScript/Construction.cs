@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System;
+
 namespace Assets.UltimateIsometricToolkit.Scripts.Core
 {
     public class Construction : MonoBehaviour
@@ -11,9 +14,6 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         public Vector3 mousePosCanvas = new Vector3();
         public bool modoConstruccion = false;
         public bool disponible = true;
-        public float madera = 0;
-        public float piedra = 0;
-        public float poblacion = 1f;
         // Use this for initialization
         void Start()
         {
@@ -23,6 +23,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         // Update is called once per frame
         void Update()
         {
+
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.x = Mathf.Round(mousePos.x);
             mousePos.y = Mathf.Round(mousePos.y);
@@ -38,15 +39,15 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         public void OnClickBuilding(GameObject prefabPasar)
         {
             prefab = prefabPasar;
-            //if (madera >= prefab.GetComponent<Recursos>().maderaNecesaria && piedra >= prefab.GetComponent<Recursos>().piedraNecesaria)
-            //{
-            //madera -= prefab.GetComponent<Recursos>().maderaNecesaria;
-            // piedra -= prefab.GetComponent<Recursos>().piedraNecesaria;
-            instancia = (GameObject)Instantiate(prefab, mousePos, Quaternion.identity);
-            instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
-            modoConstruccion = true;
-            botonAceptar.SetActive(true);
-            //}
+            if (GameObject.Find("Controller").GetComponent<GestionRecursos>().madera >= prefab.GetComponent<Recursos>().maderaNecesaria && GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra >= prefab.GetComponent<Recursos>().piedraNecesaria)
+            {
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().madera -= prefab.GetComponent<Recursos>().maderaNecesaria;
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra -= prefab.GetComponent<Recursos>().piedraNecesaria;
+                instancia = (GameObject)Instantiate(prefab, mousePos, Quaternion.identity);
+                instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
+                modoConstruccion = true;
+                botonAceptar.SetActive(true);
+            }
         }
         public void OnClickAceptar()
         {
