@@ -10,6 +10,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         public GameObject prefab;
         public GameObject instancia;
         public GameObject botonAceptar;
+        public GameObject cuadrado;
         public Vector3 mousePos = new Vector3();
         public Vector3 mousePosCanvas = new Vector3();
         public bool modoConstruccion = false;
@@ -25,8 +26,8 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         {
 
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePos.x = Mathf.Round(mousePos.x);
-            mousePos.y = Mathf.Round(mousePos.y);
+            mousePos.x = Mathf.Round(mousePos.x)*cuadrado.GetComponent<Renderer>().bounds.size.x;
+            mousePos.y = Mathf.Round(mousePos.y) * cuadrado.GetComponent<Renderer>().bounds.size.y;
             mousePos.z = Camera.main.nearClipPlane;
             if (modoConstruccion)
             {

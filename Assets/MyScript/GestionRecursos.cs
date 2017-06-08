@@ -10,6 +10,7 @@ public class GestionRecursos : MonoBehaviour {
     public float poblacion = 1f;
     public float poblacionTotal = 10f;
     public float comida;
+    public float gold = 100;
     [Header("Textos")]
     public Text textoPoblacion;
     public Text textoPoblacionTotal;
