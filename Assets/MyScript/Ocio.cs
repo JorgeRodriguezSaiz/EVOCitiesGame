@@ -21,10 +21,10 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         private DateTime tiempoActual;
         private DateTime tiempoDesconexion, tiempoFinal;
         [Header("TiemposTrabajo")]
-        private TimeSpan tiempoRestanteTrabajo;
-        private DateTime tiempoActualTrabajo;
-        private DateTime tiempoDesconexionTrabajo, tiempoFinalTrabajo;
-        private bool funcionar = false, trabajando = false, finTrabajo = false, startOn = false;
+        private TimeSpan tiempoRestanteOcio;
+        private DateTime tiempoActualOcio;
+        private DateTime tiempoDesconexionOcio, tiempoFinalOcio;
+        private bool funcionar = false, ociando = false, finOcio = false, startOn = false;
 
         // Use this for initialization
         void Start()
@@ -56,30 +56,30 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                         }
                         else
                         {
-                            if (trabajando)
+                            if (ociando)
                             {
-                                if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo)
+                                if (tiempoDesconexionOcio >= tiempoFinalOcio)
                                 {
-                                    finTrabajo = true;
-                                    if (finTrabajo)
+                                    finOcio = true;
+                                    if (finOcio)
                                     {
-                                        finTrabajo = false;
+                                        finOcio = false;
                                         ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
                                     }
-                                    trabajando = false;
+                                    ociando = false;
                                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                                 }
                                 else
                                 {
-                                    if (trabajando)
+                                    if (ociando)
                                     {
-                                        tiempoDesconexionTrabajo = DateTime.Now;
-                                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
-                                            tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
+                                        tiempoDesconexionOcio = DateTime.Now;
+                                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteOcio.Days, tiempoRestanteOcio.Hours,
+                                            tiempoRestanteOcio.Minutes, tiempoRestanteOcio.Seconds);
                                         gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                                        float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
+                                        float tAux = (float)tiempoRestanteOcio.TotalSeconds;
                                         tAux -= 1 * Time.deltaTime;
-                                        tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
+                                        tiempoRestanteOcio = TimeSpan.FromSeconds(tAux);
                                     }
                                 }
                             }
@@ -98,35 +98,35 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                 }
             }
         }
-        private void OnMouseDown()
+        /*private void OnMouseDown()
         {
             if (tiempoDesconexion >= tiempoFinal)
             {
                 if (funcionar)
                 {
-                    if (!trabajando)
+                    if (!ociando)
                     {
-                        Trabajar();
+                        Ociar();
                     }
                 }
             }
         }
-        public void Trabajar()
+        public void Ociar()
         {
-            if (!trabajando)
+            if (!ociando)
             {
                 if (trabajadoresNecesita < 2)
                 {
-                    trabajando = true;
+                    ociando = true;
                     gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                    tiempoActualTrabajo = DateTime.Now;
-                    ZPlayerPrefs.SetString("TiempoTrabajo " + numbConstruccion, tiempoActualTrabajo.ToString());
-                    tiempoDesconexionTrabajo = DateTime.Now;
-                    tiempoFinalTrabajo = tiempoActualTrabajo.AddMinutes(tiempoTrabajo);
-                    tiempoRestanteTrabajo = tiempoFinalTrabajo - tiempoDesconexionTrabajo;
+                    tiempoActualOcio = DateTime.Now;
+                    ZPlayerPrefs.SetString("TiempoTrabajo " + numbConstruccion, tiempoActualOcio.ToString());
+                    tiempoDesconexionOcio = DateTime.Now;
+                    tiempoFinalOcio = tiempoActualOcio.AddMinutes(tiempoTrabajo);
+                    tiempoRestanteOcio = tiempoFinalOcio - tiempoDesconexionOcio;
                 }
             }
-        }
+        }*/
         public void IniciarConstruccion()
         {
             StopAllCoroutines();
@@ -155,12 +155,12 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             //ZPlayerPrefs.DeleteAll();
             if (ZPlayerPrefs.HasKey("Trabajando" + numbConstruccion))
             {
-                trabajando = bool.Parse(ZPlayerPrefs.GetString("Trabajando " + numbConstruccion));
+                ociando = bool.Parse(ZPlayerPrefs.GetString("Trabajando " + numbConstruccion));
 
             }
             else
             {
-                trabajando = false;
+                ociando = false;
             }
             if (!funcionar)
             {
@@ -178,21 +178,21 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     funcionar = true;
                     //this.enabled = false;
-                    if (trabajando)
+                    if (ociando)
                     {
                         if (ZPlayerPrefs.HasKey("TiempoTrabajo " + GetInstanceID()))
                         {
-                            tiempoActualTrabajo = Convert.ToDateTime(ZPlayerPrefs.GetString("TiempoTrabajo " + numbConstruccion));
+                            tiempoActualOcio = Convert.ToDateTime(ZPlayerPrefs.GetString("TiempoTrabajo " + numbConstruccion));
                         }
                         else
                         {
-                            tiempoActualTrabajo = DateTime.Now;
-                            ZPlayerPrefs.SetString("TiempoTrabajo " + numbConstruccion, tiempoActualTrabajo.ToString());
-                            tiempoFinalTrabajo = tiempoActualTrabajo.AddMinutes(5D);
+                            tiempoActualOcio = DateTime.Now;
+                            ZPlayerPrefs.SetString("TiempoTrabajo " + numbConstruccion, tiempoActualOcio.ToString());
+                            tiempoFinalOcio = tiempoActualOcio.AddMinutes(5D);
                         }
                         //tiempoFinal = tiempoActual.AddMinutes(5D);
-                        tiempoDesconexionTrabajo = DateTime.Now;
-                        tiempoRestanteTrabajo = tiempoFinalTrabajo - tiempoDesconexionTrabajo;
+                        tiempoDesconexionOcio = DateTime.Now;
+                        tiempoRestanteOcio = tiempoFinalOcio - tiempoDesconexionOcio;
                     }
                 }
             }
