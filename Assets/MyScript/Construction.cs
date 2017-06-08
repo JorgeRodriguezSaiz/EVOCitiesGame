@@ -63,7 +63,12 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                     instancia.GetComponent<Casa>().IniciarConstruccion();
                     instancia.GetComponent<Casa>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
                 }
-                
+                else if (instancia.tag == "ocio")
+                {
+                    instancia.GetComponent<Ocio>().IniciarConstruccion();
+                    instancia.GetComponent<Ocio>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
+                }
+
                 modoConstruccion = false;
                 instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
                 instancia = null;
