@@ -5,7 +5,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
     public class MoveAfterConstruction : MonoBehaviour
     {
         public float tiempoParaMover = 1.5f;
-        private float timeCounter = 0;
+        private float timeCounter = 0f;
         public GameObject controller;
         public GameObject aceptarConstruccion;
         public GameObject barraExp;
