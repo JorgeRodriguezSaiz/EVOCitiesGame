@@ -115,22 +115,18 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             {
                 if (funcionar)
                 {
-                    if (trabajando)
-                    {
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
-                    }
                     if (!trabajando)
                     {
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
                         casitas = GameObject.FindGameObjectsWithTag("casa");
-                        foreach(GameObject casa in casitas)
+                        for(int casa = 0; casa <= casitas.Length ; casa++)
                         {
-                            if (casa.GetComponent<ComidaCasa>().isComida)
+                            if (casitas[casa].GetComponent<ComidaCasa>().isComida)
                             {
                                 Trabajar();
                             }
                         }   
-                    }
-                    
+                    } 
                 }
             }
         }
@@ -166,7 +162,6 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                 tiempoActual = DateTime.Now;
                 ZPlayerPrefs.SetString("Tiempo " + numbConstruccion, tiempoActual.ToString());
                 tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
-                //tiempoFinal = tiempoActual.AddSeconds(10D);
                 tiempoDesconexion = DateTime.Now;
                 tiempoRestante = tiempoFinal - tiempoDesconexion;
             }
