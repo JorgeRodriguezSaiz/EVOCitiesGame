@@ -115,7 +115,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             {
                 if (funcionar)
                 {
-                    if (!trabajando)
+                    if (!trabajando && GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > 0)
                     {
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
                         casitas = GameObject.FindGameObjectsWithTag("casa");
