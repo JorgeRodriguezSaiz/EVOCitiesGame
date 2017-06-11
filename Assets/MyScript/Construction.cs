@@ -49,7 +49,31 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             if (modoConstruccion)
             {
                 disponible = instancia.GetComponent<comprobadorDisponible>()._disponible;
-                if(instancia.transform.position.y != mousePos.y && Math.Abs(instancia.transform.position.y - mousePos.y) > 0.25*sizeCasilla.y)
+                if (instancia.transform.position.y > mousePos.y && Math.Abs(instancia.transform.position.y - mousePos.y) > 0.25 * sizeCasilla.y)
+                {
+                    instancia.transform.position = new Vector3(instancia.transform.position.x, instancia.transform.position.y - (float)0.25 * sizeCasilla.y, instancia.transform.position.z);
+                    botonAceptar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(instancia.transform.position.x + auxAceptar.x, instancia.transform.position.y + auxAceptar.y, instancia.transform.position.z));
+                    botonCancelar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(instancia.transform.position.x + auxCancelar.x, instancia.transform.position.y + auxCancelar.y, instancia.transform.position.z));
+                }
+                if (instancia.transform.position.y < mousePos.y && Math.Abs(instancia.transform.position.y - mousePos.y) > 0.25 * sizeCasilla.y)
+                {
+                    instancia.transform.position = new Vector3(instancia.transform.position.x, (float)0.25 * sizeCasilla.y + instancia.transform.position.y, instancia.transform.position.z);
+                    botonAceptar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(instancia.transform.position.x + auxAceptar.x, instancia.transform.position.y + auxAceptar.y, instancia.transform.position.z));
+                    botonCancelar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(instancia.transform.position.x + auxCancelar.x, instancia.transform.position.y + auxCancelar.y, instancia.transform.position.z));
+                }
+                if (instancia.transform.position.x > mousePos.x && Math.Abs(instancia.transform.position.x - mousePos.x) > 0.25 * sizeCasilla.x)
+                {
+                    instancia.transform.position = new Vector3(instancia.transform.position.x - (float)0.25 * sizeCasilla.x, instancia.transform.position.y, instancia.transform.position.z);
+                    botonAceptar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(instancia.transform.position.x + auxAceptar.x, instancia.transform.position.y + auxAceptar.y, instancia.transform.position.z));
+                    botonCancelar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(instancia.transform.position.x + auxCancelar.x, instancia.transform.position.y + auxCancelar.y, instancia.transform.position.z));
+                }
+                if (instancia.transform.position.x < mousePos.x && Math.Abs(instancia.transform.position.x - mousePos.x) > 0.25 * sizeCasilla.x)
+                {
+                    instancia.transform.position = new Vector3((float)0.25 * sizeCasilla.x + instancia.transform.position.x, instancia.transform.position.y, instancia.transform.position.z);
+                    botonAceptar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(instancia.transform.position.x + auxAceptar.x, instancia.transform.position.y + auxAceptar.y, instancia.transform.position.z));
+                    botonCancelar.transform.position = Camera.main.WorldToScreenPoint(new Vector3(instancia.transform.position.x + auxCancelar.x, instancia.transform.position.y + auxCancelar.y, instancia.transform.position.z));
+                }
+                /*if(instancia.transform.position.y != mousePos.y && Math.Abs(instancia.transform.position.y - mousePos.y) > 0.25*sizeCasilla.y)
                 {
                     instancia.transform.position = Vector3.MoveTowards(instancia.transform.position, mousePos, speed * Time.deltaTime);
                     botonAceptar.transform.position = Vector3.MoveTowards(botonAceptar.transform.position, Input.mousePosition + auxAceptar, speed*100000000 * Time.deltaTime);
@@ -60,7 +84,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                     instancia.transform.position = Vector3.MoveTowards(instancia.transform.position, mousePos, speed * Time.deltaTime);
                     botonAceptar.transform.position = Vector3.MoveTowards(botonAceptar.transform.position, Input.mousePosition + auxAceptar, speed*100000 * Time.deltaTime);
                     botonCancelar.transform.position = Vector3.MoveTowards(botonCancelar.transform.position, Input.mousePosition + auxCancelar, speed * 100000000 * Time.deltaTime);
-                }
+                }*/
             }
         }
         public void OnClickBuilding(GameObject prefabPasar)
