@@ -10,10 +10,12 @@ public class GestionRecursos : MonoBehaviour {
     public float poblacion = 1f;
     public float poblacionTotal = 10f;
     public float comida;
+    public float gold = 100;
     [Header("Textos")]
     public Text textoPoblacion;
     public Text textoPoblacionTotal;
     public Text comidaText;
+    public Text dineroText;
     // Use this for initialization
     void Start () {
 	
@@ -24,5 +26,6 @@ public class GestionRecursos : MonoBehaviour {
         textoPoblacion.text = Convert.ToString(poblacion) + "/";
         textoPoblacionTotal.text = Convert.ToString(poblacionTotal);
         comidaText.text = Convert.ToString(comida);
+        dineroText.text = Convert.ToString((int)gold);
     }
 }

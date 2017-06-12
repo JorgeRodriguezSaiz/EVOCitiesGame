@@ -25,6 +25,8 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         private DateTime tiempoActualOcio;
         private DateTime tiempoDesconexionOcio, tiempoFinalOcio;
         private bool funcionar = false, ociando = false, finOcio = false, startOn = false;
+        [Header("Orete")]
+        public float vAumentoOro = 0.1f;
 
         // Use this for initialization
         void Start()
@@ -41,63 +43,67 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         // Update is called once per frame
         void Update()
         {
-            if (startOn)
+            //            if (startOn)
+            //          {
+            if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
             {
-                if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+                if (tiempoDesconexion >= tiempoFinal)
                 {
-                    if (tiempoDesconexion >= tiempoFinal)
+                    GameObject.Find("Controller").GetComponent<GestionRecursos>().gold +=
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal
+                        * vAumentoOro * Time.deltaTime;
+
+                    if (!funcionar)
                     {
-                        if (!funcionar)
+                        funcionar = true;
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                        //this.enabled = false;
+                    }
+                    else
+                    {
+                        if (ociando)
                         {
-                            funcionar = true;
-                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                            GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                            //this.enabled = false;
-                        }
-                        else
-                        {
-                            if (ociando)
+                            if (tiempoDesconexionOcio >= tiempoFinalOcio)
                             {
-                                if (tiempoDesconexionOcio >= tiempoFinalOcio)
+                                finOcio = true;
+                                if (finOcio)
                                 {
-                                    finOcio = true;
-                                    if (finOcio)
-                                    {
-                                        finOcio = false;
-                                        ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
-                                    }
-                                    ociando = false;
-                                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                                    finOcio = false;
+                                    ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
                                 }
-                                else
+                                ociando = false;
+                                gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                            }
+                            else
+                            {
+                                if (ociando)
                                 {
-                                    if (ociando)
-                                    {
-                                        tiempoDesconexionOcio = DateTime.Now;
-                                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteOcio.Days, tiempoRestanteOcio.Hours,
-                                            tiempoRestanteOcio.Minutes, tiempoRestanteOcio.Seconds);
-                                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                                        float tAux = (float)tiempoRestanteOcio.TotalSeconds;
-                                        tAux -= 1 * Time.deltaTime;
-                                        tiempoRestanteOcio = TimeSpan.FromSeconds(tAux);
-                                    }
+                                    tiempoDesconexionOcio = DateTime.Now;
+                                    string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteOcio.Days, tiempoRestanteOcio.Hours,
+                                        tiempoRestanteOcio.Minutes, tiempoRestanteOcio.Seconds);
+                                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                                    float tAux = (float)tiempoRestanteOcio.TotalSeconds;
+                                    tAux -= 1 * Time.deltaTime;
+                                    tiempoRestanteOcio = TimeSpan.FromSeconds(tAux);
                                 }
                             }
                         }
                     }
-                    else if (!funcionar)
-                    {
-                        tiempoDesconexion = DateTime.Now;
-                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
-                            tiempoRestante.Minutes, tiempoRestante.Seconds);
-                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                        float tAux = (float)tiempoRestante.TotalSeconds;
-                        tAux -= 1 * Time.deltaTime;
-                        tiempoRestante = TimeSpan.FromSeconds(tAux);
-                    }
+                }
+                else if (!funcionar)
+                {
+                    tiempoDesconexion = DateTime.Now;
+                    string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
+                        tiempoRestante.Minutes, tiempoRestante.Seconds);
+                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                    float tAux = (float)tiempoRestante.TotalSeconds;
+                    tAux -= 1 * Time.deltaTime;
+                    tiempoRestante = TimeSpan.FromSeconds(tAux);
                 }
             }
         }
+   
         /*private void OnMouseDown()
         {
             if (tiempoDesconexion >= tiempoFinal)
