@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class CombustionEspontaneaArborea : MonoBehaviour {
-    public GameObject panelSeguro;
 	// Use this for initialization
 	void Start () {
 	
@@ -14,6 +13,7 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
 	}
     public void OnMouseDown()
     {
-        panelSeguro.SetActive(true);
+        GameObject.Find("Controller").GetComponent<ControllerTalar>().panelTalar.SetActive(true);
+        GameObject.Find("Controller").GetComponent<ControllerTalar>().arbol = gameObject;
     }
 }
