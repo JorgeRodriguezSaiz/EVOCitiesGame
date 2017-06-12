@@ -6,7 +6,6 @@ public class ComidaCasa : MonoBehaviour {
     public float comidaCasa;
     public float comidaCasaTotal;
     public bool isComida = true;
-    public bool trabajando = false;
     public GameObject minaActual;
     // Use this for initialization
 	void Start () {
@@ -31,7 +30,7 @@ public class ComidaCasa : MonoBehaviour {
 	}
     public void OnMouseDown()
     {
-        if (comidaCasaTotal - comidaCasa > 1 && !trabajando)
+        if (comidaCasaTotal - comidaCasa > 1)
         {
             GameObject.Find("Controller").GetComponent<GestionRecursos>().comida -= (int)(comidaCasaTotal - comidaCasa);
             comidaCasa = comidaCasaTotal;
