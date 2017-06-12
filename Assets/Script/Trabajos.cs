@@ -25,7 +25,8 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         private TimeSpan tiempoRestanteTrabajo;
         private DateTime tiempoActualTrabajo;
         private DateTime tiempoDesconexionTrabajo, tiempoFinalTrabajo;
-        private bool funcionar = false, trabajando = false, finTrabajo = false,startOn = false;
+        private bool funcionar = false, finTrabajo = false,startOn = false;
+        public bool trabajando = false;
         private GameObject[] casitas;
         public GameObject casaPrefab;
 
@@ -115,15 +116,20 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             {
                 if (funcionar)
                 {
-                    if (!trabajando)
+                    if (!trabajando && GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > 0)
                     {
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
                         casitas = GameObject.FindGameObjectsWithTag("casa");
-                        for(int casa = 0; casa <= casitas.Length ; casa++)
+                        for(int casa = 0; casa <= casitas.Length -1 ; casa++)
                         {
                             if (casitas[casa].GetComponent<ComidaCasa>().isComida)
                             {
+                                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
+                                casitas[casa].GetComponent<ComidaCasa>().minaActual = gameObject;
                                 Trabajar();
+                            }
+                            else
+                            {
+
                             }
                         }   
                     } 

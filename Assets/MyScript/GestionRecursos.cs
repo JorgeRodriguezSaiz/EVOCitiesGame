@@ -15,6 +15,7 @@ public class GestionRecursos : MonoBehaviour {
     public Text textoPoblacion;
     public Text textoPoblacionTotal;
     public Text comidaText;
+    public Text dineroText;
     // Use this for initialization
     void Start () {
 	
@@ -25,5 +26,6 @@ public class GestionRecursos : MonoBehaviour {
         textoPoblacion.text = Convert.ToString(poblacion) + "/";
         textoPoblacionTotal.text = Convert.ToString(poblacionTotal);
         comidaText.text = Convert.ToString(comida);
+        dineroText.text = Convert.ToString((int)gold);
     }
 }
