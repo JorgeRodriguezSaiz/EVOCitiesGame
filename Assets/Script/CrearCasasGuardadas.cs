@@ -5,9 +5,13 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
 {
     public class CrearCasasGuardadas : MonoBehaviour {
         public GameObject[] prefabsConstruccion;
+        public bool armagedon;
         // Use this for initialization
         private void Awake() {
-            StartCoroutine(Wait());
+            if (armagedon)
+                ZPlayerPrefs.DeleteAll();
+            else
+                StartCoroutine(Wait()); 
         }
         IEnumerator Wait()
         {
@@ -34,7 +38,7 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             {
                 ZPlayerPrefs.SetInt("cantidadConstrucciones", -1);
             }
-            //ZPlayerPrefs.DeleteAll();
+            
         }
     }
 }
