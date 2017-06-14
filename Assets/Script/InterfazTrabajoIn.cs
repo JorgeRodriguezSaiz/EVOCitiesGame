@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 namespace Assets.UltimateIsometricToolkit.Scripts.Core
 {
-
-    public class Recursos : MonoBehaviour
+    public class InterfazTrabajoIn : MonoBehaviour
     {
-        public float maderaNecesaria = 0;
-        public float piedraNecesaria = 0;
-        public float goldNecesaria = 0;
-        public float trabajadoresNecesita = 2;
+        [Header("OpcionesTrabajo")]
+        public GameObject interfaz;
+        public GameObject[] primeraOpcion;
 
         // Use this for initialization
         void Start()
