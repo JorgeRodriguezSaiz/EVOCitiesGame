@@ -32,7 +32,8 @@ public class ComidaCasa : MonoBehaviour {
     {
         if (comidaCasaTotal - comidaCasa > 1)
         {
-            GameObject.Find("Controller").GetComponent<GestionRecursos>().comida -= (int)(comidaCasaTotal - comidaCasa);
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas -= (int)(comidaCasaTotal - comidaCasa);
+            ZPlayerPrefs.SetFloat("manzanas", GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas);
             comidaCasa = comidaCasaTotal;
             isComida = true;
         }

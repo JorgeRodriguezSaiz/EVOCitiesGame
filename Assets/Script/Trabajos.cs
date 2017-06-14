@@ -27,14 +27,22 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         private DateTime tiempoDesconexionTrabajo, tiempoFinalTrabajo;
         private bool funcionar = false, finTrabajo = false,startOn = false;
         public bool trabajando = false;
-        private GameObject[] casitas;
+        [Header("OpcionesTrabajo")]
+        public GameObject interfaz;
+        public GameObject primeraOpcion;
+        public int tipoTrabajo;
+        [Header("CasaPrefab")]
         public GameObject casaPrefab;
+        private GameObject[] casitas;
+       
 
 
 
         // Use this for initialization
         void Start()
         {
+            interfaz = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().interfaz;
+            primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[tipoTrabajo];
             trabajando = false;
             if (numbConstruccion <= ZPlayerPrefs.GetInt("cantidadConstrucciones"))
             {
@@ -68,22 +76,11 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                             {
                                 if (trabajando)
                                 {
-                                    if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo)
-                                    {
-                                        finTrabajo = true;
-                                        if (finTrabajo)
-                                        {
-                                            GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-                                            finTrabajo = false;
-                                            ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
-                                        }
-                                        trabajando = false;
-                                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                                    }
-                                    else
+                                    if (tiempoDesconexionTrabajo < tiempoFinalTrabajo)
                                     {
                                         if (trabajando)
                                         {
+                                            gameObject.transform.GetChild(0).gameObject.SetActive(true);
                                             tiempoDesconexionTrabajo = DateTime.Now;
                                             string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
                                                 tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
@@ -92,6 +89,12 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                                             tAux -= 1 * Time.deltaTime;
                                             tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
                                         }
+                                    }
+                                    else
+                                    {
+                                        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                                        string aux = string.Format("00:00:00:00");
+                                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
                                     }
                                 }
                             }
@@ -116,40 +119,64 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             {
                 if (funcionar)
                 {
-                    if (!trabajando && GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > 0)
+                    if (!trabajando)
                     {
-                        casitas = GameObject.FindGameObjectsWithTag("casa");
-                        for(int casa = 0; casa <= casitas.Length -1 ; casa++)
-                        {
-                            if (casitas[casa].GetComponent<ComidaCasa>().isComida)
-                            {
-                                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
-                                casitas[casa].GetComponent<ComidaCasa>().minaActual = gameObject;
-                                Trabajar();
-                            }
-                            else
-                            {
 
+                       interfaz.SetActive(true);
+                       primeraOpcion.SetActive(true);
+                        for(int i = 0; i < GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion.Length; i++)
+                        {
+                            GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[i].GetComponent<DatosTrabajo>().trabajo = gameObject;
+                        }
+                        GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(transform.position.x + 4, transform.position.y,
+                             GameObject.Find("Main Camera").GetComponent<Transform>().position.z);
+                        GameObject.Find("Main Camera").GetComponent<SmoothCamera2d>().enabled = false;
+                        GameObject.Find("Main Camera").GetComponent<PinchZoom>().enabled = false;
+                    }
+                    else
+                    {
+                        if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo)
+                        {
+                            finTrabajo = true;
+                            if (finTrabajo)
+                            {
+                                primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().
+                                    primeraOpcion[ZPlayerPrefs.GetInt("tipoTrabajo" + numbConstruccion)];
+                                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                                ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                                finTrabajo = false;
+                                for (int i = 0; i < primeraOpcion.GetComponent<DatosTrabajo>().recursos.Length; i++)
+                                {
+                                    ZPlayerPrefs.SetFloat(primeraOpcion.GetComponent<DatosTrabajo>().recursos[i],
+                                        primeraOpcion.GetComponent<DatosTrabajo>().cantidadRecursos[i]);
+                                }
                             }
-                        }   
-                    } 
+                            trabajando = false;
+                            ZPlayerPrefs.SetString("Trabajando " + numbConstruccion, trabajando.ToString());
+                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        }
+                    }
                 }
             }
         }
-        public void Trabajar()
+        public void Trabajar(int trabajo)
         {
-            if (!trabajando)
+            primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[trabajo];
+            if ( primeraOpcion.GetComponent<DatosTrabajo>().trabajadoresNecesita < GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion)
             {
-                if (trabajadoresNecesita < 2)
-                {
-                    trabajando = true;
-                    gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                    tiempoActualTrabajo = DateTime.Now;
-                    ZPlayerPrefs.SetString("TiempoTrabajo " + numbConstruccion, tiempoActualTrabajo.ToString());
-                    tiempoDesconexionTrabajo = DateTime.Now;
-                    tiempoFinalTrabajo = tiempoActualTrabajo.AddMinutes(tiempoTrabajo);
-                    tiempoRestanteTrabajo = tiempoFinalTrabajo - tiempoDesconexionTrabajo;
-                }
+                trabajando = true;
+                ZPlayerPrefs.SetString("Trabajando " + numbConstruccion, trabajando.ToString());
+                gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                tiempoActualTrabajo = DateTime.Now;
+                ZPlayerPrefs.SetString("TiempoTrabajo " + numbConstruccion, tiempoActualTrabajo.ToString());
+                ZPlayerPrefs.SetInt("tipoTrabajo" + numbConstruccion, trabajo);
+                ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -
+                    primeraOpcion.GetComponent<DatosTrabajo>().trabajadoresNecesita);
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= primeraOpcion.GetComponent<DatosTrabajo>().trabajadoresNecesita;               
+                tiempoDesconexionTrabajo = DateTime.Now;
+                tiempoFinalTrabajo = tiempoActualTrabajo.AddMinutes(primeraOpcion.GetComponent<DatosTrabajo>().tiempoTrabajo);
+                tiempoRestanteTrabajo = tiempoFinalTrabajo - tiempoDesconexionTrabajo;
+                primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[tipoTrabajo];
             }
         }
         public void IniciarConstruccion()
@@ -172,12 +199,29 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                 tiempoRestante = tiempoFinal - tiempoDesconexion;
             }
         }
+        public void EmpezarConstruir()
+        {
+            if (!trabajando && GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > 0)
+            {
+                casitas = GameObject.FindGameObjectsWithTag("casa");
+                for (int casa = 0; casa <= casitas.Length - 1; casa++)
+                {
+                    if (casitas[casa].GetComponent<ComidaCasa>().isComida)
+                    {
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
+                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                        casitas[casa].GetComponent<ComidaCasa>().minaActual = gameObject;
+                        //Trabajar();
+                    }
+                }
+            }
+        }
         IEnumerator Wait()
         {
 
             yield return new WaitForSecondsRealtime(0.2f);
             //ZPlayerPrefs.DeleteAll();
-            if (ZPlayerPrefs.HasKey("Trabajando" + numbConstruccion))
+            if (ZPlayerPrefs.HasKey("Trabajando " + numbConstruccion))
             {
                 trabajando = bool.Parse(ZPlayerPrefs.GetString("Trabajando " + numbConstruccion));
                 
@@ -204,15 +248,11 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                     //this.enabled = false;
                     if (trabajando)
                     {
-                        if (ZPlayerPrefs.HasKey("TiempoTrabajo " + GetInstanceID()))
+                        if (ZPlayerPrefs.HasKey("TiempoTrabajo " + numbConstruccion))
                         {
                             tiempoActualTrabajo = Convert.ToDateTime(ZPlayerPrefs.GetString("TiempoTrabajo " + numbConstruccion));
-                        }
-                        else
-                        {
-                            tiempoActualTrabajo = DateTime.Now;
-                            ZPlayerPrefs.SetString("TiempoTrabajo " + numbConstruccion, tiempoActualTrabajo.ToString());
-                            tiempoFinalTrabajo = tiempoActualTrabajo.AddMinutes(5D);
+                            tiempoFinalTrabajo = tiempoActualTrabajo.AddMinutes(GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().
+                                primeraOpcion[ZPlayerPrefs.GetInt("tipoTrabajo" + numbConstruccion)].GetComponent<DatosTrabajo>().tiempoTrabajo);
                         }
                         //tiempoFinal = tiempoActual.AddMinutes(5D);
                         tiempoDesconexionTrabajo = DateTime.Now;

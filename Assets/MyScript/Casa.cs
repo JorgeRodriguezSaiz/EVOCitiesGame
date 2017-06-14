@@ -38,6 +38,8 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
+                        ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
+                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                         this.enabled = false;
 
                     }
