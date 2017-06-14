@@ -15,6 +15,8 @@ public class ControllerTalar : MonoBehaviour {
     public float tiempoTalar = 0.5f;
     public int trabajadoresNecesita;
     public float maderaTalar = 15;
+    public float piedraPicar = 15;
+
     // Use this for initialization
     void Start () {
 	
@@ -31,7 +33,14 @@ public class ControllerTalar : MonoBehaviour {
 
                 talando = false;
                 Destroy(arbol);
-                gameObject.GetComponent<GestionRecursos>().madera += maderaTalar;
+                if (arbol.GetComponent<CombustionEspontaneaArborea>().madera)
+                {
+                    gameObject.GetComponent<GestionRecursos>().madera += maderaTalar;
+                }
+                else
+                {
+                    gameObject.GetComponent<GestionRecursos>().piedra += piedraPicar;
+                }
             }
             else
             {
