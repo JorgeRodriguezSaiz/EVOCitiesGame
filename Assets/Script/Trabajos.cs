@@ -57,7 +57,7 @@ public class Trabajos : MonoBehaviour
         if (GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > trabajadoresNecesita)
         {
 
-            if (startOn)
+            if (startOn && !GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
             {
                 if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
                 {
@@ -65,13 +65,11 @@ public class Trabajos : MonoBehaviour
                     {
                         if (!funcionar)
                         {
-                            if (ZPlayerPrefs.HasKey("Trabajando " + numbConstruccion))
-                            {
                                 funcionar = true;
                                 gameObject.transform.GetChild(0).gameObject.SetActive(false);
                                 GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
                                 //this.enabled = false;
-                            }
+
                         }
                         else
                         {
@@ -120,45 +118,48 @@ public class Trabajos : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        if (tiempoDesconexion >= tiempoFinal)
+        if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
         {
-            if (funcionar)
+            if (tiempoDesconexion >= tiempoFinal)
             {
-                if (!trabajando)
+                if (funcionar)
                 {
-                    interfaz.SetActive(true);
-                    primeraOpcion.SetActive(true);
-                    for (int i = 0; i < GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion.Length; i++)
+                    if (!trabajando)
                     {
-                        GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[i].GetComponent<DatosTrabajo>().trabajo = gameObject;
-                    }
-                    GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(transform.position.x + 4, transform.position.y,
-                         GameObject.Find("Main Camera").GetComponent<Transform>().position.z);
-                    GameObject.Find("Main Camera").GetComponent<SmoothCamera2d>().enabled = false;
-                    GameObject.Find("Main Camera").GetComponent<PinchZoom>().enabled = false;
-                }
-                else
-                {
-                    if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo && trabajando)
-                    {
-                        finTrabajo = true;
-                        if (finTrabajo)
+                        interfaz.SetActive(true);
+                        primeraOpcion.SetActive(true);
+                        for (int i = 0; i < GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion.Length; i++)
                         {
-                            primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().
-                                primeraOpcion[ZPlayerPrefs.GetInt("tipoTrabajo" + numbConstruccion)];
-                            GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-                            ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
-                            finTrabajo = false;
-                            for (int i = 0; i < primeraOpcion.GetComponent<DatosTrabajo>().recursos.Length; i++)
-                            {
-                                ZPlayerPrefs.SetFloat(primeraOpcion.GetComponent<DatosTrabajo>().recursos[i],
-                                   ZPlayerPrefs.GetFloat(primeraOpcion.GetComponent<DatosTrabajo>().recursos[i]) +
-                                   primeraOpcion.GetComponent<DatosTrabajo>().cantidadRecursos[i]);
-                            }
+                            GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[i].GetComponent<DatosTrabajo>().trabajo = gameObject;
                         }
-                        trabajando = false;
-                        ZPlayerPrefs.SetString("Trabajando " + numbConstruccion, trabajando.ToString());
-                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(transform.position.x + 4, transform.position.y,
+                             GameObject.Find("Main Camera").GetComponent<Transform>().position.z);
+                        GameObject.Find("Main Camera").GetComponent<SmoothCamera2d>().enabled = false;
+                        GameObject.Find("Main Camera").GetComponent<PinchZoom>().enabled = false;
+                    }
+                    else
+                    {
+                        if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo && trabajando)
+                        {
+                            finTrabajo = true;
+                            if (finTrabajo)
+                            {
+                                primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().
+                                    primeraOpcion[ZPlayerPrefs.GetInt("tipoTrabajo" + numbConstruccion)];
+                                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                                ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                                finTrabajo = false;
+                                for (int i = 0; i < primeraOpcion.GetComponent<DatosTrabajo>().recursos.Length; i++)
+                                {
+                                    ZPlayerPrefs.SetFloat(primeraOpcion.GetComponent<DatosTrabajo>().recursos[i],
+                                       ZPlayerPrefs.GetFloat(primeraOpcion.GetComponent<DatosTrabajo>().recursos[i]) +
+                                       primeraOpcion.GetComponent<DatosTrabajo>().cantidadRecursos[i]);
+                                }
+                            }
+                            trabajando = false;
+                            ZPlayerPrefs.SetString("Trabajando " + numbConstruccion, trabajando.ToString());
+                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        }
                     }
                 }
             }
