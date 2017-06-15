@@ -41,7 +41,7 @@ public class CrearCasasGuardadas : MonoBehaviour
     IEnumerator Wait()
     {
         yield return new WaitForSecondsRealtime(0.01f);
-       if (ZPlayerPrefs.HasKey("cantidadConstrucciones"))
+        if (ZPlayerPrefs.HasKey("cantidadConstrucciones"))
         {
             Debug.Log(ZPlayerPrefs.GetInt("cantidadConstrucciones"));
             for (int i = 0; i <= ZPlayerPrefs.GetInt("cantidadConstrucciones"); i++)
@@ -54,8 +54,12 @@ public class CrearCasasGuardadas : MonoBehaviour
                 {
                     prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Casa>().numbConstruccion = i;
                 }
+                else if (prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].tag == "ocio")
+                {
+                    prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Ocio>().numbConstruccion = i;
+                }
                 prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].transform.position =
-                    new Vector3(ZPlayerPrefs.GetFloat("posX" + i), ZPlayerPrefs.GetFloat("posY" + i), ZPlayerPrefs.GetFloat("posZ" + i));
+                new Vector3(ZPlayerPrefs.GetFloat("posX" + i), ZPlayerPrefs.GetFloat("posY" + i), ZPlayerPrefs.GetFloat("posZ" + i));
                 Instantiate(prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)]);
             }
         }
