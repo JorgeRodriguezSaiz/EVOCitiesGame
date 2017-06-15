@@ -2,8 +2,6 @@
 using System.Collections;
 using System;
 using UnityEngine.UI;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
     public class TimeController : MonoBehaviour
     {
         public DateTime tiempoActual;
@@ -38,4 +36,4 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             }
         }
     }
-}
+

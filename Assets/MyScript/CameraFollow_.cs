@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
     public class CameraFollow_ : MonoBehaviour
     {
 
@@ -55,5 +53,5 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             transform.position = new Vector3(targetX, targetY, transform.position.z);
         }
     }
-}
+
 

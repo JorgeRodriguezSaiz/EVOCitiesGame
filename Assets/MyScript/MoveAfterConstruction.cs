@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
     public class MoveAfterConstruction : MonoBehaviour
     {
         public float tiempoParaMover = 1.5f;
@@ -25,4 +23,3 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             timeCounter = 0;
         }
     }
-}
