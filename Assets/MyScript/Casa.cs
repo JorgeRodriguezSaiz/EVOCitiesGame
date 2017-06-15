@@ -57,7 +57,6 @@ using System;
             StopAllCoroutines();
             funcionar = false;
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
-           
             ZPlayerPrefs.SetInt("cantidadConstrucciones", ZPlayerPrefs.GetInt("cantidadConstrucciones", -1) + 1);
             ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
             ZPlayerPrefs.SetFloat("posY" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.y);
