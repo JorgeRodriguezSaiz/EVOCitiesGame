@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 
 public class DatosTrabajo : MonoBehaviour
 {
+    [Header("Variables para el trabajo")]
     public int trabajadoresNecesita;
     public string[] recursos;
     public int tipoTrabajo;
@@ -12,6 +14,14 @@ public class DatosTrabajo : MonoBehaviour
     public float recursoNecesitan = 0;
     public string recursoNecesario = "gold";
     public GameObject trabajo;
+    [Header("Escritura")]
+    public Text trabajadores;
+    public Text semillas;
+    private void OnEnable()
+    {
+        semillas.text = recursoNecesitan.ToString();
+        trabajadores.text = GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion + "/" + trabajadoresNecesita;
+    }
     // Use this for initialization
     public void PonerATrabajar()
     {
