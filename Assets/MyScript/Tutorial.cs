@@ -13,6 +13,7 @@ public class Tutorial : MonoBehaviour {
     public float tiempoLetras = 0.1f;
     public bool finAnimate = true;
     public bool click = false;
+    public bool skip = false;
 	// Use this for initialization
 	void Start ()
     {
@@ -21,50 +22,21 @@ public class Tutorial : MonoBehaviour {
             StartCoroutine(Tuto(textNumber));
         }
     }
-	
-	// Update is called once per frame
-	void Update ()
-    {
-    }
     IEnumerator Tuto(int auxInt)
     {
-            panelJugando.SetActive(false);
-            panelTuto.SetActive(true);
-            if (finAnimate)
-            {
+        panelJugando.SetActive(false);
+        panelTuto.SetActive(true);
+        if (finAnimate)
+        {
             finAnimate = false;
             StartCoroutine(AnimateText(text[auxInt]));
-            }
-           
-            firstGame = false;
-            /*if (click)
-            {
-                click = false;
-                textoTuto.text = "Como puedes ver, ahora mismo nos encontramos en la Prehistoria.Pero no te preocupes, " +
-                    "si trabajas duro y cuidas de tus ciudadanos pronto irás avanzando en las distintas épocas. ¡Quién sabe lo que nos depara el futuro!" +
-                    "Yo voy a encargarme de enseñarte  cómo puedes comenzar a construir tu ciudad.\n" +
-                    "¡Lo primero!Tienes que darle un nombre a tu ciudad, ¿cómo quieres que se llame ?";
-                if (click)
-                {
-                    click = false;
-                    yield break;
-                }
-            }*/
-            yield return null;
-        
+        }
+        firstGame = false;
+        yield return null;        
     }
     IEnumerator AnimateText(string strComplete)
     {
-        //int i = 0;
         auxString = "";
-        /* while (i < strComplete.Length)
-         {
-             auxString += strComplete[i++];
-             textoTuto.text = auxString;
-             yield return new WaitForSeconds(tiempoLetras);
-         }*/
-        //yield return new WaitForSeconds(tiempoLetras);
-
         for (int i = 0; i < strComplete.Length; i++)
         {
             auxString += strComplete[i];
@@ -86,6 +58,12 @@ public class Tutorial : MonoBehaviour {
             }
             StartCoroutine(Tuto(textNumber));
         }
-        
+        else
+        {
+            StopAllCoroutines();
+            textoTuto.text = text[textNumber];
+            click = true;
+            finAnimate = true;
+        }
     }
 }

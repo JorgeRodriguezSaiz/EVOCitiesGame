@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
     public class Ocio : MonoBehaviour
     {
         [Header("Guardado")]
@@ -205,4 +203,4 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             startOn = true;
         }
     }
-}
+

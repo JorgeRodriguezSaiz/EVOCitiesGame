@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
     public class Casa : MonoBehaviour
     {
         [Header("Experiencia")]
@@ -99,4 +97,4 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             startOn = true;
         }
     }
-}
+

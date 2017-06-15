@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
     public class Construction : MonoBehaviour
     {
         public GameObject prefab;
@@ -151,4 +149,4 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             modoConstruccion = false;
         }
     }
-}
+

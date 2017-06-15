@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
     [RequireComponent(typeof(BoxCollider2D))]
     public class RaycastController : MonoBehaviour
     {
@@ -108,4 +106,3 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             public Vector2 bottomLeft, bottomRight;
         }
     }
-}

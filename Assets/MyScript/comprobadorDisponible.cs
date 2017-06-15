@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
-    [RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 
     public class comprobadorDisponible : MonoBehaviour {
@@ -33,4 +31,4 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
             _disponible = true;
         }
     }
-}
+
