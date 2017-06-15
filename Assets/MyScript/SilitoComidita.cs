@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class SilitoComidita : MonoBehaviour {
     public GameObject siloWindow;
     public float comidaMax = 1000000;
-    public Scrollbar barraComida;
+    public Slider barraComida;
+    public Text semillasManzanas;
+    public Text semillasFrambuesa;
+    public Text manzanas;
+    public Text frambuesas;
 	// Use this for initialization
 	void Start () {
 	
@@ -15,7 +20,11 @@ public class SilitoComidita : MonoBehaviour {
 	void Update ()
     {
         barraComida.value = GameObject.Find("Controller").GetComponent<GestionRecursos>().comida / comidaMax;
-	}
+        semillasManzanas.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasManzanas);
+        semillasFrambuesa.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasManzanas);
+        manzanas.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas);
+        frambuesas.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().frambuesas);
+    }
     void OnMouseDown()
     {
         siloWindow.SetActive(true);

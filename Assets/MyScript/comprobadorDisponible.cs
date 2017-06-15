@@ -19,10 +19,12 @@ using System.Collections;
         void OnTriggerEnter2D(Collider2D coll)
         {
             Debug.Log("Entra en el trigger");
-            //_instancia.GetComponent<SpriteRenderer>().color = Color.red;
-            if(controlador.GetComponent<Construction>().instancia)
+        //_instancia.GetComponent<SpriteRenderer>().color = Color.red;
+        if (controlador.GetComponent<Construction>().instancia)
+        {
             controlador.GetComponent<Construction>().instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 0f, 0f, .5f);
-            //_disponible = false;
+            _disponible = false;
+        }
         }
         void OnTriggerExit2D(Collider2D coll)
         {

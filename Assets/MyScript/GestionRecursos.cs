@@ -11,8 +11,10 @@ public class GestionRecursos : MonoBehaviour {
     public float poblacionTotal = 10f;
     public float comida;
     public float manzanas;
+    public float frambuesas;
     public float gold = 100;
     public float semillasManzanas = 0;
+    public float semillasFrambuesa = 0;
     [Header("Textos")]
     public Text textoPoblacion;
     public Text textoPoblacionTotal;
@@ -30,6 +32,8 @@ public class GestionRecursos : MonoBehaviour {
             manzanas = ZPlayerPrefs.GetFloat("manzanas");
             gold = ZPlayerPrefs.GetFloat("gold");
             semillasManzanas = ZPlayerPrefs.GetFloat("semillasManzanas");
+            semillasFrambuesa = ZPlayerPrefs.GetFloat("semillasFrambuesa");
+            frambuesas = ZPlayerPrefs.GetFloat("frambuesas");
         }
         else
         {
@@ -41,6 +45,8 @@ public class GestionRecursos : MonoBehaviour {
             ZPlayerPrefs.SetFloat("manzanas", manzanas);
             ZPlayerPrefs.SetFloat("gold", gold);
             ZPlayerPrefs.SetFloat("semillasManzanas", semillasManzanas);
+            ZPlayerPrefs.SetFloat("semillasFrambuesa", semillasFrambuesa);
+            ZPlayerPrefs.SetFloat("frambuesas", frambuesas);
         }
 	}
 	
@@ -56,7 +62,7 @@ public class GestionRecursos : MonoBehaviour {
         }
         if (ZPlayerPrefs.GetFloat("manzanas") != manzanas)
         {
-            manzanas = ZPlayerPrefs.GetFloat("manzanas");
+            //manzanas = ZPlayerPrefs.GetFloat("manzanas");
         }
         if (ZPlayerPrefs.GetFloat("piedra") != piedra)
         {
@@ -64,15 +70,23 @@ public class GestionRecursos : MonoBehaviour {
         }
         if (ZPlayerPrefs.GetFloat("comida") != comida)
         {
-            comida = ZPlayerPrefs.GetFloat("comida");
+            //comida = ZPlayerPrefs.GetFloat("comida");
         }
         if (ZPlayerPrefs.GetFloat("comida") != comida)
         {
-            comida = ZPlayerPrefs.GetFloat("comida");
+            //comida = ZPlayerPrefs.GetFloat("comida");
         }
         if (ZPlayerPrefs.GetFloat("semillasManzanas") != semillasManzanas)
         {
             semillasManzanas = ZPlayerPrefs.GetFloat("semillasManzanas");
+        }
+        if (ZPlayerPrefs.GetFloat("semillasFrambuesa") != semillasFrambuesa)
+        {
+            semillasFrambuesa = ZPlayerPrefs.GetFloat("semillasFrambuesa");
+        }
+        if (ZPlayerPrefs.GetFloat("frambuesas") != frambuesas)
+        {
+            frambuesas = ZPlayerPrefs.GetFloat("frambuesas");
         }
     }
 }

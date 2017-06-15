@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour {
-    private bool firstGame = true;
+    public bool firstGame = true;
     public GameObject panelJugando;
     public GameObject panelTuto;
     public Text textoTuto;
