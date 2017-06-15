@@ -90,12 +90,16 @@ public class Trabajos : MonoBehaviour
                                 }
                                 else
                                 {
-                                    gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                                    string aux = string.Format("00:00:00:00");
-                                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                                    if (trabajando)
+                                    {
+                                        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                                        string aux = string.Format("00:00:00:00");
+                                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                                    }
                                 }
                             }
                         }
+
                     }
                     else if (!funcionar)
                     {
@@ -133,7 +137,7 @@ public class Trabajos : MonoBehaviour
                 }
                 else
                 {
-                    if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo)
+                    if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo && trabajando)
                     {
                         finTrabajo = true;
                         if (finTrabajo)

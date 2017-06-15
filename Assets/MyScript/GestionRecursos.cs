@@ -52,7 +52,7 @@ public class GestionRecursos : MonoBehaviour {
         dineroText.text = Convert.ToString((int)gold);
         if(ZPlayerPrefs.GetFloat("madera") != madera)
         {
-            madera = ZPlayerPrefs.GetFloat("madera");
+           // madera = ZPlayerPrefs.GetFloat("madera");
         }
         if (ZPlayerPrefs.GetFloat("manzanas") != manzanas)
         {
@@ -60,7 +60,7 @@ public class GestionRecursos : MonoBehaviour {
         }
         if (ZPlayerPrefs.GetFloat("piedra") != piedra)
         {
-            piedra = ZPlayerPrefs.GetFloat("piedra");
+            ///piedra = ZPlayerPrefs.GetFloat("piedra");
         }
         if (ZPlayerPrefs.GetFloat("comida") != comida)
         {
