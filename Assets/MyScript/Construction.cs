@@ -161,9 +161,45 @@ public class Construction : MonoBehaviour
         if (disponible)
         {
             instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            if (instancia.tag == "trabajo")
+            {
+                ZPlayerPrefs.SetFloat("posX" + instancia.GetComponent<Trabajos>().numbConstruccion, instancia.transform.position.x);
+                ZPlayerPrefs.SetFloat("posY" + instancia.GetComponent<Trabajos>().numbConstruccion, instancia.transform.position.y);
+                ZPlayerPrefs.SetFloat("posZ" + instancia.GetComponent<Trabajos>().numbConstruccion, instancia.transform.position.z);
+            }
+            else if (instancia.tag == "casa")
+            {
+                ZPlayerPrefs.SetFloat("posX" + instancia.GetComponent<Casa>().numbConstruccion, instancia.transform.position.x);
+                ZPlayerPrefs.SetFloat("posY" + instancia.GetComponent<Casa>().numbConstruccion, instancia.transform.position.y);
+                ZPlayerPrefs.SetFloat("posZ" + instancia.GetComponent<Casa>().numbConstruccion, instancia.transform.position.z);
+            }
+            else if (instancia.tag == "ocio")
+            {
+                ZPlayerPrefs.SetFloat("posX" + instancia.GetComponent<Ocio>().numbConstruccion, instancia.transform.position.x);
+                ZPlayerPrefs.SetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion, instancia.transform.position.y);
+                ZPlayerPrefs.SetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion, instancia.transform.position.z);
+            }
+
         }
         else
         {
+            if (instancia.tag == "trabajo")
+            {
+                instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Trabajos>().numbConstruccion),
+                ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Trabajos>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Trabajos>().numbConstruccion));
+            }
+            else if (instancia.tag == "casa")
+            {
+                instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Casa>().numbConstruccion),
+                ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Casa>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Casa>().numbConstruccion));
+            }
+            else if (instancia.tag == "ocio")
+            {
+                instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Ocio>().numbConstruccion),
+                ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion));
+            }
+
+
 
         }
     }
@@ -172,6 +208,21 @@ public class Construction : MonoBehaviour
         mover = false;
         modoConstruccion = false;
         instancia = null;
+        if (instancia.tag == "trabajo")
+        {
+            instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Trabajos>().numbConstruccion),
+            ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Trabajos>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Trabajos>().numbConstruccion));
+        }
+        else if (instancia.tag == "casa")
+        {
+            instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Casa>().numbConstruccion),
+            ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Casa>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Casa>().numbConstruccion));
+        }
+        else if (instancia.tag == "ocio")
+        {
+            instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Ocio>().numbConstruccion),
+            ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion));
+        }
     }
 }
 
