@@ -63,12 +63,13 @@ public class Trabajos : MonoBehaviour
                 {
                     if (tiempoDesconexion >= tiempoFinal)
                     {
-                        if (!funcionar)
+                        if (!funcionar && !ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                         {
-                                funcionar = true;
-                                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                                GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                                //this.enabled = false;
+                            funcionar = true;
+                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                            GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                            ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                            //this.enabled = false;
 
                         }
                         else
@@ -116,7 +117,7 @@ public class Trabajos : MonoBehaviour
             }
         }
     }
-    private void OnMouseDown()
+    private void OnMouseUp()
     {
         if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
         {
@@ -249,6 +250,11 @@ public class Trabajos : MonoBehaviour
             }
             if (tiempoDesconexion >= tiempoFinal)
             {
+                if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                {
+                    GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                }
                 gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 funcionar = true;
                 //this.enabled = false;
