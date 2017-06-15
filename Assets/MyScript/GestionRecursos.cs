@@ -12,6 +12,7 @@ public class GestionRecursos : MonoBehaviour {
     public float comida;
     public float manzanas;
     public float gold = 100;
+    public float semillasManzanas = 0;
     [Header("Textos")]
     public Text textoPoblacion;
     public Text textoPoblacionTotal;
@@ -28,6 +29,7 @@ public class GestionRecursos : MonoBehaviour {
             comida = ZPlayerPrefs.GetFloat("comida");
             manzanas = ZPlayerPrefs.GetFloat("manzanas");
             gold = ZPlayerPrefs.GetFloat("gold");
+            semillasManzanas = ZPlayerPrefs.GetFloat("semillasManzanas");
         }
         else
         {
@@ -38,6 +40,7 @@ public class GestionRecursos : MonoBehaviour {
             ZPlayerPrefs.SetFloat("comida", comida);
             ZPlayerPrefs.SetFloat("manzanas", manzanas);
             ZPlayerPrefs.SetFloat("gold", gold);
+            ZPlayerPrefs.SetFloat("semillasManzanas", semillasManzanas);
         }
 	}
 	
@@ -47,5 +50,29 @@ public class GestionRecursos : MonoBehaviour {
         textoPoblacionTotal.text = Convert.ToString(poblacionTotal);
         comidaText.text = Convert.ToString(manzanas);
         dineroText.text = Convert.ToString((int)gold);
+        if(ZPlayerPrefs.GetFloat("madera") != madera)
+        {
+            madera = ZPlayerPrefs.GetFloat("madera");
+        }
+        if (ZPlayerPrefs.GetFloat("manzanas") != manzanas)
+        {
+            manzanas = ZPlayerPrefs.GetFloat("manzanas");
+        }
+        if (ZPlayerPrefs.GetFloat("piedra") != piedra)
+        {
+            piedra = ZPlayerPrefs.GetFloat("piedra");
+        }
+        if (ZPlayerPrefs.GetFloat("comida") != comida)
+        {
+            comida = ZPlayerPrefs.GetFloat("comida");
+        }
+        if (ZPlayerPrefs.GetFloat("comida") != comida)
+        {
+            comida = ZPlayerPrefs.GetFloat("comida");
+        }
+        if (ZPlayerPrefs.GetFloat("semillasManzanas") != semillasManzanas)
+        {
+            semillasManzanas = ZPlayerPrefs.GetFloat("semillasManzanas");
+        }
     }
 }
