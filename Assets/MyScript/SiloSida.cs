@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class SiloSida : MonoBehaviour
 {
     public GameObject siloWindow;
     public float recursosMax = 1000000;
-    public Scrollbar barraSida;
+    public Slider barraSida;
     private float recursosTot;
+    public Text madera;
+    public Text piedra;
     // Use this for initialization
     void Start()
     {
@@ -19,6 +22,8 @@ public class SiloSida : MonoBehaviour
     {
         recursosTot = GameObject.Find("Controller").GetComponent<GestionRecursos>().madera + GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra;
         barraSida.value =  recursosTot/ recursosMax;
+        madera.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().madera);
+        piedra.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra);
     }
     void OnMouseDown()
     {
