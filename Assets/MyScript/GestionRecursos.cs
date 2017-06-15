@@ -56,7 +56,7 @@ public class GestionRecursos : MonoBehaviour {
         textoPoblacionTotal.text = Convert.ToString(poblacionTotal);
         comidaText.text = Convert.ToString(manzanas);
         dineroText.text = Convert.ToString((int)gold);
-        if(ZPlayerPrefs.GetFloat("madera") != madera)
+        /*if(ZPlayerPrefs.GetFloat("madera") != madera)
         {
            // madera = ZPlayerPrefs.GetFloat("madera");
         }
@@ -87,6 +87,6 @@ public class GestionRecursos : MonoBehaviour {
         if (ZPlayerPrefs.GetFloat("frambuesas") != frambuesas)
         {
             frambuesas = ZPlayerPrefs.GetFloat("frambuesas");
-        }
+        }*/
     }
 }

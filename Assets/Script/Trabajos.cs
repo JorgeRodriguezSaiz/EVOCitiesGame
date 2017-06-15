@@ -65,10 +65,13 @@ public class Trabajos : MonoBehaviour
                     {
                         if (!funcionar)
                         {
-                            funcionar = true;
-                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                            GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                            //this.enabled = false;
+                            if (ZPlayerPrefs.HasKey("Trabajando " + numbConstruccion))
+                            {
+                                funcionar = true;
+                                gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                                GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                                //this.enabled = false;
+                            }
                         }
                         else
                         {
@@ -123,7 +126,6 @@ public class Trabajos : MonoBehaviour
             {
                 if (!trabajando)
                 {
-
                     interfaz.SetActive(true);
                     primeraOpcion.SetActive(true);
                     for (int i = 0; i < GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion.Length; i++)
