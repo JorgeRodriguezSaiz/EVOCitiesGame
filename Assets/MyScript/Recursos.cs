@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
-
     public class Recursos : MonoBehaviour
     {
         public float maderaNecesaria = 0;
@@ -22,4 +19,4 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
 
         }
     }
-}
+

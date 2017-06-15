@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-namespace Assets.UltimateIsometricToolkit.Scripts.Core
-{
     public class PinchZoom : MonoBehaviour
     {
 
@@ -81,4 +79,3 @@ namespace Assets.UltimateIsometricToolkit.Scripts.Core
         }
     }
 
-}

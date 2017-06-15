@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Assets.UltimateIsometricToolkit.Scripts.Core;
 
 public class ComidaCasa : MonoBehaviour {
     public float comidaCasa;
