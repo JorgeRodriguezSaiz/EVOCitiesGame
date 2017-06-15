@@ -29,9 +29,9 @@ public class DatosTrabajo : MonoBehaviour
     // Use this for initialization
     public void PonerATrabajar()
     {
-        for(int i = 0; i < recursoNecesitan.Length; i++)
+        for (int i = 0; i < recursoNecesitan.Length; i++)
         {
-            if(recursoNecesitan[i] <= ZPlayerPrefs.GetFloat(recursoNecesario[i]))
+            if (recursoNecesitan[i] <= ZPlayerPrefs.GetFloat(recursoNecesario[i]))
             {
                 recursosAceptados++;
             }
@@ -48,6 +48,38 @@ public class DatosTrabajo : MonoBehaviour
                 GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[i].gameObject.SetActive(false);
             }
             GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().interfaz.SetActive(false);
+            if (ZPlayerPrefs.GetFloat("madera") != GameObject.Find("Controller").GetComponent<GestionRecursos>().madera)
+            {
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().madera = ZPlayerPrefs.GetFloat("madera");
+            }
+            if (ZPlayerPrefs.GetFloat("manzanas") != GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas)
+            {
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas = ZPlayerPrefs.GetFloat("manzanas");
+            }
+            if (ZPlayerPrefs.GetFloat("piedra") != GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra)
+            {
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra = ZPlayerPrefs.GetFloat("piedra");
+            }
+            if (ZPlayerPrefs.GetFloat("comida") != GameObject.Find("Controller").GetComponent<GestionRecursos>().comida)
+            {
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().comida = ZPlayerPrefs.GetFloat("comida");
+            }
+            /*if (ZPlayerPrefs.GetFloat("comida") != comida)
+            {
+                comida = ZPlayerPrefs.GetFloat("comida");
+            }*/
+            if (ZPlayerPrefs.GetFloat("semillasManzanas") != GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasManzanas)
+            {
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasManzanas = ZPlayerPrefs.GetFloat("semillasManzanas");
+            }
+            if (ZPlayerPrefs.GetFloat("semillasFrambuesa") != GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasFrambuesa)
+            {
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasFrambuesa = ZPlayerPrefs.GetFloat("semillasFrambuesa");
+            }
+            if (ZPlayerPrefs.GetFloat("frambuesas") != GameObject.Find("Controller").GetComponent<GestionRecursos>().frambuesas)
+            {
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().frambuesas = ZPlayerPrefs.GetFloat("frambuesas");
+            }
         }
     }
 }
