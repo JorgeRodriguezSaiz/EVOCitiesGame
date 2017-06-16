@@ -158,20 +158,17 @@ public class Ocio : MonoBehaviour
         StopAllCoroutines();
         funcionar = false;
         gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
-        ZPlayerPrefs.SetInt("cantidadConstrucciones", ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1);
+        ZPlayerPrefs.SetInt("cantidadConstrucciones", numbConstruccion);
         ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
         ZPlayerPrefs.SetFloat("posY" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.y);
         ZPlayerPrefs.SetFloat("posZ" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.z);
-        ZPlayerPrefs.SetInt("tipoConstruccion" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), tipoConstruccion);
-        numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
-        if (!funcionar)
-        {
-            tiempoActual = DateTime.Now;
-            ZPlayerPrefs.SetString("Tiempo " + numbConstruccion, tiempoActual.ToString());
-            tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
-            tiempoDesconexion = DateTime.Now;
-            tiempoRestante = tiempoFinal - tiempoDesconexion;
-        }
+        ZPlayerPrefs.SetInt("tipoConstruccion" + numbConstruccion, tipoConstruccion);
+        //numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
+        tiempoActual = DateTime.Now;
+        ZPlayerPrefs.SetString("Tiempo " + numbConstruccion, tiempoActual.ToString());
+        tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
+        tiempoDesconexion = DateTime.Now;
+        tiempoRestante = tiempoFinal - tiempoDesconexion;
     }
     IEnumerator Wait()
     {

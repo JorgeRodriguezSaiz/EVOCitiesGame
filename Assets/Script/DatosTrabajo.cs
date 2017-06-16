@@ -26,7 +26,7 @@ public class DatosTrabajo : MonoBehaviour
         }
         trabajadores.text = GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion + "/" + trabajadoresNecesita;
         recursosAceptados = 0;
-        Debug.Log(ZPlayerPrefs.GetFloat(recursoNecesario[0]));
+        //Debug.Log(ZPlayerPrefs.GetFloat(recursoNecesario[0]));
         Debug.Log(ZPlayerPrefs.GetFloat("semillasManzanas"));
     }
     // Use this for initialization
