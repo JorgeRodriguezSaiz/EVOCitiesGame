@@ -124,18 +124,21 @@ public class Construction : MonoBehaviour
         {
             if (instancia.tag == "trabajo")
             {
-                instancia.GetComponent<Trabajos>().IniciarConstruccion();
                 instancia.GetComponent<Trabajos>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
+                instancia.GetComponent<Trabajos>().IniciarConstruccion();
+               
             }
             else if (instancia.tag == "casa")
             {
-                instancia.GetComponent<Casa>().IniciarConstruccion();
                 instancia.GetComponent<Casa>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
+                instancia.GetComponent<Casa>().IniciarConstruccion();
+                
             }
             else if (instancia.tag == "ocio")
             {
-                instancia.GetComponent<Ocio>().IniciarConstruccion();
                 instancia.GetComponent<Ocio>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
+                instancia.GetComponent<Ocio>().IniciarConstruccion();
+               
             }
 
             modoConstruccion = false;
