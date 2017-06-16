@@ -54,68 +54,69 @@ public class Trabajos : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion > trabajadoresNecesita)
+
+        if (startOn)
         {
-
-            if (startOn && !GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+            if (tiempoDesconexion >= tiempoFinal)
             {
-                if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+                if (!funcionar)
                 {
-                    if (tiempoDesconexion >= tiempoFinal)
+                    if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                     {
-                        if (!funcionar && !ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
-                        {
-                            funcionar = true;
-                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                            GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                            ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
-                            //this.enabled = false;
+                        funcionar = true;
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                        //this.enabled = false;
+                    }
 
+                }
+                else
+                {
+                    if (trabajando)
+                    {
+                        if (tiempoDesconexionTrabajo < tiempoFinalTrabajo)
+                        {
+                            if (trabajando)
+                            {
+                                gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                                tiempoDesconexionTrabajo = DateTime.Now;
+                                string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
+                                    tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
+                                gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                                float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
+                                tAux -= 1 * Time.deltaTime;
+                                tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
+                            }
                         }
                         else
                         {
                             if (trabajando)
                             {
-                                if (tiempoDesconexionTrabajo < tiempoFinalTrabajo)
-                                {
-                                    if (trabajando)
-                                    {
-                                        gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                                        tiempoDesconexionTrabajo = DateTime.Now;
-                                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
-                                            tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
-                                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                                        float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
-                                        tAux -= 1 * Time.deltaTime;
-                                        tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
-                                    }
-                                }
-                                else
-                                {
-                                    if (trabajando)
-                                    {
-                                        gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                                        string aux = string.Format("00:00:00:00");
-                                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                                    }
-                                }
+                                gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                                string aux = string.Format("00:00:00:00");
+                                gameObject.GetComponentInChildren<TextMesh>().text = aux;
                             }
                         }
-
-                    }
-                    else if (!funcionar)
-                    {
-                        tiempoDesconexion = DateTime.Now;
-                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
-                            tiempoRestante.Minutes, tiempoRestante.Seconds);
-                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                        float tAux = (float)tiempoRestante.TotalSeconds;
-                        tAux -= 1 * Time.deltaTime;
-                        tiempoRestante = TimeSpan.FromSeconds(tAux);
                     }
                 }
+
+            }
+            else if (!funcionar)
+            {
+                tiempoDesconexion = DateTime.Now;
+                string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
+                    tiempoRestante.Minutes, tiempoRestante.Seconds);
+                gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                float tAux = (float)tiempoRestante.TotalSeconds;
+                tAux -= 1 * Time.deltaTime;
+                tiempoRestante = TimeSpan.FromSeconds(tAux);
             }
         }
+
+
     }
     private void OnMouseUp()
     {
@@ -147,7 +148,7 @@ public class Trabajos : MonoBehaviour
                             {
                                 primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().
                                     primeraOpcion[ZPlayerPrefs.GetInt("tipoTrabajo" + numbConstruccion)];
-                                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += primeraOpcion.GetComponent<DatosTrabajo>().trabajadoresNecesita;
                                 ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                                 finTrabajo = false;
                                 for (int i = 0; i < primeraOpcion.GetComponent<DatosTrabajo>().recursos.Length; i++)
@@ -254,6 +255,8 @@ public class Trabajos : MonoBehaviour
                 {
                     GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
                     ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                 }
                 gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 funcionar = true;
