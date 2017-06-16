@@ -155,6 +155,7 @@ public class Trabajos : MonoBehaviour
                             trabajando = false;
                             ZPlayerPrefs.SetString("Trabajando " + numbConstruccion, trabajando.ToString());
                             gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                            reescribirVariables();
                         }
                     }
                 }
@@ -181,6 +182,57 @@ public class Trabajos : MonoBehaviour
             primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[tipoTrabajo];
             GameObject.Find("Main Camera").GetComponent<SmoothCamera2d>().enabled = true;
             GameObject.Find("Main Camera").GetComponent<PinchZoom>().enabled = true;
+        }
+    }
+    public void reescribirVariables()
+    {
+        if (ZPlayerPrefs.GetFloat("madera") != GameObject.Find("Controller").GetComponent<GestionRecursos>().madera)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().madera = ZPlayerPrefs.GetFloat("madera");
+        }
+        if (ZPlayerPrefs.GetFloat("manzanas") != GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas = ZPlayerPrefs.GetFloat("manzanas");
+        }
+        if (ZPlayerPrefs.GetFloat("piedra") != GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra = ZPlayerPrefs.GetFloat("piedra");
+        }
+        if (ZPlayerPrefs.GetFloat("comida") != GameObject.Find("Controller").GetComponent<GestionRecursos>().comida)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().comida = ZPlayerPrefs.GetFloat("comida");
+        }
+        if (ZPlayerPrefs.GetFloat("semillasManzanas") != GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasManzanas)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasManzanas = ZPlayerPrefs.GetFloat("semillasManzanas");
+        }
+        if (ZPlayerPrefs.GetFloat("semillasFrambuesa") != GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasFrambuesa)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().semillasFrambuesa = ZPlayerPrefs.GetFloat("semillasFrambuesa");
+        }
+        if (ZPlayerPrefs.GetFloat("frambuesas") != GameObject.Find("Controller").GetComponent<GestionRecursos>().frambuesas)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().frambuesas = ZPlayerPrefs.GetFloat("frambuesas");
+        }
+        if (ZPlayerPrefs.GetFloat("variscita") != GameObject.Find("Controller").GetComponent<GestionRecursos>().variscita)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().variscita = ZPlayerPrefs.GetFloat("variscita");
+        }
+        if (ZPlayerPrefs.GetFloat("carbon") != GameObject.Find("Controller").GetComponent<GestionRecursos>().carbon)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().carbon = ZPlayerPrefs.GetFloat("carbon");
+        }
+        if (ZPlayerPrefs.GetFloat("arcilla") != GameObject.Find("Controller").GetComponent<GestionRecursos>().arcilla)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().arcilla = ZPlayerPrefs.GetFloat("arcilla");
+        }
+        if (ZPlayerPrefs.GetFloat("jarronBasico") != GameObject.Find("Controller").GetComponent<GestionRecursos>().jarronBasico)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().jarronBasico = ZPlayerPrefs.GetFloat("jarronBasico");
+        }
+        if (ZPlayerPrefs.GetFloat("jarronDecorado") != GameObject.Find("Controller").GetComponent<GestionRecursos>().jarronDecorado)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().jarronDecorado = ZPlayerPrefs.GetFloat("jarronDecorado");
         }
     }
     public void IniciarConstruccion()
