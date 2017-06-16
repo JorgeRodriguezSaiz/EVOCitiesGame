@@ -20,7 +20,10 @@ public class DatosTrabajo : MonoBehaviour
     public Text semillas;
     private void OnEnable()
     {
-        semillas.text = ZPlayerPrefs.GetFloat(recursoNecesario[0]).ToString();
+        if (recursoNecesario.Length > 0)
+        {
+            semillas.text = ZPlayerPrefs.GetFloat(recursoNecesario[0]).ToString();
+        }
         trabajadores.text = GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion + "/" + trabajadoresNecesita;
         recursosAceptados = 0;
         Debug.Log(ZPlayerPrefs.GetFloat(recursoNecesario[0]));

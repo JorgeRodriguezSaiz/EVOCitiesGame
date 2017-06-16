@@ -57,6 +57,8 @@ public class Ocio : MonoBehaviour
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
                     ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                    //GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                     //this.enabled = false;
                 }
                 else
@@ -204,6 +206,8 @@ public class Ocio : MonoBehaviour
                     {
                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
                         ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                     }
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     funcionar = true;

@@ -29,17 +29,21 @@ public class Casa : MonoBehaviour
             tiempoDesconexion = DateTime.Now;
             if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
             {
-                if (tiempoDesconexion >= tiempoFinal && !ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                if (tiempoDesconexion >= tiempoFinal)
                 {
-                    funcionar = true;
-                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
-                    ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
-                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
-                    this.enabled = false;
-                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                    if (!PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                    {
+                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                        funcionar = true;
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
+                        ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
+                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                        this.enabled = false;
+                    }
+                    
 
                 }
                 if (!funcionar)
@@ -92,6 +96,8 @@ public class Casa : MonoBehaviour
                 }
                 if (tiempoDesconexion >= tiempoFinal)
                 {
+                    if(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                        this.enabled = false;
                     if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                     {
                         gameObject.transform.GetChild(0).gameObject.SetActive(false);
