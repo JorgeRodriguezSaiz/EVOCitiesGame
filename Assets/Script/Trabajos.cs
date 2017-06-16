@@ -6,7 +6,7 @@ public class Trabajos : MonoBehaviour
 {
     [Header("Guardado")]
     public int tipoConstruccion = 0;
-    public int numbConstruccion = 0;
+    public int numbConstruccion = -1;
     [Header("Construccion")]
     public float exp = 75f;
     public double tiempoConstruccion;
@@ -42,11 +42,11 @@ public class Trabajos : MonoBehaviour
         interfaz = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().interfaz;
         primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[tipoTrabajo];
         trabajando = false;
-        if (numbConstruccion <= ZPlayerPrefs.GetInt("cantidadConstrucciones"))
+       /* if (numbConstruccion <= ZPlayerPrefs.GetInt("cantidadConstrucciones"))
         {
             gameObject.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + numbConstruccion), ZPlayerPrefs.GetFloat("posY" + numbConstruccion),
                 ZPlayerPrefs.GetFloat("posZ" + numbConstruccion));
-        }
+        }*/
         StartCoroutine(Wait());
 
     }
@@ -191,6 +191,7 @@ public class Trabajos : MonoBehaviour
     {
         StopAllCoroutines();
         funcionar = false;
+        startOn = true;
         gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
         ZPlayerPrefs.SetInt("cantidadConstrucciones", ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1);
         ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
@@ -243,7 +244,7 @@ public class Trabajos : MonoBehaviour
             if (ZPlayerPrefs.HasKey("Tiempo " + numbConstruccion))
             {
                 tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo " + numbConstruccion));
-                numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
+                //numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
                 tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
                 //tiempoFinal = tiempoActual.AddSeconds(10D);
                 tiempoDesconexion = DateTime.Now;

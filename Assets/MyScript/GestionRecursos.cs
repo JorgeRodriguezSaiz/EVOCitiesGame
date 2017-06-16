@@ -49,7 +49,7 @@ public class GestionRecursos : MonoBehaviour {
             ZPlayerPrefs.SetFloat("semillasFrambuesa", semillasFrambuesa);
             ZPlayerPrefs.SetFloat("frambuesas", frambuesas);
         }
-        Debug.Log(ZPlayerPrefs.GetFloat("semillasFrambuesa"));
+        //Debug.Log(ZPlayerPrefs.GetFloat("semillasFrambuesa"));
     }
 	
 	// Update is called once per frame
@@ -58,7 +58,7 @@ public class GestionRecursos : MonoBehaviour {
         textoPoblacionTotal.text = Convert.ToString(poblacionTotal);
         comidaText.text = Convert.ToString(manzanas);
         dineroText.text = Convert.ToString((int)gold);
-        Debug.Log(ZPlayerPrefs.GetFloat("semillasFrambuesa"));
+        //Debug.Log(ZPlayerPrefs.GetFloat("semillasFrambuesa"));
         /*if(ZPlayerPrefs.GetFloat("madera") != madera)
         {
            // madera = ZPlayerPrefs.GetFloat("madera");
