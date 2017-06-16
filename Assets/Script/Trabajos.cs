@@ -185,6 +185,8 @@ public class Trabajos : MonoBehaviour
             tiempoFinalTrabajo = tiempoActualTrabajo.AddMinutes(primeraOpcion.GetComponent<DatosTrabajo>().tiempoTrabajo);
             tiempoRestanteTrabajo = tiempoFinalTrabajo - tiempoDesconexionTrabajo;
             primeraOpcion = GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().primeraOpcion[tipoTrabajo];
+            GameObject.Find("Main Camera").GetComponent<SmoothCamera2d>().enabled = true;
+            GameObject.Find("Main Camera").GetComponent<PinchZoom>().enabled = true;
         }
     }
     public void IniciarConstruccion()
