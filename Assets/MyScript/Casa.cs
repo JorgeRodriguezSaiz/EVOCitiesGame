@@ -7,7 +7,7 @@ public class Casa : MonoBehaviour
     public float exp = 75f;
     public float poblacionCasa = 2;
     public int tipoConstruccion = 0;
-    public int numbConstruccion = 0;
+    public int numbConstruccion = -1;
     public TimeSpan tiempoRestante;
     public DateTime tiempoActual;
     public DateTime tiempoDesconexion, tiempoFinal;
@@ -63,7 +63,7 @@ public class Casa : MonoBehaviour
         funcionar = false;
 
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        ZPlayerPrefs.SetInt("cantidadConstrucciones", ZPlayerPrefs.GetInt("cantidadConstrucciones", -1) + 1);
+        ZPlayerPrefs.SetInt("cantidadConstrucciones", numbConstruccion);
         ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
         ZPlayerPrefs.SetFloat("posY" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.y);
         ZPlayerPrefs.SetFloat("posZ" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.z);
@@ -88,7 +88,7 @@ public class Casa : MonoBehaviour
                 if (ZPlayerPrefs.HasKey("Tiempo " + numbConstruccion))
                 {
                     tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo " + numbConstruccion));
-                    numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
+                    //numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
                     tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
                     //tiempoFinal = tiempoActual.AddSeconds(10D);
                     tiempoDesconexion = DateTime.Now;

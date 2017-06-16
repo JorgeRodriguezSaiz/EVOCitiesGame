@@ -5,7 +5,7 @@ public class Ocio : MonoBehaviour
 {
     [Header("Guardado")]
     public int tipoConstruccion = 0;
-    public int numbConstruccion = 0;
+    public int numbConstruccion = -1;
     [Header("Construccion")]
     public float exp = 75f;
     public double tiempoConstruccion;
@@ -29,11 +29,11 @@ public class Ocio : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (numbConstruccion <= ZPlayerPrefs.GetInt("cantidadConstrucciones"))
+        /*if (numbConstruccion <= ZPlayerPrefs.GetInt("cantidadConstrucciones"))
         {
             gameObject.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + numbConstruccion), ZPlayerPrefs.GetFloat("posY" + numbConstruccion),
                 ZPlayerPrefs.GetFloat("posZ" + numbConstruccion));
-        }
+        }*/
         StartCoroutine(Wait());
 
     }
@@ -194,7 +194,7 @@ public class Ocio : MonoBehaviour
                 if (ZPlayerPrefs.HasKey("Tiempo " + numbConstruccion))
                 {
                     tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo " + numbConstruccion));
-                    numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
+                    //numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
                     tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
                     //tiempoFinal = tiempoActual.AddSeconds(10D);
                     tiempoDesconexion = DateTime.Now;
