@@ -71,7 +71,6 @@ public class Trabajos : MonoBehaviour
                         ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                         //this.enabled = false;
                     }
-
                 }
                 else
                 {
@@ -79,26 +78,21 @@ public class Trabajos : MonoBehaviour
                     {
                         if (tiempoDesconexionTrabajo < tiempoFinalTrabajo)
                         {
-                            if (trabajando)
-                            {
-                                gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                                tiempoDesconexionTrabajo = DateTime.Now;
-                                string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
-                                    tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
-                                gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                                float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
-                                tAux -= 1 * Time.deltaTime;
-                                tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
-                            }
+
+                            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                            tiempoDesconexionTrabajo = DateTime.Now;
+                            string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTrabajo.Days, tiempoRestanteTrabajo.Hours,
+                                tiempoRestanteTrabajo.Minutes, tiempoRestanteTrabajo.Seconds);
+                            gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                            float tAux = (float)tiempoRestanteTrabajo.TotalSeconds;
+                            tAux -= 1 * Time.deltaTime;
+                            tiempoRestanteTrabajo = TimeSpan.FromSeconds(tAux);
                         }
                         else
                         {
-                            if (trabajando)
-                            {
-                                gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                                string aux = string.Format("00:00:00:00");
-                                gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                            }
+                            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                            string aux = string.Format("00:00:00:00");
+                            gameObject.GetComponentInChildren<TextMesh>().text = aux;
                         }
                     }
                 }
@@ -195,20 +189,17 @@ public class Trabajos : MonoBehaviour
         funcionar = false;
         startOn = true;
         gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
-        ZPlayerPrefs.SetInt("cantidadConstrucciones", ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1);
+        ZPlayerPrefs.SetInt("cantidadConstrucciones", numbConstruccion);
         ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
         ZPlayerPrefs.SetFloat("posY" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.y);
         ZPlayerPrefs.SetFloat("posZ" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.z);
-        ZPlayerPrefs.SetInt("tipoConstruccion" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), tipoConstruccion);
-        numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
-        if (!funcionar)
-        {
-            tiempoActual = DateTime.Now;
-            ZPlayerPrefs.SetString("Tiempo " + numbConstruccion, tiempoActual.ToString());
-            tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
-            tiempoDesconexion = DateTime.Now;
-            tiempoRestante = tiempoFinal - tiempoDesconexion;
-        }
+        ZPlayerPrefs.SetInt("tipoConstruccion" + numbConstruccion, tipoConstruccion);
+        //numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
+        tiempoActual = DateTime.Now;
+        ZPlayerPrefs.SetString("Tiempo " + numbConstruccion, tiempoActual.ToString());
+        tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
+        tiempoDesconexion = DateTime.Now;
+        tiempoRestante = tiempoFinal - tiempoDesconexion;
     }
     public void EmpezarConstruir()
     {
@@ -232,53 +223,53 @@ public class Trabajos : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.2f);
         //ZPlayerPrefs.DeleteAll();
-        if (ZPlayerPrefs.HasKey("Trabajando " + numbConstruccion))
+        if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
         {
-            trabajando = bool.Parse(ZPlayerPrefs.GetString("Trabajando " + numbConstruccion));
+            if (ZPlayerPrefs.HasKey("Trabajando " + numbConstruccion))
+            {
+                trabajando = bool.Parse(ZPlayerPrefs.GetString("Trabajando " + numbConstruccion));
 
-        }
-        else
-        {
-            trabajando = false;
-        }
-        if (!funcionar)
-        {
-            if (ZPlayerPrefs.HasKey("Tiempo " + numbConstruccion))
-            {
-                tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo " + numbConstruccion));
-                //numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
-                tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
-                //tiempoFinal = tiempoActual.AddSeconds(10D);
-                tiempoDesconexion = DateTime.Now;
-                tiempoRestante = tiempoFinal - tiempoDesconexion;
             }
-            if (tiempoDesconexion >= tiempoFinal)
+            else
             {
-                if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                trabajando = false;
+            }
+            if (!funcionar)
+            {
+                if (ZPlayerPrefs.HasKey("Tiempo " + numbConstruccion))
                 {
-                    GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                    tiempoActual = Convert.ToDateTime(ZPlayerPrefs.GetString("Tiempo " + numbConstruccion));
+                    //numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
+                    tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
+                    //tiempoFinal = tiempoActual.AddSeconds(10D);
+                    tiempoDesconexion = DateTime.Now;
+                    tiempoRestante = tiempoFinal - tiempoDesconexion;
                 }
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                funcionar = true;
-                //this.enabled = false;
-                if (trabajando)
+                if (tiempoDesconexion >= tiempoFinal)
                 {
-                    if (ZPlayerPrefs.HasKey("TiempoTrabajo " + numbConstruccion))
+                    if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                    {
+                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                    }
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    funcionar = true;
+                    //this.enabled = false;
+                    if (trabajando)
                     {
                         tiempoActualTrabajo = Convert.ToDateTime(ZPlayerPrefs.GetString("TiempoTrabajo " + numbConstruccion));
                         tiempoFinalTrabajo = tiempoActualTrabajo.AddMinutes(GameObject.Find("Controller").GetComponent<InterfazTrabajoIn>().
-                            primeraOpcion[ZPlayerPrefs.GetInt("tipoTrabajo" + numbConstruccion)].GetComponent<DatosTrabajo>().tiempoTrabajo);
+                        primeraOpcion[ZPlayerPrefs.GetInt("tipoTrabajo" + numbConstruccion)].GetComponent<DatosTrabajo>().tiempoTrabajo);
+                        //tiempoFinal = tiempoActual.AddMinutes(5D);
+                        tiempoDesconexionTrabajo = DateTime.Now;
+                        tiempoRestanteTrabajo = tiempoFinalTrabajo - tiempoDesconexionTrabajo;
                     }
-                    //tiempoFinal = tiempoActual.AddMinutes(5D);
-                    tiempoDesconexionTrabajo = DateTime.Now;
-                    tiempoRestanteTrabajo = tiempoFinalTrabajo - tiempoDesconexionTrabajo;
                 }
             }
+            startOn = true;
         }
-        startOn = true;
     }
 }
 
