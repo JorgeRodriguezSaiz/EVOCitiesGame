@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-public class Casa : MonoBehaviour
-{
+
+public class Deacoraciones : MonoBehaviour {
     [Header("Experiencia")]
     public float exp = 75f;
-    public float poblacionCasa = 2;
     public int tipoConstruccion = 0;
     public int numbConstruccion = 0;
     public TimeSpan tiempoRestante;
@@ -31,17 +30,10 @@ public class Casa : MonoBehaviour
             {
                 if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                 {
-                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion,0);
+                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
                     funcionar = true;
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
-                    ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
-                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
-                    Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
-                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     //this.enabled = false;
                 }
 
@@ -60,8 +52,6 @@ public class Casa : MonoBehaviour
     public void IniciarConstruccion()
     {
         StopAllCoroutines();
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        gameObject.transform.GetChild(1).gameObject.SetActive(true);
         funcionar = false;
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
         ZPlayerPrefs.SetInt("cantidadConstrucciones", numbConstruccion);
@@ -97,8 +87,6 @@ public class Casa : MonoBehaviour
                 }
                 if (tiempoDesconexion >= tiempoFinal)
                 {
-                    Debug.Log(numbConstruccion);
-                    Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
                     if (ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                         this.enabled = false;
                     else if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
@@ -107,15 +95,9 @@ public class Casa : MonoBehaviour
                         funcionar = true;
                         gameObject.transform.GetChild(0).gameObject.SetActive(false);
                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
-                        ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
-                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                         ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
-                        Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
                         this.enabled = false;
                     }
-                    Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
 
                 }
             }
@@ -123,4 +105,3 @@ public class Casa : MonoBehaviour
         }
     }
 }
-

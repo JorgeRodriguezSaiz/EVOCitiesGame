@@ -93,7 +93,6 @@ public class Construction : MonoBehaviour
     public void OnClickBuilding(GameObject prefabPasar)
     {
         prefab = prefabPasar;
-
         if (GameObject.Find("Controller").GetComponent<GestionRecursos>().madera >= prefab.GetComponent<Recursos>().maderaNecesaria
             && GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra >= prefab.GetComponent<Recursos>().piedraNecesaria
             && GameObject.Find("Controller").GetComponent<GestionRecursos>().gold >= prefab.GetComponent<Recursos>().goldNecesaria
@@ -109,10 +108,6 @@ public class Construction : MonoBehaviour
             ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
             instancia = (GameObject)Instantiate(prefab, mousePos, Quaternion.identity);
             instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
-            botonAceptar.transform.position = Vector3.MoveTowards(botonAceptar.transform.position, Input.mousePosition + auxAceptar,
-                 speed * 100000000 * Time.deltaTime);
-            botonCancelar.transform.position = Vector3.MoveTowards(botonCancelar.transform.position, Input.mousePosition + auxCancelar,
-                speed * 100000000 * Time.deltaTime);
             modoConstruccion = true;
             botonAceptar.SetActive(true);
             botonCancelar.SetActive(true);
@@ -139,6 +134,12 @@ public class Construction : MonoBehaviour
                 instancia.GetComponent<Ocio>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
                 instancia.GetComponent<Ocio>().IniciarConstruccion();
                
+            }
+            else if (instancia.tag == "decoraciones")
+            {
+                instancia.GetComponent<Deacoraciones>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
+                instancia.GetComponent<Deacoraciones>().IniciarConstruccion();
+
             }
 
             modoConstruccion = false;
@@ -182,6 +183,12 @@ public class Construction : MonoBehaviour
                 ZPlayerPrefs.SetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion, instancia.transform.position.y);
                 ZPlayerPrefs.SetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion, instancia.transform.position.z);
             }
+            else if (instancia.tag == "deacoraciones")
+            {
+                ZPlayerPrefs.SetFloat("posX" + instancia.GetComponent<Deacoraciones>().numbConstruccion, instancia.transform.position.x);
+                ZPlayerPrefs.SetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion, instancia.transform.position.y);
+                ZPlayerPrefs.SetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion, instancia.transform.position.z);
+            }
 
         }
         else
@@ -201,9 +208,11 @@ public class Construction : MonoBehaviour
                 instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Ocio>().numbConstruccion),
                 ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion));
             }
-
-
-
+            else if (instancia.tag == "deacoraciones")
+            {
+                instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Deacoraciones>().numbConstruccion),
+                ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion));
+            }
         }
     }
     public void OnClickCancelarMover()
@@ -225,6 +234,11 @@ public class Construction : MonoBehaviour
         {
             instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Ocio>().numbConstruccion),
             ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion));
+        }
+        else if (instancia.tag == "deacoraciones")
+        {
+            instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Deacoraciones>().numbConstruccion),
+            ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion));
         }
     }
 }
