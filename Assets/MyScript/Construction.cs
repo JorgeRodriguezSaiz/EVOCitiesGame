@@ -140,6 +140,12 @@ public class Construction : MonoBehaviour
                 instancia.GetComponent<Ocio>().IniciarConstruccion();
                
             }
+            else if (instancia.tag == "decoraciones")
+            {
+                instancia.GetComponent<Deacoraciones>().numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1;
+                instancia.GetComponent<Deacoraciones>().IniciarConstruccion();
+
+            }
 
             modoConstruccion = false;
             instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
@@ -182,6 +188,12 @@ public class Construction : MonoBehaviour
                 ZPlayerPrefs.SetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion, instancia.transform.position.y);
                 ZPlayerPrefs.SetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion, instancia.transform.position.z);
             }
+            else if (instancia.tag == "deacoraciones")
+            {
+                ZPlayerPrefs.SetFloat("posX" + instancia.GetComponent<Deacoraciones>().numbConstruccion, instancia.transform.position.x);
+                ZPlayerPrefs.SetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion, instancia.transform.position.y);
+                ZPlayerPrefs.SetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion, instancia.transform.position.z);
+            }
 
         }
         else
@@ -201,9 +213,11 @@ public class Construction : MonoBehaviour
                 instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Ocio>().numbConstruccion),
                 ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion));
             }
-
-
-
+            else if (instancia.tag == "deacoraciones")
+            {
+                instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Deacoraciones>().numbConstruccion),
+                ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion));
+            }
         }
     }
     public void OnClickCancelarMover()
@@ -225,6 +239,11 @@ public class Construction : MonoBehaviour
         {
             instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Ocio>().numbConstruccion),
             ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Ocio>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Ocio>().numbConstruccion));
+        }
+        else if (instancia.tag == "deacoraciones")
+        {
+            instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Deacoraciones>().numbConstruccion),
+            ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion));
         }
     }
 }

@@ -234,6 +234,10 @@ public class Trabajos : MonoBehaviour
         {
             GameObject.Find("Controller").GetComponent<GestionRecursos>().jarronDecorado = ZPlayerPrefs.GetFloat("jarronDecorado");
         }
+        if (ZPlayerPrefs.GetFloat("diamantes") != GameObject.Find("Controller").GetComponent<GestionRecursos>().diamantes)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().diamantes = ZPlayerPrefs.GetFloat("diamantes");
+        }
     }
     public void IniciarConstruccion()
     {

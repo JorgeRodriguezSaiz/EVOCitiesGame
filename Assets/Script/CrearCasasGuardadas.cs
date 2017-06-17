@@ -62,6 +62,10 @@ public class CrearCasasGuardadas : MonoBehaviour
                 {
                     prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Ocio>().numbConstruccion = i;
                 }
+                else if (prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].tag == "decoraciones")
+                {
+                    prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Deacoraciones>().numbConstruccion = i;
+                }
             }
         }
         else

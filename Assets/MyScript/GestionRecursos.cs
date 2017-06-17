@@ -17,6 +17,7 @@ public class GestionRecursos : MonoBehaviour {
     public float jarronBasico;
     public float jarronDecorado;
     public float frambuesas;
+    public float diamantes = 5;
     public float gold = 100;
     public float semillasManzanas = 0;
     public float semillasFrambuesa = 0;
@@ -25,6 +26,9 @@ public class GestionRecursos : MonoBehaviour {
     public Text textoPoblacionTotal;
     public Text comidaText;
     public Text dineroText;
+    public Text dineroTextConstruir;
+    public Text diamantesText;
+    public Text diamantesTextConstruir;
 
     private bool guardado;
     // Use this for initialization
@@ -47,6 +51,7 @@ public class GestionRecursos : MonoBehaviour {
             arcilla = ZPlayerPrefs.GetFloat("arcilla");
             jarronBasico = ZPlayerPrefs.GetFloat("jarronBasico");
             jarronDecorado = ZPlayerPrefs.GetFloat("jarronDecorado");
+            diamantes = ZPlayerPrefs.GetFloat("diamantes");
         }
         else
         {
@@ -65,6 +70,7 @@ public class GestionRecursos : MonoBehaviour {
             ZPlayerPrefs.SetFloat("arcilla", arcilla);
             ZPlayerPrefs.SetFloat("jarronBasico", jarronBasico);
             ZPlayerPrefs.SetFloat("jarronDecorado", jarronDecorado);
+            ZPlayerPrefs.SetFloat("diamantes", diamantes);
         }
         //Debug.Log(ZPlayerPrefs.GetFloat("semillasFrambuesa"));
     }
@@ -75,6 +81,9 @@ public class GestionRecursos : MonoBehaviour {
         textoPoblacionTotal.text = Convert.ToString(poblacion);
         comidaText.text = Convert.ToString(manzanas);
         dineroText.text = Convert.ToString((int)gold);
+        dineroTextConstruir.text = Convert.ToString((int)gold);
+        diamantesText.text = Convert.ToString((int)diamantes);
+        diamantesTextConstruir.text = Convert.ToString((int)diamantes);
         if (!guardado)
         {
             guardado = true;
