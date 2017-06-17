@@ -69,6 +69,8 @@ public class Trabajos : MonoBehaviour
                         ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
                         ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                        gameObject.transform.GetChild(1).gameObject.SetActive(false);
                         //this.enabled = false;
                     }
                 }
@@ -242,6 +244,8 @@ public class Trabajos : MonoBehaviour
     public void IniciarConstruccion()
     {
         StopAllCoroutines();
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.transform.GetChild(1).gameObject.SetActive(true);
         funcionar = false;
         startOn = true;
         gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
