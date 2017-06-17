@@ -53,6 +53,27 @@ public class ControllerTalar : MonoBehaviour {
                     float tAux = (float)tiempoRestanteTalar.TotalSeconds;
                     tAux -= 1 * Time.deltaTime;
                     tiempoRestanteTalar = TimeSpan.FromSeconds(tAux);
+                    if (!arbol.GetComponent<CombustionEspontaneaArborea>().madera)
+                    {
+                        if (tAux <= tiempoTalar*60 / 2)
+                        {
+                            arbol.GetComponent<SpriteRenderer>().enabled = false;
+                            arbol.transform.GetChild(1).gameObject.SetActive(true);
+                        }
+                    }
+                    if (arbol.GetComponent<CombustionEspontaneaArborea>().madera)
+                    {
+                        if (tAux <= (tiempoTalar*60*2) / 3)
+                        {
+                            arbol.GetComponent<SpriteRenderer>().enabled = false;
+                            arbol.transform.GetChild(1).gameObject.SetActive(true);
+                        }
+                        if (tAux <= tiempoTalar*60 / 3)
+                        {
+                            arbol.GetComponent<SpriteRenderer>().enabled = false;
+                            arbol.transform.GetChild(2).gameObject.SetActive(true);
+                        }
+                    }
                 }
             }
         }
