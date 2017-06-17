@@ -161,7 +161,6 @@ public class Construction : MonoBehaviour
     {
         modoConstruccion = false;
         mover = false;
-        instancia = null;
         if (disponible)
         {
             instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
@@ -189,7 +188,7 @@ public class Construction : MonoBehaviour
                 ZPlayerPrefs.SetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion, instancia.transform.position.y);
                 ZPlayerPrefs.SetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion, instancia.transform.position.z);
             }
-
+            instancia = null;
         }
         else
         {
@@ -219,7 +218,6 @@ public class Construction : MonoBehaviour
     {
         mover = false;
         modoConstruccion = false;
-        instancia = null;
         if (instancia.tag == "trabajo")
         {
             instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Trabajos>().numbConstruccion),
@@ -240,6 +238,7 @@ public class Construction : MonoBehaviour
             instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Deacoraciones>().numbConstruccion),
             ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion));
         }
+        instancia = null;
     }
 }
 
