@@ -71,8 +71,8 @@ public class GestionRecursos : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        textoPoblacion.text = Convert.ToString(poblacion) + "/";
-        textoPoblacionTotal.text = Convert.ToString(poblacionTotal);
+        textoPoblacion.text = Convert.ToString(poblacion) + "/" + Convert.ToString(poblacionTotal);
+        textoPoblacionTotal.text = Convert.ToString(poblacion);
         comidaText.text = Convert.ToString(manzanas);
         dineroText.text = Convert.ToString((int)gold);
         if (!guardado)
