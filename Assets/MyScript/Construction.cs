@@ -93,7 +93,6 @@ public class Construction : MonoBehaviour
     public void OnClickBuilding(GameObject prefabPasar)
     {
         prefab = prefabPasar;
-
         if (GameObject.Find("Controller").GetComponent<GestionRecursos>().madera >= prefab.GetComponent<Recursos>().maderaNecesaria
             && GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra >= prefab.GetComponent<Recursos>().piedraNecesaria
             && GameObject.Find("Controller").GetComponent<GestionRecursos>().gold >= prefab.GetComponent<Recursos>().goldNecesaria
@@ -109,10 +108,6 @@ public class Construction : MonoBehaviour
             ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
             instancia = (GameObject)Instantiate(prefab, mousePos, Quaternion.identity);
             instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .5f);
-            botonAceptar.transform.position = Vector3.MoveTowards(botonAceptar.transform.position, Input.mousePosition + auxAceptar,
-                 speed * 100000000 * Time.deltaTime);
-            botonCancelar.transform.position = Vector3.MoveTowards(botonCancelar.transform.position, Input.mousePosition + auxCancelar,
-                speed * 100000000 * Time.deltaTime);
             modoConstruccion = true;
             botonAceptar.SetActive(true);
             botonCancelar.SetActive(true);

@@ -40,6 +40,8 @@ public class Casa : MonoBehaviour
                     ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
                     ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                     Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
+                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     //this.enabled = false;
                 }
 
@@ -58,6 +60,8 @@ public class Casa : MonoBehaviour
     public void IniciarConstruccion()
     {
         StopAllCoroutines();
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.transform.GetChild(1).gameObject.SetActive(true);
         funcionar = false;
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
         ZPlayerPrefs.SetInt("cantidadConstrucciones", numbConstruccion);
