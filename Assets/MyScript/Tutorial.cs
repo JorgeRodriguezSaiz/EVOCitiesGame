@@ -39,12 +39,21 @@ public class Tutorial : MonoBehaviour {
         auxString = "";
         for (int i = 0; i < strComplete.Length; i++)
         {
+            if (i == 4)
+            {
+                IntroducirName();
+            }
             auxString += strComplete[i];
             textoTuto.text = auxString;
             yield return new WaitForSeconds(tiempoLetras);
         }
         finAnimate = true;
         click = true;
+        yield return null;
+    }
+    IEnumerator IntroducirName()
+    {
+        TouchScreenKeyboard.Open("");
         yield return null;
     }
     public void Click()
