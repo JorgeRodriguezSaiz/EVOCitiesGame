@@ -59,6 +59,8 @@ public class Ocio : MonoBehaviour
                     ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
                     //GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
                     ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     //this.enabled = false;
                 }
                 else
@@ -105,57 +107,11 @@ public class Ocio : MonoBehaviour
         }
     }
 
-    /*private void OnMouseDown()
-    {
-        if (tiempoDesconexion >= tiempoFinal)
-        {
-            if (funcionar)
-            {
-                if (!ociando)
-                {
-                    Ociar();
-                }
-            }
-        }
-    }
-    public void Ociar()
-    {
-        if (!ociando)
-        {
-            if (trabajadoresNecesita < 2)
-            {
-                ociando = true;
-                gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                tiempoActualOcio = DateTime.Now;
-                ZPlayerPrefs.SetString("TiempoTrabajo " + numbConstruccion, tiempoActualOcio.ToString());
-                tiempoDesconexionOcio = DateTime.Now;
-                tiempoFinalOcio = tiempoActualOcio.AddMinutes(tiempoTrabajo);
-                tiempoRestanteOcio = tiempoFinalOcio - tiempoDesconexionOcio;
-            }
-        }
-    }*/
     public void IniciarConstruccion()
     {
-        /*StopAllCoroutines();
-        funcionar = false;
-        gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
-        ZPlayerPrefs.SetInt("cantidadConstrucciones", ZPlayerPrefs.GetInt("cantidadConstrucciones") + 1);
-        ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
-        ZPlayerPrefs.SetFloat("posY" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.y);
-        ZPlayerPrefs.SetFloat("posZ" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.z);
-        ZPlayerPrefs.SetInt("tipoConstruccion" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), tipoConstruccion);
-        numbConstruccion = ZPlayerPrefs.GetInt("cantidadConstrucciones");
-        if (!funcionar)
-        {
-            tiempoActual = DateTime.Now;
-            ZPlayerPrefs.SetString("Tiempo " + numbConstruccion, tiempoActual.ToString());
-            tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
-            //tiempoFinal = tiempoActual.AddSeconds(10D);
-            tiempoDesconexion = DateTime.Now;
-            tiempoRestante = tiempoFinal - tiempoDesconexion;
-        }*/
-
         StopAllCoroutines();
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.transform.GetChild(1).gameObject.SetActive(true);
         funcionar = false;
         gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
         ZPlayerPrefs.SetInt("cantidadConstrucciones", numbConstruccion);
