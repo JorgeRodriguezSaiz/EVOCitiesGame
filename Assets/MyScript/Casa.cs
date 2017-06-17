@@ -7,7 +7,7 @@ public class Casa : MonoBehaviour
     public float exp = 75f;
     public float poblacionCasa = 2;
     public int tipoConstruccion = 0;
-    public int numbConstruccion = -1;
+    public int numbConstruccion = 0;
     public TimeSpan tiempoRestante;
     public DateTime tiempoActual;
     public DateTime tiempoDesconexion, tiempoFinal;
@@ -27,33 +27,31 @@ public class Casa : MonoBehaviour
         if (startOn)
         {
             tiempoDesconexion = DateTime.Now;
-            if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+            if (tiempoDesconexion >= tiempoFinal)
             {
-                if (tiempoDesconexion >= tiempoFinal)
+                if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                 {
-                    if (!PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
-                    {
-                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
-                        funcionar = true;
-                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
-                        ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
-                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
-                        this.enabled = false;
-                    }
-                    
+                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion,0);
+                    funcionar = true;
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
+                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
+                    ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
+                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                    Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
+                    //this.enabled = false;
+                }
 
-                }
-                if (!funcionar)
-                {
-                    string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours, tiempoRestante.Minutes, tiempoRestante.Seconds);
-                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                    float tAux = (float)tiempoRestante.TotalSeconds;
-                    tAux -= 1 * Time.deltaTime;
-                    tiempoRestante = TimeSpan.FromSeconds(tAux);
-                }
+
+            }
+            if (!funcionar)
+            {
+                string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours, tiempoRestante.Minutes, tiempoRestante.Seconds);
+                gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                float tAux = (float)tiempoRestante.TotalSeconds;
+                tAux -= 1 * Time.deltaTime;
+                tiempoRestante = TimeSpan.FromSeconds(tAux);
             }
         }
     }
@@ -61,7 +59,6 @@ public class Casa : MonoBehaviour
     {
         StopAllCoroutines();
         funcionar = false;
-
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
         ZPlayerPrefs.SetInt("cantidadConstrucciones", numbConstruccion);
         ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
@@ -96,9 +93,11 @@ public class Casa : MonoBehaviour
                 }
                 if (tiempoDesconexion >= tiempoFinal)
                 {
-                    if(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                    Debug.Log(numbConstruccion);
+                    Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
+                    if (ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                         this.enabled = false;
-                    if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                    else if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                     {
                         gameObject.transform.GetChild(0).gameObject.SetActive(false);
                         funcionar = true;
@@ -108,9 +107,11 @@ public class Casa : MonoBehaviour
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
                         ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
                         ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                        Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
+                        this.enabled = false;
                     }
-                    this.enabled = false;
-                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                    Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
 
                 }
             }
