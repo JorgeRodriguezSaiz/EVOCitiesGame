@@ -88,43 +88,46 @@ public class ComidaCasa : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        if (minaActual.tag == "trabajo")
+        if (minaActual)
         {
-            if (minaActual.GetComponent<Trabajos>().comer)
+            if (minaActual.tag == "trabajo")
             {
-                comidaCasa = comidaCasaTotal;
-                ZPlayerPrefs.SetFloat("comidaCasa " + gameObject.GetComponent<Casa>().numbConstruccion, comidaCasa);
-                isComida = true;
-                gameObject.transform.GetChild(4).gameObject.SetActive(false);
-                gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                gameObject.transform.GetChild(3).gameObject.SetActive(false);
-                minaActual.GetComponent<Trabajos>().comer = false;
+                if (minaActual.GetComponent<Trabajos>().comer)
+                {
+                    comidaCasa = comidaCasaTotal;
+                    ZPlayerPrefs.SetFloat("comidaCasa " + gameObject.GetComponent<Casa>().numbConstruccion, comidaCasa);
+                    isComida = true;
+                    gameObject.transform.GetChild(4).gameObject.SetActive(false);
+                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                    minaActual.GetComponent<Trabajos>().comer = false;
+                }
             }
-        }
-        if (minaActual.tag == "ocio")
-        {
-            if (minaActual.GetComponent<Ocio>().comer)
+            if (minaActual.tag == "ocio")
             {
-                comidaCasa = comidaCasaTotal;
-                ZPlayerPrefs.SetFloat("comidaCasa " + gameObject.GetComponent<Casa>().numbConstruccion, comidaCasa);
-                isComida = true;
-                gameObject.transform.GetChild(4).gameObject.SetActive(false);
-                gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                gameObject.transform.GetChild(3).gameObject.SetActive(false);
-                minaActual.GetComponent<Ocio>().comer = false;
+                if (minaActual.GetComponent<Ocio>().comer)
+                {
+                    comidaCasa = comidaCasaTotal;
+                    ZPlayerPrefs.SetFloat("comidaCasa " + gameObject.GetComponent<Casa>().numbConstruccion, comidaCasa);
+                    isComida = true;
+                    gameObject.transform.GetChild(4).gameObject.SetActive(false);
+                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                    minaActual.GetComponent<Ocio>().comer = false;
+                }
             }
-        }
-        if (minaActual.tag == "casa")
-        {
-            if (minaActual.GetComponent<Casa>().comer)
+            if (minaActual.tag == "casa")
             {
-                comidaCasa = comidaCasaTotal;
-                ZPlayerPrefs.SetFloat("comidaCasa " + gameObject.GetComponent<Casa>().numbConstruccion, comidaCasa);
-                isComida = true;
-                gameObject.transform.GetChild(4).gameObject.SetActive(false);
-                gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                gameObject.transform.GetChild(3).gameObject.SetActive(false);
-                minaActual.GetComponent<Casa>().comer = false;
+                if (minaActual.GetComponent<Casa>().comer)
+                {
+                    comidaCasa = comidaCasaTotal;
+                    ZPlayerPrefs.SetFloat("comidaCasa " + gameObject.GetComponent<Casa>().numbConstruccion, comidaCasa);
+                    isComida = true;
+                    gameObject.transform.GetChild(4).gameObject.SetActive(false);
+                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                    minaActual.GetComponent<Casa>().comer = false;
+                }
             }
         }
     }

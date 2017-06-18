@@ -62,6 +62,8 @@ public class Trabajos : MonoBehaviour
             {
                 if (!funcionar)
                 {
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(3).gameObject.SetActive(true);
                    /* if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                     {
                         funcionar = true;
@@ -93,9 +95,8 @@ public class Trabajos : MonoBehaviour
                         }
                         else
                         {
-                            gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                            string aux = string.Format("00:00:00:00");
-                            gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                            gameObject.transform.GetChild(4).gameObject.SetActive(true);
                         }
                     }
                 }
@@ -143,6 +144,9 @@ public class Trabajos : MonoBehaviour
                     {
                         if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo && trabajando)
                         {
+                            gameObject.transform.GetChild(4).gameObject.SetActive(false);
+                            particulas.SetActive(true);
+
                             finTrabajo = true;
                             if (finTrabajo)
                             {
@@ -172,7 +176,7 @@ public class Trabajos : MonoBehaviour
                     {
                         funcionar = true;
                         particulas.SetActive(true);
-                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        gameObject.transform.GetChild(3).gameObject.SetActive(false);
                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
                         ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;

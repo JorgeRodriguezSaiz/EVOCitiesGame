@@ -94,10 +94,10 @@ public class ControllerTalar : MonoBehaviour {
                     {
                         casitas[casa].GetComponent<ComidaCasa>().minaActual = arbol;
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
-                        casitas[casa].GetComponent<ComidaCasa>().minaActual = gameObject;
                         arbol.GetComponent<CombustionEspontaneaArborea>().Talar();
                         panelTalar.SetActive(false);
                         panelPiedra.SetActive(false);
+                        break;
                     }
                     else
                     {
