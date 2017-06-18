@@ -150,12 +150,14 @@ public class Construction : MonoBehaviour
         {
             Destroy(instancia);
             modoConstruccion = false;
+            instancia = null;
         }
     }
     public void OnClickCancelar()
     {
-        Destroy(instancia);
         modoConstruccion = false;
+        Destroy(instancia);
+        instancia = null;
     }
     public void OnClickAceptarMover()
     {
@@ -212,12 +214,15 @@ public class Construction : MonoBehaviour
                 instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Deacoraciones>().numbConstruccion),
                 ZPlayerPrefs.GetFloat("posY" + instancia.GetComponent<Deacoraciones>().numbConstruccion), ZPlayerPrefs.GetFloat("posZ" + instancia.GetComponent<Deacoraciones>().numbConstruccion));
             }
+            instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            instancia = null;
         }
     }
     public void OnClickCancelarMover()
     {
         mover = false;
         modoConstruccion = false;
+        instancia.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
         if (instancia.tag == "trabajo")
         {
             instancia.transform.position = new Vector3(ZPlayerPrefs.GetFloat("posX" + instancia.GetComponent<Trabajos>().numbConstruccion),
