@@ -21,6 +21,8 @@ public class ComidaCasa : MonoBehaviour {
         if(comidaCasa <= 0)
         {
             isComida = false;
+            gameObject.transform.GetChild(4).gameObject.SetActive(true);
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
         if (comidaCasa < comidaCasaTotal)
         {
@@ -35,5 +37,8 @@ public class ComidaCasa : MonoBehaviour {
     {
         comidaCasa = comidaCasaTotal;
         isComida = true;
+        gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.transform.GetChild(3).gameObject.SetActive(false);
     }
 }
