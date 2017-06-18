@@ -9,6 +9,7 @@ public class Ocio : MonoBehaviour
     [Header("Construccion")]
     public float exp = 75f;
     public double tiempoConstruccion;
+    public GameObject particulas;
     [Header("VariablesTrabajo")]
     public int trabajadoresNecesita = 2;
     public string recurso = null;
@@ -47,11 +48,14 @@ public class Ocio : MonoBehaviour
         {
             if (tiempoDesconexion >= tiempoFinal )
             {
-                GameObject.Find("Controller").GetComponent<GestionRecursos>().gold +=
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal
-                    * vAumentoOro * Time.deltaTime;
+                if (funcionar)
+                {
+                    GameObject.Find("Controller").GetComponent<GestionRecursos>().gold +=
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal
+                        * vAumentoOro * Time.deltaTime;
+                }
 
-                if (!funcionar && !ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                /*if (!funcionar && !ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                 {
                     funcionar = true;
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
@@ -62,7 +66,7 @@ public class Ocio : MonoBehaviour
                     gameObject.GetComponent<SpriteRenderer>().enabled = true;
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     //this.enabled = false;
-                }
+                }*/
                 else
                 {
                     if (ociando)
@@ -96,17 +100,42 @@ public class Ocio : MonoBehaviour
             }
             else if (!funcionar)
             {
-                tiempoDesconexion = DateTime.Now;
-                string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
-                    tiempoRestante.Minutes, tiempoRestante.Seconds);
-                gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                float tAux = (float)tiempoRestante.TotalSeconds;
-                tAux -= 1 * Time.deltaTime;
-                tiempoRestante = TimeSpan.FromSeconds(tAux);
+                if (tiempoDesconexion < tiempoFinal)
+                {
+                    tiempoDesconexion = DateTime.Now;
+                    string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
+                        tiempoRestante.Minutes, tiempoRestante.Seconds);
+                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                    float tAux = (float)tiempoRestante.TotalSeconds;
+                    tAux -= 1 * Time.deltaTime;
+                    tiempoRestante = TimeSpan.FromSeconds(tAux);
+                }
             }
         }
     }
+    private void OnMouseUp()
+    {
+        if (tiempoDesconexion >= tiempoFinal)
+        {
+            if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+            {
+                if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                {
+                    funcionar = true;
+                    particulas.SetActive(true);
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
 
+                    //GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    //this.enabled = false;
+                }
+            }
+        }
+    }
     public void IniciarConstruccion()
     {
         StopAllCoroutines();
@@ -156,14 +185,23 @@ public class Ocio : MonoBehaviour
                 if (tiempoDesconexion >= tiempoFinal)
                 {
                     if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
-                    {
-                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                     {
+                        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                        gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                        gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                        string aux = string.Format("00:00:00:00");
+                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                        /*GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                         ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                         ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);*/
                     }
-                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    funcionar = true;
+                    else if (ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                    {
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        funcionar = true;
+                    }
                     //this.enabled = false;
                     if (ociando)
                     {
