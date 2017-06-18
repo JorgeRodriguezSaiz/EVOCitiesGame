@@ -46,10 +46,6 @@ public class CrearCasasGuardadas : MonoBehaviour
             Debug.Log(ZPlayerPrefs.GetInt("cantidadConstrucciones"));
             for (int i = 0; i <= ZPlayerPrefs.GetInt("cantidadConstrucciones"); i++)
             {
-               
-                prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].transform.position =
-                new Vector3(ZPlayerPrefs.GetFloat("posX" + i), ZPlayerPrefs.GetFloat("posY" + i), ZPlayerPrefs.GetFloat("posZ" + i));
-                Instantiate(prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)]);
                 if (prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].tag == "trabajo")
                 {
                     prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Trabajos>().numbConstruccion = i;
@@ -66,6 +62,25 @@ public class CrearCasasGuardadas : MonoBehaviour
                 {
                     prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Deacoraciones>().numbConstruccion = i;
                 }
+                prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].transform.position =
+                new Vector3(ZPlayerPrefs.GetFloat("posX" + i), ZPlayerPrefs.GetFloat("posY" + i), ZPlayerPrefs.GetFloat("posZ" + i));
+                Instantiate(prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)]);
+                /*if (prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].tag == "trabajo")
+                {
+                    prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Trabajos>().numbConstruccion = i;
+                }
+                else if (prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].tag == "casa")
+                {
+                    prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Casa>().numbConstruccion = i;
+                }
+                else if (prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].tag == "ocio")
+                {
+                    prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Ocio>().numbConstruccion = i;
+                }
+                else if (prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].tag == "decoraciones")
+                {
+                    prefabsConstruccion[ZPlayerPrefs.GetInt("tipoConstruccion" + i)].GetComponent<Deacoraciones>().numbConstruccion = i;
+                }*/
             }
         }
         else
