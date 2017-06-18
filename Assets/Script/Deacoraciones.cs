@@ -50,6 +50,11 @@ public class Deacoraciones : MonoBehaviour {
                     tAux -= 1 * Time.deltaTime;
                     tiempoRestante = TimeSpan.FromSeconds(tAux);
                 }
+                else
+                {
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                }
             }
         }
     }
@@ -69,6 +74,8 @@ public class Deacoraciones : MonoBehaviour {
                     gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     gameObject.GetComponent<SpriteRenderer>().enabled = true;
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(4).gameObject.SetActive(true);
                     this.enabled = false;
                 }
             }
