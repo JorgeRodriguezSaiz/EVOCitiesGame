@@ -53,6 +53,7 @@ public class Casa : MonoBehaviour
             }*/
             if (!funcionar)
             {
+
                 if (tiempoDesconexion < tiempoFinal)
                 {
                     string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours, tiempoRestante.Minutes, tiempoRestante.Seconds);
@@ -60,6 +61,11 @@ public class Casa : MonoBehaviour
                     float tAux = (float)tiempoRestante.TotalSeconds;
                     tAux -= 1 * Time.deltaTime;
                     tiempoRestante = TimeSpan.FromSeconds(tAux);
+                }
+                else
+                {
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(5).gameObject.SetActive(true);
                 }
             }
         }
@@ -87,6 +93,8 @@ public class Casa : MonoBehaviour
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     antecomer = true;
                     comer = true;
+                    gameObject.transform.GetChild(5).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(6).gameObject.SetActive(true);
                     //this.enabled = false;
                 }
             }

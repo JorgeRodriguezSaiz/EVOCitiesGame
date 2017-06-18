@@ -64,18 +64,18 @@ public class Trabajos : MonoBehaviour
                 {
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     gameObject.transform.GetChild(3).gameObject.SetActive(true);
-                   /* if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
-                    {
-                        funcionar = true;
-                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
-                        gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                        gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                        //this.enabled = false;
-                    }*/
+                    /* if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                     {
+                         funcionar = true;
+                         gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                         ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                         ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                         gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                         gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                         //this.enabled = false;
+                     }*/
                 }
                 else
                 {
@@ -145,6 +145,7 @@ public class Trabajos : MonoBehaviour
                         if (tiempoDesconexionTrabajo >= tiempoFinalTrabajo && trabajando)
                         {
                             gameObject.transform.GetChild(4).gameObject.SetActive(false);
+                            gameObject.transform.GetChild(5).gameObject.SetActive(true);
                             particulas.SetActive(true);
 
                             finTrabajo = true;
@@ -177,6 +178,7 @@ public class Trabajos : MonoBehaviour
                         funcionar = true;
                         particulas.SetActive(true);
                         gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                        gameObject.transform.GetChild(5).gameObject.SetActive(true);
                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
                         ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
