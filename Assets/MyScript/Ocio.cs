@@ -46,73 +46,79 @@ public class Ocio : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //            if (startOn)
-        //          {
-        if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+        if (startOn)
         {
-            if (tiempoDesconexion >= tiempoFinal )
+            if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
             {
-                if (funcionar)
+                if (tiempoDesconexion >= tiempoFinal)
                 {
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().gold +=
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal
-                        * vAumentoOro * Time.deltaTime;
-                }
-
-                /*if (!funcionar && !ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
-                {
-                    funcionar = true;
-                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                    GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
-                    //GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
-                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                    //this.enabled = false;
-                }*/
-                else
-                {
-                    if (ociando)
+                    if (!funcionar)
                     {
-                        if (tiempoDesconexionOcio >= tiempoFinalOcio)
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                    }
+                    if (funcionar)
+                    {
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().gold +=
+                            GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal
+                            * vAumentoOro * Time.deltaTime;
+                    }
+
+                    /*if (!funcionar && !ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                    {
+                        funcionar = true;
+                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                        //GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                        gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                        //this.enabled = false;
+                    }*/
+                    else
+                    {
+                        if (ociando)
                         {
-                            finOcio = true;
-                            if (finOcio)
+                            if (tiempoDesconexionOcio >= tiempoFinalOcio)
                             {
-                                finOcio = false;
-                                ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
+                                finOcio = true;
+                                if (finOcio)
+                                {
+                                    finOcio = false;
+                                    ZPlayerPrefs.SetInt(recurso, cantidadRecursos);
+                                }
+                                ociando = false;
+                                gameObject.transform.GetChild(0).gameObject.SetActive(false);
                             }
-                            ociando = false;
-                            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            if (ociando)
+                            else
                             {
-                                tiempoDesconexionOcio = DateTime.Now;
-                                string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteOcio.Days, tiempoRestanteOcio.Hours,
-                                    tiempoRestanteOcio.Minutes, tiempoRestanteOcio.Seconds);
-                                gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                                float tAux = (float)tiempoRestanteOcio.TotalSeconds;
-                                tAux -= 1 * Time.deltaTime;
-                                tiempoRestanteOcio = TimeSpan.FromSeconds(tAux);
+                                if (ociando)
+                                {
+                                    tiempoDesconexionOcio = DateTime.Now;
+                                    string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteOcio.Days, tiempoRestanteOcio.Hours,
+                                        tiempoRestanteOcio.Minutes, tiempoRestanteOcio.Seconds);
+                                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                                    float tAux = (float)tiempoRestanteOcio.TotalSeconds;
+                                    tAux -= 1 * Time.deltaTime;
+                                    tiempoRestanteOcio = TimeSpan.FromSeconds(tAux);
+                                }
                             }
                         }
                     }
                 }
-            }
-            else if (!funcionar)
-            {
-                if (tiempoDesconexion < tiempoFinal)
+                else if (!funcionar)
                 {
-                    tiempoDesconexion = DateTime.Now;
-                    string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
-                        tiempoRestante.Minutes, tiempoRestante.Seconds);
-                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                    float tAux = (float)tiempoRestante.TotalSeconds;
-                    tAux -= 1 * Time.deltaTime;
-                    tiempoRestante = TimeSpan.FromSeconds(tAux);
+                    if (tiempoDesconexion < tiempoFinal)
+                    {
+                        tiempoDesconexion = DateTime.Now;
+                        string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours,
+                            tiempoRestante.Minutes, tiempoRestante.Seconds);
+                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                        float tAux = (float)tiempoRestante.TotalSeconds;
+                        tAux -= 1 * Time.deltaTime;
+                        tiempoRestante = TimeSpan.FromSeconds(tAux);
+                    }
                 }
             }
         }
@@ -136,6 +142,8 @@ public class Ocio : MonoBehaviour
                     ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                     gameObject.GetComponent<SpriteRenderer>().enabled = true;
                     gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(3).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(4).gameObject.SetActive(true);
                     antecomer = true;
                     comer = true;
                     //this.enabled = false;
@@ -155,6 +163,7 @@ public class Ocio : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 gameObject.transform.GetChild(1).gameObject.SetActive(true);
                 funcionar = false;
+                
                 gameObject.transform.GetChild(0).gameObject.SetActive(true); ;
                 ZPlayerPrefs.SetInt("cantidadConstrucciones", numbConstruccion);
                 ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
@@ -169,6 +178,7 @@ public class Ocio : MonoBehaviour
                 tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
                 tiempoDesconexion = DateTime.Now;
                 tiempoRestante = tiempoFinal - tiempoDesconexion;
+                startOn = true;
                 break;
             }
         }
