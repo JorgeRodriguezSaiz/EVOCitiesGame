@@ -3,6 +3,7 @@ using System.Collections;
 using System;
 
 public class ControllerTalar : MonoBehaviour {
+    [Header("Arboles")]
     public GameObject panelTalar;
     public GameObject arbol;
     public GameObject[] casitas;
@@ -15,6 +16,8 @@ public class ControllerTalar : MonoBehaviour {
     public float tiempoTalar = 0.5f;
     public int trabajadoresNecesita;
     public float maderaTalar = 15;
+    [Header("Piedras")]
+    public GameObject panelPiedra;
     public float piedraPicar = 15;
 
     // Use this for initialization
@@ -25,11 +28,11 @@ public class ControllerTalar : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (talando)
+        /*if (talando)
         {
             if (tiempoDesconexionTalar >= tiempoFinalTalar)
             {
-                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                /*GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
 
                 talando = false;
                 Destroy(arbol);
@@ -76,7 +79,7 @@ public class ControllerTalar : MonoBehaviour {
                     }
                 }
             }
-        }
+        }*/
     }
     public void OnClickAceptarTalar()
     {
@@ -89,10 +92,12 @@ public class ControllerTalar : MonoBehaviour {
                 {
                     if (casitas[casa].GetComponent<ComidaCasa>().isComida)
                     {
+                        casitas[casa].GetComponent<ComidaCasa>().minaActual = arbol;
                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion -= trabajadoresNecesita;
                         casitas[casa].GetComponent<ComidaCasa>().minaActual = gameObject;
-                        Talar();
+                        arbol.GetComponent<CombustionEspontaneaArborea>().Talar();
                         panelTalar.SetActive(false);
+                        panelPiedra.SetActive(false);
                     }
                     else
                     {
@@ -101,12 +106,14 @@ public class ControllerTalar : MonoBehaviour {
                 }
             }
         }
+        //arbol.GetComponent<CombustionEspontaneaArborea>().OnClickAceptarTalar();
     }
     public void OnClickCancelarTalar()
     {
         GameObject.Find("ConfirmacionArboles").SetActive(false);
+        panelPiedra.SetActive(false);
     }
-    public void Talar()
+    /*public void Talar()
     {
         if (!talando)
         {
@@ -118,6 +125,24 @@ public class ControllerTalar : MonoBehaviour {
                 tiempoFinalTalar = tiempoActualTalar.AddMinutes(tiempoTalar);
                 tiempoRestanteTalar = tiempoFinalTalar - tiempoDesconexionTalar;
             
+        }
+    }*/
+    public void Finish()
+    {
+        if (tiempoDesconexionTalar >= tiempoFinalTalar)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+
+            talando = false;
+            Destroy(arbol);
+            if (arbol.GetComponent<CombustionEspontaneaArborea>().madera)
+            {
+                gameObject.GetComponent<GestionRecursos>().madera += maderaTalar;
+            }
+            else
+            {
+                gameObject.GetComponent<GestionRecursos>().piedra += piedraPicar;
+            }
         }
     }
 }
