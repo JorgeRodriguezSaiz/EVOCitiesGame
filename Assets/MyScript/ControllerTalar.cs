@@ -120,4 +120,22 @@ public class ControllerTalar : MonoBehaviour {
             
         }
     }
+    private void OnMouseUp()
+    {
+        if (tiempoDesconexionTalar >= tiempoFinalTalar)
+        {
+            GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+
+            talando = false;
+            Destroy(arbol);
+            if (arbol.GetComponent<CombustionEspontaneaArborea>().madera)
+            {
+                gameObject.GetComponent<GestionRecursos>().madera += maderaTalar;
+            }
+            else
+            {
+                gameObject.GetComponent<GestionRecursos>().piedra += piedraPicar;
+            }
+        }
+    }
 }
