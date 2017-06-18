@@ -13,14 +13,20 @@ public class ComidaCasa : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (minaActual && !minaActual.GetComponent<Trabajos>().trabajando)
+        if (minaActual && !minaActual.GetComponent<Trabajos>().finTrabajo)
         {
-            comidaCasa = 0;
+            comidaCasa -= minaActual.GetComponent<Trabajos>().primeraOpcion.GetComponent<DatosTrabajo>().trabajadoresNecesita;
             minaActual = null;
         }
         if(comidaCasa <= 0)
         {
             isComida = false;
+            gameObject.transform.GetChild(4).gameObject.SetActive(true);
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
+        if (comidaCasa < comidaCasaTotal)
+        {
+            gameObject.transform.GetChild(3).gameObject.SetActive(true);
         }
         /*if (gameObject.GetComponent<Casa>().enabled == false && comidaCasa > 0)
         {
@@ -29,12 +35,10 @@ public class ComidaCasa : MonoBehaviour {
 	}
     public void OnMouseDown()
     {
-        if (comidaCasaTotal - comidaCasa > 1)
-        {
-            GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas -= (int)(comidaCasaTotal - comidaCasa);
-            ZPlayerPrefs.SetFloat("manzanas", GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas);
-            comidaCasa = comidaCasaTotal;
-            isComida = true;
-        }
+        comidaCasa = comidaCasaTotal;
+        isComida = true;
+        gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.transform.GetChild(3).gameObject.SetActive(false);
     }
 }
