@@ -13,6 +13,7 @@ public class Casa : MonoBehaviour
     public DateTime tiempoDesconexion, tiempoFinal;
     public bool funcionar = false, startOn = false;
     public double tiempoConstruccion;
+    public GameObject particulas;
     // Use this for initialization
     void Start()
     {
@@ -27,9 +28,9 @@ public class Casa : MonoBehaviour
         if (startOn)
         {
             tiempoDesconexion = DateTime.Now;
-            if (tiempoDesconexion >= tiempoFinal)
+            /*if (tiempoDesconexion >= tiempoFinal)
             {
-                if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                /*if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                 {
                     ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion,0);
                     funcionar = true;
@@ -46,14 +47,41 @@ public class Casa : MonoBehaviour
                 }
 
 
-            }
+            }*/
             if (!funcionar)
             {
-                string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours, tiempoRestante.Minutes, tiempoRestante.Seconds);
-                gameObject.GetComponentInChildren<TextMesh>().text = aux;
-                float tAux = (float)tiempoRestante.TotalSeconds;
-                tAux -= 1 * Time.deltaTime;
-                tiempoRestante = TimeSpan.FromSeconds(tAux);
+                if (tiempoDesconexion < tiempoFinal)
+                {
+                    string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours, tiempoRestante.Minutes, tiempoRestante.Seconds);
+                    gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                    float tAux = (float)tiempoRestante.TotalSeconds;
+                    tAux -= 1 * Time.deltaTime;
+                    tiempoRestante = TimeSpan.FromSeconds(tAux);
+                }
+            }
+        }
+    }
+    private void OnMouseUp()
+    {
+        if (tiempoDesconexion >= tiempoFinal)
+        {
+            if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
+            {
+                if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
+                {
+                    ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                    funcionar = true;
+                    particulas.SetActive(true);
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
+                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
+                    ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
+                    ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                    gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                    this.enabled = false;
+                }
             }
         }
     }
@@ -97,26 +125,26 @@ public class Casa : MonoBehaviour
                 }
                 if (tiempoDesconexion >= tiempoFinal)
                 {
-                    Debug.Log(numbConstruccion);
-                    Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
                     if (ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                         this.enabled = false;
                     else if (!ZPlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion))
                     {
-                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                        funcionar = true;
-                        gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
-                        GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
-                        ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
-                        ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
-                        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
-                        Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
-                        this.enabled = false;
+                        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                        gameObject.transform.GetChild(1).gameObject.SetActive(true);
+                        string aux = string.Format("00:00:00:00");
+                        gameObject.GetComponentInChildren<TextMesh>().text = aux;
+                        /* funcionar = true;
+                         gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                         GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal += poblacionCasa;
+                         GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += poblacionCasa;
+                         ZPlayerPrefs.SetFloat("poblacionTotal", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal);
+                         ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                         ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+                         Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
+                         this.enabled = false;*/
                     }
-                    Debug.Log(PlayerPrefs.HasKey("terminadoConstruir" + numbConstruccion));
-
                 }
             }
             startOn = true;
