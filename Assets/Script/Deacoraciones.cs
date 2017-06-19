@@ -154,7 +154,7 @@ public class Deacoraciones : MonoBehaviour {
 
                     }
             }
-            startOn = true;
-        }*/
+            startOn = true;*/
+        }
     }
 }
