@@ -7,6 +7,7 @@ public class Tutorial : MonoBehaviour {
     public GameObject panelJugando;
     public GameObject panelTuto;
     public GameObject panelConstuccion;
+    public GameObject panelRecoleccion;
     public GameObject arbol;
     public Text textoTuto;
     private string auxString;
@@ -158,10 +159,20 @@ public class Tutorial : MonoBehaviour {
                 textos[23].SetActive(true);
                 break;
             case 24:
-                GameObject.FindGameObjectWithTag("trabajo").GetComponent<Trabajos>().Trabajar(0);
+                panelRecoleccion.SetActive(true);
+                panelRecoleccion.transform.GetChild(0).gameObject.SetActive(true);
                 textos[23].SetActive(false);
                 textos[24].SetActive(true);
                 break;
+            case 25:
+                panelRecoleccion.transform.GetChild(0).gameObject.SetActive(false);
+                panelRecoleccion.SetActive(false);
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion = GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal;
+                ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                textos[24].SetActive(false);
+                textos[25].SetActive(true);
+                break;
+
 
         }
         /*if (textNumber == 3)
