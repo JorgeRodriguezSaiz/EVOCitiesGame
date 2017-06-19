@@ -7,6 +7,7 @@ public class Tutorial : MonoBehaviour {
     public GameObject panelJugando;
     public GameObject panelTuto;
     public GameObject panelConstuccion;
+    public GameObject panelRecoleccion;
     public GameObject arbol;
     public Text textoTuto;
     private string auxString;
@@ -118,6 +119,7 @@ public class Tutorial : MonoBehaviour {
             case 17:
                 GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(arbol.transform.position.x, arbol.transform.position.y,
                             GameObject.Find("Main Camera").GetComponent<Transform>().position.z);
+                GameObject.Find("Controller").GetComponent<ControllerTalar>().arbol = arbol;
                 textos[16].SetActive(false);
                 textos[17].SetActive(true);
                 break;
@@ -143,24 +145,45 @@ public class Tutorial : MonoBehaviour {
                 textos[20].SetActive(true);
                 break;
             case 21:
-
+                
+                
                 textos[20].SetActive(false);
                 textos[21].SetActive(true);
                 break;
             case 22:
+                panelJugando.SetActive(true);
+                
                 panelConstuccion.SetActive(true);
                 panelConstuccion.transform.GetChild(6).gameObject.SetActive(true);
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion = GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal;
                 textos[21].SetActive(false);
                 textos[22].SetActive(true);
                 break;
             case 23:
+                panelConstuccion.transform.GetChild(6).gameObject.SetActive(false);
+                panelConstuccion.SetActive(false);
+                
+                panelJugando.SetActive(false);
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion = GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal;
                 textos[22].SetActive(false);
                 textos[23].SetActive(true);
                 break;
             case 24:
-                GameObject.FindGameObjectWithTag("trabajo").GetComponent<Trabajos>().Trabajar(0);
+                //panelConstuccion.transform.GetChild(6).gameObject.SetActive(false);
+                //panelConstuccion.SetActive(false);
+
+                panelRecoleccion.SetActive(true);
+                panelRecoleccion.transform.GetChild(0).gameObject.SetActive(true);
                 textos[23].SetActive(false);
                 textos[24].SetActive(true);
+                break;
+            case 25:
+                panelRecoleccion.transform.GetChild(0).gameObject.SetActive(false);
+                panelRecoleccion.SetActive(false);
+                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion = GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacionTotal;
+                ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
+                textos[24].SetActive(false);
+                textos[25].SetActive(true);
                 break;
 
         }
