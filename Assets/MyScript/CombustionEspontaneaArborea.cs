@@ -15,6 +15,7 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
     public DateTime tiempoFinalTalar;
     public TimeSpan tiempoRestanteTalar;
     public int numbConstruccion = 3;
+    public int numeroArbol = 0;
     public float tiempoTalar = 0.5f;
     public int trabajadoresNecesita;
     public float maderaTalar = 15;
@@ -24,7 +25,7 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
     public float recurso = 0;
     // Use this for initialization
     void Start () {
-	
+        StartCoroutine(Wait());
 	}
 	
 	// Update is called once per frame
@@ -33,6 +34,8 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
         {
             if (tiempoDesconexionTalar >= tiempoFinalTalar)
             {
+                gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                gameObject.transform.GetChild(4).gameObject.SetActive(true);
                 /*GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
 
                 talando = false;
@@ -90,7 +93,9 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
             if (tiempoDesconexionTalar >= tiempoFinalTalar)
             {
                 GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-
+                gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                gameObject.transform.GetChild(5).gameObject.SetActive(true);
                 talando = false;
                 
                 if (madera)
@@ -101,6 +106,7 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
                 {
                     GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra += piedraPicar;
                 }
+                ZPlayerPrefs.SetInt("talado" + numeroArbol,0);
                 Destroy(gameObject);
             }
         }
@@ -156,11 +162,36 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
         {
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
             tiempoActualTalar = DateTime.Now;
-            ZPlayerPrefs.SetString("TiempoTalar " + numbConstruccion, tiempoActualTalar.ToString());
+            ZPlayerPrefs.SetString("TiempoTalar " + numeroArbol, tiempoActualTalar.ToString());
             tiempoDesconexionTalar = DateTime.Now;
             tiempoFinalTalar = tiempoActualTalar.AddMinutes(tiempoTalar);
             tiempoRestanteTalar = tiempoFinalTalar - tiempoDesconexionTalar;
             talando = true;
+            ZPlayerPrefs.SetString("talando" + numeroArbol, talando.ToString());
+        }
+    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSecondsRealtime(0.2f);
+        if(ZPlayerPrefs.HasKey("talado" + numeroArbol))
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            if(ZPlayerPrefs.HasKey("talando" + numeroArbol))
+            {
+                //talando = bool.Parse(ZPlayerPrefs.GetString("talando" + numeroArbol));
+                if (bool.Parse(ZPlayerPrefs.GetString("talando" + numeroArbol)))
+                {
+                    gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    tiempoActualTalar = Convert.ToDateTime(ZPlayerPrefs.GetString("TiempoTalar " + numeroArbol));
+                    tiempoDesconexionTalar = DateTime.Now;
+                    tiempoFinalTalar = tiempoActualTalar.AddMinutes(tiempoTalar);
+                    tiempoRestanteTalar = tiempoFinalTalar - tiempoDesconexionTalar;
+                    talando = true;
+                }
+            }
         }
     }
 }

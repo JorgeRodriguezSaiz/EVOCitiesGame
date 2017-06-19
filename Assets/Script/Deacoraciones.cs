@@ -18,7 +18,7 @@ public class Deacoraciones : MonoBehaviour {
     {
         //ZPlayerPrefs.DeleteAll();
         StartCoroutine(Wait());
-
+       
     }
 
     // Update is called once per frame
