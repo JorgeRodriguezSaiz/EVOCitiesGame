@@ -156,6 +156,7 @@ public class Trabajos : MonoBehaviour
                                 GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += primeraOpcion.GetComponent<DatosTrabajo>().trabajadoresNecesita;
                                 ZPlayerPrefs.SetFloat("poblacion", GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion);
                                 finTrabajo = false;
+                                GameObject.Find("God").GetComponent<Exp_controller>().exp += primeraOpcion.GetComponent<DatosTrabajo>().exp;
                                 comer = true;
                                 for (int i = 0; i < primeraOpcion.GetComponent<DatosTrabajo>().recursos.Length; i++)
                                 {

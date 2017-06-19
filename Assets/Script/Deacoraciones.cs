@@ -42,7 +42,7 @@ public class Deacoraciones : MonoBehaviour {
             }
             if (!funcionar)
             {
-                if (tiempoDesconexion < tiempoFinal)
+                /*if (tiempoDesconexion < tiempoFinal)
                 {
                     string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestante.Days, tiempoRestante.Hours, tiempoRestante.Minutes, tiempoRestante.Seconds);
                     gameObject.GetComponentInChildren<TextMesh>().text = aux;
@@ -54,7 +54,7 @@ public class Deacoraciones : MonoBehaviour {
                 {
                     gameObject.transform.GetChild(0).gameObject.SetActive(false);
                     gameObject.transform.GetChild(3).gameObject.SetActive(true);
-                }
+                }*/
             }
         }
     }
@@ -90,13 +90,24 @@ public class Deacoraciones : MonoBehaviour {
         ZPlayerPrefs.SetFloat("posX" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.x);
         ZPlayerPrefs.SetFloat("posY" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.y);
         ZPlayerPrefs.SetFloat("posZ" + ZPlayerPrefs.GetInt("cantidadConstrucciones"), gameObject.transform.position.z);
-        ZPlayerPrefs.SetInt("tipoConstruccion" + numbConstruccion, tipoConstruccion);
+        /*ZPlayerPrefs.SetInt("tipoConstruccion" + numbConstruccion, tipoConstruccion);
         tiempoActual = DateTime.Now;
         ZPlayerPrefs.SetString("Tiempo" + numbConstruccion, tiempoActual.ToString());
         tiempoFinal = tiempoActual.AddMinutes(tiempoConstruccion);
         //tiempoFinal = tiempoActual.AddSeconds(20D);
         tiempoDesconexion = DateTime.Now;
-        tiempoRestante = tiempoFinal - tiempoDesconexion;
+        tiempoRestante = tiempoFinal - tiempoDesconexion;*/
+        ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
+        funcionar = true;
+        particulas.SetActive(true);
+        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.transform.GetChild(1).gameObject.SetActive(false);
+        gameObject.transform.GetChild(3).gameObject.SetActive(false);
+        gameObject.transform.GetChild(4).gameObject.SetActive(true);
+        this.enabled = false;
         startOn = true;
     }
     IEnumerator Wait()
@@ -106,7 +117,8 @@ public class Deacoraciones : MonoBehaviour {
         //ZPlayerPrefs.DeleteAll();
         if (!GameObject.Find("Controller").GetComponent<Construction>().modoConstruccion)
         {
-            if (!funcionar)
+            this.enabled = false;
+           /* if (!funcionar)
             {
                 if (ZPlayerPrefs.HasKey("Tiempo " + numbConstruccion))
                 {
@@ -138,11 +150,11 @@ public class Deacoraciones : MonoBehaviour {
                             GameObject.Find("God").GetComponent<Exp_controller>().exp += this.exp;
                             ZPlayerPrefs.SetInt("terminadoConstruir" + numbConstruccion, 0);
                             this.enabled = false;
-                        }*/
+                        }
 
                     }
             }
             startOn = true;
-        }
+        }*/
     }
 }
