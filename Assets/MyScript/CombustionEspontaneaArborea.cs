@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
-
+using UnityEngine.EventSystems;
 
 public class CombustionEspontaneaArborea : MonoBehaviour {
     public bool madera = true;
@@ -88,47 +88,50 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
     }
     public void OnMouseUp()
     {
-        if (talando)
+        if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (tiempoDesconexionTalar >= tiempoFinalTalar)
+            if (talando)
             {
-                GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                gameObject.transform.GetChild(3).gameObject.SetActive(true);
-                gameObject.transform.GetChild(5).gameObject.SetActive(true);
-                talando = false;
-                
-                if (madera)
+                if (tiempoDesconexionTalar >= tiempoFinalTalar)
                 {
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().madera += maderaTalar;
+                    GameObject.Find("Controller").GetComponent<GestionRecursos>().poblacion += trabajadoresNecesita;
+                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    gameObject.transform.GetChild(3).gameObject.SetActive(true);
+                    gameObject.transform.GetChild(5).gameObject.SetActive(true);
+                    talando = false;
+
+                    if (madera)
+                    {
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().madera += maderaTalar;
+                    }
+                    else
+                    {
+                        GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra += piedraPicar;
+                    }
+                    ZPlayerPrefs.SetInt("talado" + numeroArbol, 0);
+                    Destroy(gameObject);
                 }
-                else
+            }
+            else
+            {
+                if (gameObject.tag == "arbol")
                 {
-                    GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra += piedraPicar;
+                    madera = true;
+                    GameObject.Find("Controller").GetComponent<ControllerTalar>().panelTalar.SetActive(true);
+                    tiempoTalar = GameObject.Find("Controller").GetComponent<ControllerTalar>().tiempoTalar;
+                    GameObject.Find("Controller").GetComponent<ControllerTalar>().trabajadoresNecesita = trabajadoresNecesita;
+                    recurso = GameObject.Find("Controller").GetComponent<ControllerTalar>().maderaTalar;
                 }
-                ZPlayerPrefs.SetInt("talado" + numeroArbol,0);
-                Destroy(gameObject);
+                if (gameObject.tag == "piedra")
+                {
+                    madera = false;
+                    GameObject.Find("Controller").GetComponent<ControllerTalar>().panelPiedra.SetActive(true);
+                    tiempoTalar = GameObject.Find("Controller").GetComponent<ControllerTalar>().tiempoTalar;
+                    trabajadoresNecesita = GameObject.Find("Controller").GetComponent<ControllerTalar>().trabajadoresNecesita;
+                    recurso = GameObject.Find("Controller").GetComponent<ControllerTalar>().piedraPicar;
+                }
+                GameObject.Find("Controller").GetComponent<ControllerTalar>().arbol = gameObject;
             }
-        }
-        else
-        {
-            if (gameObject.tag == "arbol")
-            {
-                madera = true;
-                GameObject.Find("Controller").GetComponent<ControllerTalar>().panelTalar.SetActive(true);
-                tiempoTalar = GameObject.Find("Controller").GetComponent<ControllerTalar>().tiempoTalar;
-                GameObject.Find("Controller").GetComponent<ControllerTalar>().trabajadoresNecesita = trabajadoresNecesita;
-                recurso = GameObject.Find("Controller").GetComponent<ControllerTalar>().maderaTalar;
-            }
-            if (gameObject.tag == "piedra")
-            {
-                madera = false;
-                GameObject.Find("Controller").GetComponent<ControllerTalar>().panelPiedra.SetActive(true);
-                tiempoTalar = GameObject.Find("Controller").GetComponent<ControllerTalar>().tiempoTalar;
-                trabajadoresNecesita = GameObject.Find("Controller").GetComponent<ControllerTalar>().trabajadoresNecesita;
-                recurso = GameObject.Find("Controller").GetComponent<ControllerTalar>().piedraPicar;
-            }
-            GameObject.Find("Controller").GetComponent<ControllerTalar>().arbol = gameObject;
         }
     }
     /*public void OnClickAceptarTalar()
