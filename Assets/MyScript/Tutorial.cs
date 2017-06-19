@@ -6,6 +6,8 @@ public class Tutorial : MonoBehaviour {
     public bool firstGame = true;
     public GameObject panelJugando;
     public GameObject panelTuto;
+    public GameObject panelConstuccion;
+    public GameObject arbol;
     public Text textoTuto;
     private string auxString;
     public string[] text;
@@ -14,18 +16,163 @@ public class Tutorial : MonoBehaviour {
     public bool finAnimate = true;
     public bool click = false;
     public bool skip = false;
+    public int fasesTuto = 0;
+    public InputField halfonso;
+    public string nombre;
+    public GameObject[] textos;
+    public GameObject ayto;
+    public GameObject silo;
 	// Use this for initialization
-	void Start ()
+	void OnEnable ()
     {
         if (firstGame)
         {
-            StartCoroutine(Tuto(textNumber));
+            StartCoroutine(Tuto(textNumber));           
         }
+    }
+    void Update()
+    {
+
+        switch (textNumber)
+        {
+            case 0:
+                GameObject.Find("Main Camera").GetComponent<SmoothCamera2d>().enabled = false;
+                GameObject.Find("Main Camera").GetComponent<PinchZoom>().enabled = false;
+                textos[0].SetActive(true);
+                break;
+            case 1:
+                textos[0].SetActive(false);
+                textos[1].SetActive(true);
+                break;
+            case 2:
+                textos[1].SetActive(false);
+                textos[2].SetActive(true);
+                break;
+            case 3:
+                textos[2].SetActive(false);
+                textos[3].SetActive(true);
+                break;
+            case 4:
+                textos[3].SetActive(false);
+                textos[4].SetActive(true);
+                halfonso.gameObject.SetActive(true);
+                text[5] = "Mmm..." + nombre + ", ¿es correcto? Éste es el nombre que quieres, ¿verdad? ";
+                break;
+            case 5:
+                textos[4].SetActive(false);
+                textos[5].SetActive(true);
+                halfonso.gameObject.SetActive(false);
+                break;
+            case 6:
+                textos[5].SetActive(false);
+                textos[6].SetActive(true);
+                break;
+            case 7:
+                GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(ayto.transform.position.x, ayto.transform.position.y,
+                            GameObject.Find("Main Camera").GetComponent<Transform>().position.z);                
+                textos[6].SetActive(false);
+                textos[7].SetActive(true);
+                break;
+            case 8:
+                GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(silo.transform.position.x-3, silo.transform.position.y,
+                            GameObject.Find("Main Camera").GetComponent<Transform>().position.z);
+                textos[7].SetActive(false);
+                textos[8].SetActive(true);
+                break;
+            case 9:
+                textos[8].SetActive(false);
+                textos[9].SetActive(true);
+                break;
+            case 10:
+                textos[9].SetActive(false);
+                textos[10].SetActive(true);
+                break;
+            case 11:
+                textos[10].SetActive(false);
+                textos[11].SetActive(true);
+                break;
+            case 12:
+                panelConstuccion.SetActive(true);
+                textos[11].SetActive(false);
+                textos[12].SetActive(true);
+                break;
+            case 13:
+                textos[12].SetActive(false);
+                textos[13].SetActive(true);
+                break;
+            case 14:
+
+                textos[13].SetActive(false);
+                textos[14].SetActive(true);
+                break;
+            case 15:
+                panelConstuccion.SetActive(false);
+                textos[14].SetActive(false);
+                textos[15].SetActive(true);
+                break;
+            case 16:
+                
+                textos[15].SetActive(false);
+                textos[16].SetActive(true);
+                break;
+            case 17:
+                GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(arbol.transform.position.x, arbol.transform.position.y,
+                            GameObject.Find("Main Camera").GetComponent<Transform>().position.z);
+                textos[16].SetActive(false);
+                textos[17].SetActive(true);
+                break;
+            case 18:
+                
+                textos[17].SetActive(false);
+                textos[18].SetActive(true);
+                break;
+            case 19:
+                GameObject.FindGameObjectWithTag("casa").GetComponent<ComidaCasa>().comidaCasa = 0;
+                GameObject.FindGameObjectWithTag("casa").transform.GetChild(3).gameObject.SetActive(true);
+                GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(GameObject.FindGameObjectWithTag("casa").transform.position.x, GameObject.FindGameObjectWithTag("casa").transform.position.y,
+                           GameObject.Find("Main Camera").GetComponent<Transform>().position.z);
+                textos[18].SetActive(false);
+                textos[19].SetActive(true);
+                break;
+            case 20:
+                GameObject.FindGameObjectWithTag("casa").GetComponent<ComidaCasa>().comidaCasa = 3;
+                GameObject.FindGameObjectWithTag("casa").transform.GetChild(3).gameObject.SetActive(false);
+                GameObject.FindGameObjectWithTag("casa").transform.GetChild(4).gameObject.SetActive(false);
+                GameObject.FindGameObjectWithTag("casa").GetComponent<SpriteRenderer>().enabled = true;
+                textos[19].SetActive(false);
+                textos[20].SetActive(true);
+                break;
+            case 21:
+
+                textos[20].SetActive(false);
+                textos[21].SetActive(true);
+                break;
+            case 22:
+                panelConstuccion.SetActive(true);
+                panelConstuccion.transform.GetChild(6).gameObject.SetActive(true);
+                textos[21].SetActive(false);
+                textos[22].SetActive(true);
+                break;
+            case 23:
+                textos[22].SetActive(false);
+                textos[23].SetActive(true);
+                break;
+            case 24:
+                GameObject.FindGameObjectWithTag("trabajo").GetComponent<Trabajos>().Trabajar(0);
+                textos[23].SetActive(false);
+                textos[24].SetActive(true);
+                break;
+
+        }
+        /*if (textNumber == 3)
+        {
+            halfonso.gameObject.SetActive(true);
+        }*/
     }
     IEnumerator Tuto(int auxInt)
     {
-        panelJugando.SetActive(false);
-        panelTuto.SetActive(true);
+        //panelJugando.SetActive(false);
+        //panelTuto.SetActive(true);
         if (finAnimate)
         {
             finAnimate = false;
@@ -39,21 +186,12 @@ public class Tutorial : MonoBehaviour {
         auxString = "";
         for (int i = 0; i < strComplete.Length; i++)
         {
-            if (i == 4)
-            {
-                IntroducirName();
-            }
             auxString += strComplete[i];
-            textoTuto.text = auxString;
+            textos[textNumber].transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = auxString;
             yield return new WaitForSeconds(tiempoLetras);
         }
         finAnimate = true;
         click = true;
-        yield return null;
-    }
-    IEnumerator IntroducirName()
-    {
-        TouchScreenKeyboard.Open("");
         yield return null;
     }
     public void Click()
@@ -61,7 +199,7 @@ public class Tutorial : MonoBehaviour {
         if (click)
         {
             click = false;
-            if (textNumber < text.Length-1)
+            if (textNumber < text.Length)
             {
                 textNumber++;
             }
@@ -70,9 +208,25 @@ public class Tutorial : MonoBehaviour {
         else
         {
             StopAllCoroutines();
-            textoTuto.text = text[textNumber];
+            textos[textNumber].transform.GetChild(0).gameObject.transform.GetChild(0).gameObject.GetComponent<Text>().text = text[textNumber];
             click = true;
             finAnimate = true;
         }
+    }
+    public void devolverControl()
+    {
+        panelTuto.SetActive(false);
+        panelJugando.SetActive(true);
+        GameObject.Find("Main Camera").GetComponent<SmoothCamera2d>().enabled = true;
+        GameObject.Find("Main Camera").GetComponent<PinchZoom>().enabled = true;
+    }
+    public void Name()
+    {
+        nombre = halfonso.text;
+    }
+    public void Cancel()
+    {
+        nombre = null;
+        halfonso.text = null;
     }
 }

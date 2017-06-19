@@ -8,6 +8,7 @@ public class DatosTrabajo : MonoBehaviour
     [Header("Variables para el trabajo")]
     public int trabajadoresNecesita;
     public string[] recursos;
+    public int exp;
     public int tipoTrabajo;
     public int[] cantidadRecursos;
     public int recursosAceptados = 0;

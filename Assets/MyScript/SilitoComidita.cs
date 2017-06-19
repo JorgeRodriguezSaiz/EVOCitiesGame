@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 
 public class SilitoComidita : MonoBehaviour {
     public GameObject siloWindow;
@@ -25,8 +26,9 @@ public class SilitoComidita : MonoBehaviour {
         manzanas.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().manzanas);
         frambuesas.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().frambuesas);
     }
-    void OnMouseDown()
+    void OnMouseUp()
     {
-        siloWindow.SetActive(true);
+        if (!EventSystem.current.IsPointerOverGameObject())
+            siloWindow.SetActive(true);
     }
 }

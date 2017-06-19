@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using UnityEngine.EventSystems;
 
 public class SiloSida : MonoBehaviour
 {
@@ -25,8 +26,9 @@ public class SiloSida : MonoBehaviour
         madera.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().madera);
         piedra.text = Convert.ToString(GameObject.Find("Controller").GetComponent<GestionRecursos>().piedra);
     }
-    void OnMouseDown()
+    void OnMouseUp()
     {
-        siloWindow.SetActive(true);
+        if (!EventSystem.current.IsPointerOverGameObject())
+            siloWindow.SetActive(true);
     }
 }
