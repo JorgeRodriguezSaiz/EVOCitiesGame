@@ -17,6 +17,7 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
     public int numbConstruccion = 3;
     public int numeroArbol = 0;
     public float tiempoTalar = 0.5f;
+    public int exp;
     public int trabajadoresNecesita;
     public float maderaTalar = 15;
     [Header("Piedras")]
@@ -57,6 +58,7 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
                     string aux = string.Format("{0:D2}:{1:D2}:{2:D2}:{3:D2}", tiempoRestanteTalar.Days, tiempoRestanteTalar.Hours,
                         tiempoRestanteTalar.Minutes, tiempoRestanteTalar.Seconds);
                     gameObject.GetComponentInChildren<TextMesh>().text = aux;
+
                     float tAux = (float)tiempoRestanteTalar.TotalSeconds;
                     tAux -= 1 * Time.deltaTime;
                     tiempoRestanteTalar = TimeSpan.FromSeconds(tAux);
@@ -97,7 +99,7 @@ public class CombustionEspontaneaArborea : MonoBehaviour {
                 gameObject.transform.GetChild(3).gameObject.SetActive(true);
                 gameObject.transform.GetChild(5).gameObject.SetActive(true);
                 talando = false;
-                
+                GameObject.Find("God").GetComponent<Exp_controller>().exp += exp;
                 if (madera)
                 {
                     GameObject.Find("Controller").GetComponent<GestionRecursos>().madera += maderaTalar;
