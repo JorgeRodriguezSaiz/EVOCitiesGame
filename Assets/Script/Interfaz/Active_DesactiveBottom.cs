@@ -7,7 +7,7 @@ public class Active_DesactiveBottom : MonoBehaviour
     public bool camaraMovimiento;
     public void ActiveDesactive()
     {
-
+        camara = GameObject.Find("Main Camera");
         for (int i = 0; i < objOut.Length; i++)
         {
             objOut[i].SetActive(false);
