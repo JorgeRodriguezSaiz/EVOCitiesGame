@@ -122,28 +122,45 @@ public class Tutorial : MonoBehaviour {
                 textos[17].SetActive(true);
                 break;
             case 18:
+                
                 textos[17].SetActive(false);
                 textos[18].SetActive(true);
                 break;
             case 19:
+                GameObject.FindGameObjectWithTag("casa").GetComponent<ComidaCasa>().comidaCasa = 0;
+                GameObject.FindGameObjectWithTag("casa").transform.GetChild(3).gameObject.SetActive(true);
+                GameObject.Find("Main Camera").GetComponent<Transform>().position = new Vector3(GameObject.FindGameObjectWithTag("casa").transform.position.x, GameObject.FindGameObjectWithTag("casa").transform.position.y,
+                           GameObject.Find("Main Camera").GetComponent<Transform>().position.z);
                 textos[18].SetActive(false);
                 textos[19].SetActive(true);
                 break;
             case 20:
+                GameObject.FindGameObjectWithTag("casa").GetComponent<ComidaCasa>().comidaCasa = 3;
+                GameObject.FindGameObjectWithTag("casa").transform.GetChild(3).gameObject.SetActive(false);
+                GameObject.FindGameObjectWithTag("casa").transform.GetChild(4).gameObject.SetActive(false);
+                GameObject.FindGameObjectWithTag("casa").GetComponent<SpriteRenderer>().enabled = true;
                 textos[19].SetActive(false);
                 textos[20].SetActive(true);
                 break;
             case 21:
+
                 textos[20].SetActive(false);
                 textos[21].SetActive(true);
                 break;
             case 22:
+                panelConstuccion.SetActive(true);
+                panelConstuccion.transform.GetChild(6).gameObject.SetActive(true);
                 textos[21].SetActive(false);
                 textos[22].SetActive(true);
                 break;
             case 23:
                 textos[22].SetActive(false);
                 textos[23].SetActive(true);
+                break;
+            case 24:
+                GameObject.FindGameObjectWithTag("trabajo").GetComponent<Trabajos>().Trabajar(0);
+                textos[23].SetActive(false);
+                textos[24].SetActive(true);
                 break;
 
         }
